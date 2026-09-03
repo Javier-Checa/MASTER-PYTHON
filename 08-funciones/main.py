@@ -97,7 +97,17 @@ getEmpleado("María", "87654321B")
 
 
 
-# Ejemplo 5: Función con retorno de valores
+# Ejemplo 5: return o devolver datos
+
+def saludame(nombre):
+    saludo = f"Hola, saludos {nombre}"
+
+    return saludo
+print(saludame("Javier"))
+
+
+
+
 def suma(numero1, numero2):
     return numero1 + numero2
 
