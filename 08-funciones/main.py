@@ -96,6 +96,8 @@ getEmpleado("Javier")
 getEmpleado("María", "87654321B")
 
 
+print("\n######## EJEMPLO 5 ########\n")
+
 
 # Ejemplo 5: return o devolver datos
 
@@ -130,11 +132,14 @@ def calculadora(numero1, numero2, basicas = False):
 
     cadena = ""
 
-    cadena += "Suma: " + str(suma) + "\n"
-    cadena += "Resta: " + str(resta) + "\n"
-    cadena += "Multiplicación: " + str(multi) + "\n"
-    cadena += "División: " + str(division) + "\n"
+    if basicas != False:
+        cadena += "Suma: " + str(suma) + "\n"
+        cadena += "Resta: " + str(resta) + "\n"
+
+    else:
+        cadena += "Multiplicación: " + str(multi) + "\n"
+        cadena += "División: " + str(division) + "\n"
 
     return cadena
 
-print(calculadora(12, 4))
+print(calculadora(12, 4, False))
