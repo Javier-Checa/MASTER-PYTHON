@@ -113,3 +113,28 @@ def suma(numero1, numero2):
 
 resultado = suma(5, 3)
 print(f"El resultado de la suma es: {resultado}")
+
+
+
+# Ejermplo 6
+
+print("\n######## EJEMPLO 6 ########\n")
+
+
+def calculadora(numero1, numero2, basicas = False):
+
+    suma = numero1 + numero2
+    resta = numero1 - numero2
+    multi = numero1 * numero2
+    division = numero1 / numero2
+
+    cadena = ""
+
+    cadena += "Suma: " + str(suma) + "\n"
+    cadena += "Resta: " + str(resta) + "\n"
+    cadena += "Multiplicación: " + str(multi) + "\n"
+    cadena += "División: " + str(division) + "\n"
+
+    return cadena
+
+print(calculadora(12, 4))
