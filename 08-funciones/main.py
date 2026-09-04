@@ -156,6 +156,20 @@ def getNombre(nombre):
 def getApellidos(apellidos):
     texto = f"Los apellidos son: {apellidos}"
     return texto
-print(getNombre("Javier"))
-print(getApellidos("Checa Martínez"))
+
+def devuelveTodo(nombre, apellidos):
+    texto = f"El nombre completo es: {nombre} {apellidos}"
+    return texto
+# print(getNombre("Javier"))
+# print(getApellidos("Checa Martínez"))
+print(devuelveTodo("Javier", "Checa Martínez")) 
 print("\n")
+
+
+# Ejemplo 8: Funciones lambda
+
+print("######## EJEMPLO 8 ########\n")
+
+dime_el_year = lambda year: f"El año es: {int(year * 1.1)}\n"
+
+print(dime_el_year(2050))
