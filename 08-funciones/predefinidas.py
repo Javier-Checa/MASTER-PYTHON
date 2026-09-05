@@ -42,3 +42,6 @@ else:
 # Encontrar caracteres
 frase = "Carpe diem, aprovecha el día"
 print(frase.find("die"))  # Devuelve la posición de la palabra
+
+nueva_frase = frase.replace("Carpe diem", "Campa y ríe")  # Reemplaza palabras
+print(nueva_frase)
