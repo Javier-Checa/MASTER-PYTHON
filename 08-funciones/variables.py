@@ -16,10 +16,25 @@ print(frase)
 # Variable local
 def holaMundo():
 
-    # frase "\nHola mundo, soy una variable local.\n"
+    frase = "\nHola mundo, soy una variable local.\n"
+    print("Dentro de la función: ")
     print(frase)
 
-holaMundo()
+    year = 2026
+    print("Dentro de la función: ")
+    print(year)
+
+    global website  # Indicamos que vamos a usar la variable global
+    website = "javierchecapage.com"
+    print("DENTRO: ", website)
+    print(website)
+
+    return "Dato devuelto: " + str(year) + " - Website: " + website
+
+
+
+print(holaMundo())
+print("FUERA: ", website)
 
     
 
