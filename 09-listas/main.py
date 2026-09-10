@@ -29,3 +29,19 @@ print(peliculas[0:]) # Acceder a un rango de elementos de la lista
 
 peliculas[1] = "Gran Torino" # Modificar un elemento de la lista
 print(peliculas)
+
+# Añadir elementos a lista
+
+cantantes.append("Adele") # Añadir un elemento al final de la lista
+cantantes.append("Ed Sheeran") # Añadir un elemento al final de la lista
+print(cantantes)
+
+
+# Recorrer lista
+
+print ("\n************* LISTADO PELÍCULAS ***************\n")
+for pelicula in peliculas:
+    print(pelicula)
+
+print("\n")
+
