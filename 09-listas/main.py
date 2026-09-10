@@ -58,7 +58,18 @@ contactos = [
     ["María", "maria@email.com"]
 ]
 
+"""
+print(contactos)
 print(contactos[1][0]) # Acceder a un elemento de la lista multidimensional
 print(contactos[0][0]) # Acceder a un elemento de la lista multidimensional
 print(contactos[2][1]) # Acceder a un elemento de la lista multidimensional
+"""
+for contacto in contactos:
+    for elemento in contacto:
+        if contacto.index(elemento) == 0:
+            print("Nombre: " + elemento)    
+        else:
+            print("Email: " + elemento)
+    print("\n")
 
+          
