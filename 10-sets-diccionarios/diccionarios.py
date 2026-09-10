@@ -19,3 +19,31 @@ print(persona["edad"])
 print(persona.get("email")) # Obtener el valor de una clave
 
 
+# Lista con diccionarios
+
+contactos = [
+    {
+        "nombre": "Ana",
+        "email": "ana.garcia@example.com"
+    },
+    {
+        "nombre": "Luis",
+        "email": "luis.lopez@example.com"
+    },
+    {
+        "nombre": "Maria",
+        "email": "maria.rodriguez@example.com"
+    }
+]
+
+contactos[0]["nombre"] = "Anita" # Modificar el valor de una clave
+print(contactos[0]["nombre"]) # Anita
+print(contactos[1]["email"]) # luis.lopez@example.com
+print(contactos[2]["nombre"]) # Maria  
+
+print("\nListado de contactos: ")
+print("--------------------------------------------------")
+
+for contacto in contactos:
+    print(f"Nombre del contacto: {contacto['nombre']}, Email: {contacto['email']}")
+    print("--------------------------------------------------")
