@@ -1,5 +1,6 @@
 from io import open
 import pathlib
+import shutil
 
 # Abrir archivo
 
@@ -30,3 +31,9 @@ for frase in lista:
     lista_frase = frase.split()
     print(lista_frase)
     # print("- "+frase.capitalize())
+    
+# Copiar archivos
+
+ruta_original = str(pathlib.Path().absolute()) + "./14-sistema-archivos/fichero_texto.txt"
+ruta_nueva = str(pathlib.Path().absolute()) + "./14-sistema-archivos/fichero_copiado.txt"
+shutil.copyfile()    
