@@ -34,6 +34,40 @@ for frase in lista:
     
 # Copiar archivos
 
+"""
 ruta_original = str(pathlib.Path().absolute()) + "./14-sistema-archivos/fichero_texto.txt"
 ruta_nueva = str(pathlib.Path().absolute()) + "./14-sistema-archivos/fichero_copiado.txt"
-shutil.copyfile()    
+ruta_alternativa = str("./07-ejercicios/fichero-copiado77.txt") 
+
+shutil.copyfile(ruta_original, ruta_nueva)    
+"""
+
+# Mover y renombrar archivos
+"""
+ruta_original = str(pathlib.Path().absolute()) + "./14-sistema-archivos/fichero_copiado.txt"
+ruta_nueva = str(pathlib.Path().absolute()) + "./14-sistema-archivos/fichero_copiado_NUEVO.txt"
+
+shutil.move(ruta_original, ruta_nueva)
+"""
+
+
+# Eliminar archivos
+"""
+import os
+ruta_nueva = str(pathlib.Path().absolute()) + "./14-sistema-archivos/fichero_copiado_NUEVO.txt"
+
+os.remove(ruta_nueva)
+"""
+
+# Comprobar si un archivo existe
+
+import os.path
+
+# print(os.path.abspath("./"))
+ruta_comprobar = os.path.abspath("./") + "./14-sistema-archivos/fichero_texto.txt"
+print(ruta_comprobar)
+
+if os.path.isfile(ruta_comprobar):
+    print("El archivo existe")
+else:
+    print("El archivo no existe")
