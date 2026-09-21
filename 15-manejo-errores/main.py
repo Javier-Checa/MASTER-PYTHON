@@ -15,3 +15,9 @@ try:
 
 except:
     print("Ha ocurrido un error. Introduce un nombre, por favor.")
+    
+else:
+    print("¡Genial! Todo ha funcionado correctamente.")
+    
+finally:
+    print("¡¡¡Fin de la iteración!!!")
