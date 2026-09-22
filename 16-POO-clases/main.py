@@ -17,10 +17,10 @@ class Coche:
         # Métodos, que son acciones que hace el objeto (coche). Son las antiguas funciones.
         
         def acelerar(self):
-            self.velocidad += 1
+            self.velocidad += 3 
 
         def frenar(self):
-            self.velocidad -= 1
+            self.velocidad -= 2
 
         def getVelocidad(self):
             return self.velocidad
@@ -31,5 +31,14 @@ class Coche:
 
 coche = Coche()
 
-print(coche.marca)
-print(coche.modelo)
+print(coche.marca, coche.modelo, coche.color)
+print("Velocidad actual: ", coche.velocidad)
+
+coche.acelerar()
+coche.acelerar()
+coche.acelerar()
+coche.acelerar()
+coche.frenar()
+
+
+print("Velocidad nueva: ", coche.velocidad)
