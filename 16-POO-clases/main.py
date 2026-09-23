@@ -31,14 +31,5 @@ class Coche:
 
 coche = Coche()
 
-print(coche.marca, coche.modelo, coche.color)
-print("Velocidad actual: ", coche.velocidad)
-
-coche.acelerar()
-coche.acelerar()
-coche.acelerar()
-coche.acelerar()
-coche.frenar()
-
-
-print("Velocidad nueva: ", coche.velocidad)
+print(coche.marca)
+print(coche.modelo)
