@@ -71,8 +71,13 @@ print("\n-*-*-*-*-*-*-*-*-*-*-*-*-*-\n")
 
 coche2 = Coche()
 
+coche2.setColor("Verde")
+coche2.setModelo("Gallardo")
+
 print("\n---------- COCHE 2 ---------\n")
 
-print(coche2.getColor())
+# print(coche2.getColor())
 
 print(coche2.marca, coche2.getModelo(), coche2.getColor())
+print(type(coche2))
+print("\n")
