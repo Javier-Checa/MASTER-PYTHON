@@ -16,6 +16,18 @@ class Coche:
 
         # Métodos, que son acciones que hace el objeto (coche). Son las antiguas funciones.
         
+        def setColor(self, color):
+            self.color = color
+            
+        def getColor(self):
+            return self.color
+        
+        def setModelo(self, modelo):
+            self.modelo = modelo
+            
+        def getModelo(self):
+            return self.modelo
+        
         def acelerar(self):
             self.velocidad += 3 
 
@@ -29,10 +41,6 @@ class Coche:
 
 # Crear objetos / Instanciar la clase
 
-coche = Coche()
-
-print(coche.marca)
-print(coche.modelo)
 
 # Fin definicion clase
 
@@ -40,8 +48,13 @@ print(coche.modelo)
 
 coche = Coche()
 
-print(coche.marca, coche.modelo, coche.color)
-print("Velocidad actual: ", coche.velocidad)
+print("\n--------- COCHE 1 ---------\n")
+
+coche.setColor("Amarillo")
+coche.setModelo("Testarossa")
+
+print(coche.marca, coche.getModelo(), coche.getColor())
+print("Velocidad actual: ", coche.getVelocidad())
 
 coche.acelerar()
 coche.acelerar()
@@ -50,4 +63,16 @@ coche.acelerar()
 coche.frenar()
 
 
-print("Velocidad nueva: ", coche.velocidad)
+print("Velocidad nueva: ", coche.getVelocidad())
+
+print("\n-*-*-*-*-*-*-*-*-*-*-*-*-*-\n")
+
+# Crear más objetos
+
+coche2 = Coche()
+
+print("\n---------- COCHE 2 ---------\n")
+
+print(coche2.getColor())
+
+print(coche2.marca, coche2.getModelo(), coche2.getColor())
