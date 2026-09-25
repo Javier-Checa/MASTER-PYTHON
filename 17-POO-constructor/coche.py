@@ -9,6 +9,9 @@ class Coche:
         caballaje = 500
         plazas = 2
         
+        soy_publico = "Hola, soy un atributo público."
+        __soy_privado = "Hola, soy un atributo privado."
+        
         """
         Definición del constructor: método especial dentro de una clasees un método especial 
         de una clase que se ejecuta automáticamente cuando se crea (instancia) 
@@ -27,6 +30,10 @@ class Coche:
             self.plazas = plazas
 
         # Métodos, que son acciones que hace el objeto (coche). Son las antiguas funciones.
+        
+        def getPrivado(self):
+            return self.__soy_privado
+              
         
         def setColor(self, color):
             self.color = color
