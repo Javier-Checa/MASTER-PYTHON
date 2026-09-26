@@ -34,7 +34,14 @@ conexion.commit()
 # Listar datos
 cursor.execute("SELECT * FROM productos;")
 productos = cursor.fetchall()
-print(productos)
+
+for producto in productos:
+    print("Título:", producto[1])
+    print("Descripción:", producto[2])
+    print("Precio:", producto[3])
+    print("\n")
+
+
 
 
 
