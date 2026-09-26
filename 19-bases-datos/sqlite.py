@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS productos(
     titulo varchar(255),
     descripcion text,
     precio int(255)              
-)
+);
 """)
 
 
@@ -35,11 +35,35 @@ cursor.execute("INSERT INTO productos VALUES (null, 'Primer producto', 'Descripc
 conexion.commit()
 """
 
+# Borrar registros
+"""
+cursor.execute("DELETE FROM productos")
+conexion.commit()
+"""
+
+# Insertar muchos registros de golpe
+
+productos = [
+    ("Ordenador portátil", "Buen PC", 700),
+    ("Teléfono Smartphone", "Gama media Motorola", 90),
+    ("Smartwatch 3ª generación", "Con GPS y tensiómetro", 120),
+    ("Robot de cocina", "Gama media Taurus", 240),
+]
+cursor.executemany("INSERT INTO productos VALUES (null,?,?,?)", productos)
+conexion.commit()
+
+
+# Update (actualizar datos)
+
+cursor.execute("UPDATE productos SET precio=550 WHERE precio=700")
+conexion.commit()
+
 # Listar datos
-cursor.execute("SELECT * FROM productos;")
+cursor.execute("SELECT * FROM productos WHERE precio >= 150;")
 productos = cursor.fetchall()
 
 for producto in productos:
+    print("ID: ", producto[0])
     print("Título:", producto[1])
     print("Descripción:", producto[2])
     print("Precio:", producto[3])
