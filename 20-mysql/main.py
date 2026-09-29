@@ -44,6 +44,5 @@ for table in cursor:
     print(table)
 
 
-# Introducir datos en la tabla
-
-cursor.execute("INSERT DATA")   
+cursor.execute("INSERT INTO vehiculos VALUES(null, 'Opel', 'Astra', 21500)")
+database.commit()
