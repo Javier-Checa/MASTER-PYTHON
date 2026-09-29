@@ -41,3 +41,8 @@ cursor.execute("SHOW TABLES")
 
 for table in cursor:
     print(table)
+
+
+# Introducción de datos en tablas
+
+cursor.execute("INSERT DATA")
