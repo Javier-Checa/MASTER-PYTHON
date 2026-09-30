@@ -57,6 +57,9 @@ coches = [
 
 database.commit()
 
+
+# Listar registros
+
 cursor.execute("SELECT * FROM vehiculos WHERE precio <= 20000 AND marca = 'Renault'")
 
 result = cursor.fetchall()
@@ -69,5 +72,17 @@ cursor.execute("SELECT * FROM vehiculos")
 coche = cursor.fetchone()
 print (coche)
 
-cursor.execute("DELETE FROM vehiculos WHERE marca = 'Renault'")
+
+# Borrar registros
+
+cursor.execute("DELETE FROM vehiculos WHERE marca = 'Volkswagen'")
 database.commit()
+
+print(cursor.rowcount, "borrados!!")
+
+
+# Actualizar registros
+
+cursor. execute("UPDATE vehiculos SET modero='León' WHERE marca='Seat'")
+database.commit()
+print(cursor.rowcount, "actualizados!!")
