@@ -37,11 +37,12 @@ CONSTRAINT pk_vehiculo PRIMARY KEY(id)
 )                              
 """)
 
-
+"""
 cursor.execute("SHOW TABLES")
 
 for table in cursor:
     print(table)
+"""    
 
 
 #cursor.execute("INSERT INTO vehiculos VALUES(null, 'Opel', 'Astra', 21500)")
@@ -52,7 +53,18 @@ coches = [
     ('Skoda', 'Fabia', 22500),
 ]
 
-cursor.executemany("INSERT INTO vehiculos VALUES(null, %s, %s, %s)", coches)
-
+# cursor.executemany("INSERT INTO vehiculos VALUES(null, %s, %s, %s)", coches)
 
 database.commit()
+
+cursor.execute("SELECT * FROM vehiculos WHERE precio <= 20000 AND marca = 'Renault'")
+
+result = cursor.fetchall()
+
+print("---- TODOS MIS COCHES ----")
+for coche in result:
+    print(coche[0], coche[1], coche[2], coche[3])
+
+cursor.execute("SELECT * FROM vehiculos")
+coche = cursor.fetchone()
+print (coche)
