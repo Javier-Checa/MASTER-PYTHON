@@ -73,6 +73,7 @@ coche = cursor.fetchone()
 print (coche)
 
 
+
 # Borrar registros
 
 cursor.execute("DELETE FROM vehiculos WHERE marca = 'Volkswagen'")
