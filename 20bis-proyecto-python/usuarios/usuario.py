@@ -28,7 +28,7 @@ class Usuario:
         cursor.execute(sql, usuario)
         database.commit()   
         
-        return [cursor.rowcount, self]       
+        return [cursor.rowcount, self]    
     
     
     def identificar(self):
