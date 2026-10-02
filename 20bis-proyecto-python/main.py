@@ -4,9 +4,9 @@ PROYECTO PYTHON Y MYSQL:
 - Login o registro
 - Si elegimos registro, creará un usuario en la bbdd
 - Si elegimos login, identifica al usuario y nos preguntará
-- Crear nota, mostrar notas, borrarlas.
-  
+- Crear nota, mostrar notas, borrar nota, modificar nota
 """
+from usuarios import acciones
 
 print("""
 Acciones disponibles:
@@ -14,20 +14,14 @@ Acciones disponibles:
     - login         
 """)
 
+hazEl = acciones.Acciones()
 accion = input("¿Qué quieres hacer?: ")
 
+
 if accion == "registro":
-    print("\nOk!! Vamos a registrarte en el sistema...")
-    nombre = input("Introduce tu nombre: ")
-    apellidos = input("Introduce tus apellidos: ")
-    email = input("Introduce tu email: ")
-    password = input("Introduce tu contraseña: ")
+   hazEl.registro()
     
     
     
 elif accion == "login":
-    print("Vale!! Identifícate en el sistema...")
-    email = input("Introduce tu email: ")
-    password = input("Introduce tu contraseña: ")
-    
-        
+    hazEl.login()
