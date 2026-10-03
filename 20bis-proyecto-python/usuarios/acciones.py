@@ -4,6 +4,7 @@ class Acciones:
     
     def registro(self):
         print("\nOk!! Vamos a registrarte en el sistema...")
+        
         nombre = input("Introduce tu nombre: ")
         apellidos = input("Introduce tus apellidos: ")
         email = input("Introduce tu email: ")
