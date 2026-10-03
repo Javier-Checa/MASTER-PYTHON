@@ -48,15 +48,15 @@ class Acciones:
         
         accion = input("¿Qué quieres hacer?: ")
         if accion == "crear":
-            print("Ok!! Vamos a crear una nota")
+            print("\nOk!! Vamos a crear una nota")
             self.proximasAcciones(usuario)
             
         elif accion == "mostrar":
-            print("Ok!! Vamos a mostrar tus notas")
+            print("\nOk!! Vamos a mostrar tus notas")
             self.proximasAcciones(usuario)
             
         elif accion == "eliminar":
-            print("Ok!! Vamos a eliminar una nota")
+            print("\nOk!! Vamos a eliminar una nota")
             self.proximasAcciones(usuario)
             
         elif accion == "salir":
