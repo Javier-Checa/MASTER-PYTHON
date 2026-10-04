@@ -42,16 +42,22 @@ class Acciones:
         Acciones disponibles:
             - crear nota
             - mostrar notas
-            - borrar nota
+            - eliminar nota
             - salir
         """)
         
         accion = input("¿Qué quieres hacer?: ")
         if accion == "crear":
             print("Ok!! Vamos a crear una nota")
+            self.proximasAcciones(usuario)
+            
         elif accion == "mostrar":
             print("Ok!! Vamos a mostrar tus notas")
-        elif accion == "borrar":
-            print("Ok!! Vamos a borrar una nota")
+            self.proximasAcciones(usuario)
+            
+        elif accion == "eliminar":
+            print("Ok!! Vamos a eliminar una nota")
+            self.proximasAcciones(usuario)
+            
         elif accion == "salir":
-            print(f"Ok {usuario[1]}!! Hasta pronto!!")
+            exit()
