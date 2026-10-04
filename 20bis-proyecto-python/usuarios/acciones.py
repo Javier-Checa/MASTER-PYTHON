@@ -60,4 +60,5 @@ class Acciones:
             self.proximasAcciones(usuario)
             
         elif accion == "salir":
+            print(f"\nOk {usuario[1]}!! Hasta pronto!!")
             exit()
