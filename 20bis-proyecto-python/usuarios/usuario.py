@@ -2,7 +2,7 @@ import datetime
 import hashlib
 import usuarios.conexion as conexion
 
-connect = conexion.contectar()
+connect = conexion.conectar()
 database = connect[0]
 cursor = connect[1]
 
