@@ -7,8 +7,8 @@ from tkinter import *
 
 ventana = Tk()
 
-
-
+# Cambio en el tamaño de la ventana
+ventana.geometry("750x450")  # Ancho x Alto
 
 # Arrancar y mostrar la ventana hasta que se cierre
 ventana.mainloop()
