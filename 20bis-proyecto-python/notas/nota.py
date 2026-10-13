@@ -4,6 +4,7 @@ connect = conexion.conectar()
 database = connect[0]
 cursor = connect[1]
 
+
 class Nota:
     def __init__(self, usuario_id, titulo, descripcion):    
         self.usuario_id = usuario_id
