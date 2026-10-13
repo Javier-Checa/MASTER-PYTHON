@@ -10,5 +10,8 @@ ventana = Tk()
 # Cambio en el tamaño de la ventana
 ventana.geometry("750x450")  # Ancho x Alto
 
+# Bloquear el cambio de tamaño del alto de la ventana
+ventana.resizable(True, False)
+
 # Arrancar y mostrar la ventana hasta que se cierre
 ventana.mainloop()
