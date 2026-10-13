@@ -15,7 +15,7 @@ ventana.title("Mi primera interfaz gráfica con Python y la librería Tkinter")
 ruta_icono = os.path.abspath('./imagenes/logotipo.ico')
 
 if not os.path.isfile(ruta_icono):
-    ruta_icono = os.path.abspath('./21-tkinter/imagenes/logotipo.png')
+    ruta_icono = os.path.abspath('./21-tkinter/imagenes/logotipo.ico')
 
 # Icono de la ventana
 ventana.iconbitmap(ruta_icono)
