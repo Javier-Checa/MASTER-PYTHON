@@ -7,6 +7,13 @@ from tkinter import *
 
 ventana = Tk()
 
+# Título de la ventana
+ventana.title("Mi primera interfaz gráfica con Python y la librería Tkinter")
+
+# Icono de la ventana
+ventana.iconbitmap("./21-tkinter/imagenes/logotipo.ico")
+
+
 # Cambio en el tamaño de la ventana
 ventana.geometry("750x450")  # Ancho x Alto
 
