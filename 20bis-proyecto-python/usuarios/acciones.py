@@ -58,7 +58,7 @@ class Acciones:
             self.proximasAcciones(usuario)
             
         elif accion == "eliminar":
-            print("\nOk!! Vamos a eliminar una nota")
+            hazEl.borrar(usuario)
             self.proximasAcciones(usuario)
             
         elif accion == "salir":
