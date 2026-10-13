@@ -21,15 +21,11 @@ class Acciones:
         
         nota = modelo.Nota(usuario[0], '', '')
         notas = nota.listar()
-        
-       
-        if len(notas) >= 1:
-            print(f"\n{usuario[1]}!! Tienes {len(notas)} notas: ")
-            for n in notas:
-                print("\n********************************")
-                print(n[2])
-                print(n[3])
-                print("********************************")
-        else:
-            print(f"\n{usuario[1]}!! No tienes notas para mostrar.")
+    
+        for nota in notas:
+            print("\n********************************")
+            print(nota[2])
+            print(nota[3])
+            print("\n********************************")
+
         
