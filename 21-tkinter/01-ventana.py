@@ -11,11 +11,12 @@ class Programa:
         self.icon = './imagenes/logotipo.ico'
         self.icon_alt = './21-tkinter/imagenes/logotipo.ico'
         self.size = '750x450'
-        self.resizable = False  # Permitir cambiar el tamaño de la ventana
+        self.resizable = False  # Permitir o no cambiar el tamaño de la ventana
         
     def cargar(self):
         # Crear la ventana principal o raíz
         ventana = Tk()
+        self.ventana = ventana  # Guardar la referencia de la ventana en el objeto
 
         # Título de la ventana
         ventana.title(self.title)
@@ -44,13 +45,29 @@ class Programa:
             ventana.resizable(1, 1)
         else:
             ventana.resizable(0, 0)
-
-        # Arrancar y mostrar la ventana hasta que se cierre
-        ventana.mainloop()
+      
+       
+    def addTexto(self, dato):
+        texto = Label(self.ventana, text=dato)
+        texto.pack()
+        
+        
+    def mostrar(self):
+        # Arrancar y mostrar la ventana hasta que se cierre        
+        self.ventana.mainloop()
         
         
 # Instanciar mi programa
     
 programa = Programa()
 programa.cargar()
+
+programa.addTexto("¡Hola, mundo!")
+programa.addTexto("Yo soy")
+programa.addTexto("un texto")
+programa.addTexto("escrito para")
+programa.addTexto("esta ventana")
+
+
+programa.mostrar()
 
