@@ -4,35 +4,53 @@
 from tkinter import *
 import os.path
 
-# Crear la ventana principal o raíz
 
-ventana = Tk()
+class Programa:
+    def __init__(self):
+        self.title = 'Master en Python con Tkinter para interfaz gráfica'
+        self.icon = './imagenes/logotipo.ico'
+        self.icon_alt = './21-tkinter/imagenes/logotipo.ico'
+        self.size = '750x450'
+        self.resizable = False  # Permitir cambiar el tamaño de la ventana
+        
+    def cargar(self):
+        # Crear la ventana principal o raíz
+        ventana = Tk()
 
-# Título de la ventana
-ventana.title("Mi primera interfaz gráfica con Python y la librería Tkinter")
+        # Título de la ventana
+        ventana.title(self.title)
 
-# Comprobar si existe un archivo
-ruta_icono = os.path.abspath('./imagenes/logotipo.ico')
+        # Comprobar si existe un archivo
+        ruta_icono = os.path.abspath(self.icon)
 
-if not os.path.isfile(ruta_icono):
-    ruta_icono = os.path.abspath('./21-tkinter/imagenes/logotipo.ico')
+        if not os.path.isfile(ruta_icono):
+            ruta_icono = os.path.abspath(self.icon_alt)
 
-# Icono de la ventana
-ventana.iconbitmap(ruta_icono)
+        # Icono de la ventana
+        ventana.iconbitmap(ruta_icono)
 
-# Mostrar texto en el programa
-texto = Label(ventana, text=ruta_icono)
-texto.pack()
+        # Mostrar texto en el programa
+        texto = Label(ventana, text=ruta_icono)
+        texto.pack()
 
-# Cambiar el color de fondo de la ventana
-ventana.config(bg="lightyellow")
+        # Cambiar el color de fondo de la ventana
+        ventana.config(bg="lightyellow")
 
+        # Cambio en el tamaño de la ventana
+        ventana.geometry(self.size)  # Ancho x Alto
 
-# Cambio en el tamaño de la ventana
-ventana.geometry("750x450")  # Ancho x Alto
+        # Bloquear el cambio de tamaño del alto de la ventana
+        if self.resizable:
+            ventana.resizable(1, 1)
+        else:
+            ventana.resizable(0, 0)
 
-# Bloquear el cambio de tamaño del alto de la ventana
-ventana.resizable(True, False)
+        # Arrancar y mostrar la ventana hasta que se cierre
+        ventana.mainloop()
+        
+        
+# Instanciar mi programa
+    
+programa = Programa()
+programa.cargar()
 
-# Arrancar y mostrar la ventana hasta que se cierre
-ventana.mainloop()
