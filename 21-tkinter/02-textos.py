@@ -34,7 +34,7 @@ def pruebas(nombre, apellidos, pais):
 
 
 
-texto = Label(ventana, text=pruebas(nombre="Javier", apellidos="Checa", pais="España"))
+texto = Label(ventana, text=pruebas(pais="España", nombre="Javier", apellidos="Checa")) # Introducción aleatoria de parámetros en la función pruebas. Se puede hacer de esta manera, o bien, de la manera tradicional, es decir, pruebas("Javier", "Checa", "España").
 texto.config(font=("Consolas", 16, "bold"),
              fg="darkgreen", 
              bg="lightgreen", 
