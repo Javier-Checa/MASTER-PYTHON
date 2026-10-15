@@ -25,8 +25,20 @@ texto.config(font=("Times", 16, "italic"),
              width=60, 
              cursor="hand2"
 )
-texto.pack(anchor=S)
+texto.pack(anchor=SE)
 
+
+texto = Label(ventana, text="Este es un curso de Python.")
+texto.config(font=("Consolas", 16, "bold"),
+             fg="yellow", 
+             bg="red", 
+             padx=25, 
+             pady=25, 
+             height=12, 
+             width=60, 
+             cursor="circle"
+)
+texto.pack(anchor=SW)
 
 
 
