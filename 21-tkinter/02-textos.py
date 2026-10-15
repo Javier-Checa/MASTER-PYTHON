@@ -16,7 +16,7 @@ texto.pack()
 
 
 texto = Label(ventana, text="Soy Javier Checa, tu programador amigo.")
-texto.config(font=("Arial", 14), fg="darkgray", bg="lightgray", padx=25, pady=25)
+texto.config(font=("Arial", 14), fg="darkblue", bg="lightgray", padx=25, pady=25)
 texto.pack()
 
 
