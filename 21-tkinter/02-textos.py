@@ -16,13 +16,15 @@ texto.pack()
 
 
 texto = Label(ventana, text="Soy Javier Checa, tu programador amigo.")
-texto.config(font=("Consolas", 14),
+texto.config(font=("Times", 16, "italic"),
              fg="darkblue", 
-             bg="lightgray", 
+             bg="orange", 
              padx=25, 
              pady=25, 
-             height=350, 
-             width=50)
+             height=12, 
+             width=60, 
+             cursor="hand2"
+)
 texto.pack(anchor=S)
 
 
