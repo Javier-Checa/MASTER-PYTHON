@@ -28,10 +28,16 @@ texto.config(font=("Times", 16, "italic"),
 texto.pack(anchor=SE)
 
 
-texto = Label(ventana, text="Este es un curso de Python.")
+def pruebas(nombre, apellidos, pais):
+    return f"Hola, {nombre} {apellidos}, veo que eres de {pais}."
+
+
+
+
+texto = Label(ventana, text=pruebas(nombre="Javier", apellidos="Checa", pais="España"))
 texto.config(font=("Consolas", 16, "bold"),
-             fg="yellow", 
-             bg="red", 
+             fg="darkgreen", 
+             bg="lightgreen", 
              padx=25, 
              pady=25, 
              height=12, 
