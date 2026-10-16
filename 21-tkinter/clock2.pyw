@@ -38,7 +38,7 @@ class RelojDigitalApp:
             root,
             font=('Segoe UI', 40, 'bold'),
             bg='#1e1e1e',
-            fg='#00ffcc'
+            fg="#d2eb2e"
         )
         self.lbl_hora.pack(expand=True, fill='both')
 
