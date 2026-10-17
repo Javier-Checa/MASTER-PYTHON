@@ -9,7 +9,16 @@ marco.config(
     bd=10,
     relief="raised"
 )
+marco.pack(side=LEFT, anchor=SW)
 
-marco.pack()
+
+marco = Frame(ventana, width=350, height=250)
+marco.config(
+    bg="yellow",
+    bd=8,
+    relief="ridge"
+)
+marco.pack(side=RIGHT, anchor=NE)
+
 
 ventana.mainloop()
