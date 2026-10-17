@@ -21,6 +21,9 @@ marco.config(
 )
 marco.pack(side=RIGHT, anchor=SE)
 
+
+
+
 marco = Frame(marco_padre, width=250, height=250)
 marco.config(
     bg="lightgreen",
@@ -28,6 +31,10 @@ marco.config(
     relief="sunken"
 )
 marco.pack(side=BOTTOM, anchor=W)
+marco.pack_propagate(False)
+
+Label(marco, text="Texto en Marco").pack(side=BOTTOM, anchor=CENTER)
+
 
 marco_padre = Frame(ventana, width=250, height=250)
 marco_padre.config(
