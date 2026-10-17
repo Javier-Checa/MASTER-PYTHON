@@ -1,18 +1,19 @@
 from tkinter import *
 ventana = Tk()
 ventana.title("Marcos | Master en Python")
-ventana.geometry("750x750")
+ventana.geometry("800x800")
 
-marco = Frame(ventana, width=250, height=250)
-marco.config(
-    bg="orange",
+
+marco_padre = Frame(ventana, width=250, height=250)
+marco_padre.config(
+    bg="lightblue",
     bd=10,
     relief="raised"
 )
-marco.pack(side=LEFT, anchor=SW)
+marco_padre.pack(side=BOTTOM, fill=X, expand=YES)
 
 
-marco = Frame(ventana, width=250, height=250)
+marco = Frame(marco_padre, width=250, height=250)
 marco.config(
     bg="yellow",
     bd=8,
@@ -20,13 +21,21 @@ marco.config(
 )
 marco.pack(side=RIGHT, anchor=SE)
 
-marco = Frame(ventana, width=250, height=250)
+marco = Frame(marco_padre, width=250, height=250)
 marco.config(
     bg="lightgreen",
     bd=12,
     relief="sunken"
 )
-marco.pack(side=BOTTOM, anchor=S)
+marco.pack(side=BOTTOM, anchor=W)
+
+marco_padre = Frame(ventana, width=250, height=250)
+marco_padre.config(
+    bg="orange",
+    bd=10,
+    relief="raised"
+)
+marco_padre.pack(side=TOP, fill=X, expand=YES)
 
 
 ventana.mainloop()
