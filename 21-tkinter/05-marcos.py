@@ -33,7 +33,16 @@ marco.config(
 marco.pack(side=BOTTOM, anchor=W)
 marco.pack_propagate(False)
 
-Label(marco, text="Texto en Marco").pack(side=BOTTOM, anchor=CENTER)
+texto = Label(marco, text="Texto en Marco")
+texto.config(
+    bg="lightgreen",
+    fg="darkgreen",
+    font=("Arial", 16),
+    height=10,
+    width=15,
+    anchor=CENTER
+)
+texto.pack(fill=Y, expand=YES)
 
 
 marco_padre = Frame(ventana, width=250, height=250)
