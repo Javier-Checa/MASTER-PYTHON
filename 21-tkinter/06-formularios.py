@@ -13,7 +13,7 @@ encabezado.config(
     padx=10,
     pady=10
 )
-encabezado.pack(side=LEFT, anchor=NW)
+encabezado.pack(side=LEFT, anchor=NW, fill=X, expand=YES)
 
 
 ventana.mainloop()
