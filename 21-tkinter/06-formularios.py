@@ -9,9 +9,11 @@ encabezado = Label(ventana, text="Formularios con Tkinter - Javier Checa")
 encabezado.config(
     fg="white",
     bg="darkgray",
-    font=("Open Sans", 18)
+    font=("Open Sans", 18),
+    padx=10,
+    pady=10
 )
-encabezado.pack()
+encabezado.pack(side=LEFT, anchor=NW)
 
 
 ventana.mainloop()
