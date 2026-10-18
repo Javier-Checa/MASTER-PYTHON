@@ -15,5 +15,8 @@ encabezado.config(
 )
 encabezado.pack(side=LEFT, anchor=NW, fill=X, expand=YES)
 
+# Campo de texto
+campo_texto = Entry(ventana)
+campo_texto.pack()
 
 ventana.mainloop()
