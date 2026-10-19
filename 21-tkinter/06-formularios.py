@@ -13,11 +13,11 @@ encabezado.config(
     padx=10,
     pady=10
 )
-encabezado.grid(row=0, column=0, sticky=W)
+encabezado.grid(row=0, column=0, columnspan=8, sticky=W)
 
 # Etiqueta para el campo (nombre)
 label = Label(ventana, text="Nombre")
-label.grid(row=1, column=0, padx=5, pady=5)
+label.grid(row=1, column=0, sticky=E, padx=5, pady=5)
 
 # Campo de texto (nombre)
 campo_texto = Entry(ventana)
@@ -26,7 +26,7 @@ campo_texto.config(justify="left", state="normal")
 
 # Etiqueta para el campo (apellidos)
 label = Label(ventana, text="Apellidos")
-label.grid(row=2, column=0,  padx=5, pady=5)
+label.grid(row=2, column=0, sticky=E, padx=5, pady=5)
 
 # Campo de texto (apellidos)
 campo_texto = Entry(ventana)
@@ -36,6 +36,11 @@ campo_texto.config(justify="left", state="normal")
 
 # Etiqueta para el campo (descripción)
 label = Label(ventana, text="Descripción")
-label.grid(row=3, column=0,  padx=5, pady=5)
+label.grid(row=3, column=0, sticky=E, padx=5, pady=5)
+
+# Campo de texto GRANDE (descripción)
+campo_grande = Text(ventana)
+campo_grande.grid(row=3, column=1)
+campo_grande.config(width=30, height=5)
 
 ventana.mainloop()
