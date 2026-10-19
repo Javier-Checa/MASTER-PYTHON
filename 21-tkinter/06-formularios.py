@@ -34,4 +34,8 @@ campo_texto.grid(row=2, column=1, sticky=W, padx=5, pady=5)
 campo_texto.config(justify="left", state="normal")
 
 
+# Etiqueta para el campo (descripción)
+label = Label(ventana, text="Descripción")
+label.grid(row=3, column=0,  padx=5, pady=5)
+
 ventana.mainloop()
