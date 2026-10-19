@@ -36,7 +36,7 @@ campo_texto.config(justify="left", state="normal")
 
 # Etiqueta para el campo (descripción)
 label = Label(ventana, text="Descripción")
-label.grid(row=3, column=0, sticky=E, padx=5, pady=5)
+label.grid(row=3, column=0, sticky=NE, padx=5, pady=5)
 
 # Campo de texto GRANDE (descripción)
 campo_grande = Text(ventana)
