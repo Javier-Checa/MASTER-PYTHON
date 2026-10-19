@@ -13,7 +13,7 @@ class RelojAnalogico:
 
         self.lienzo = tk.Canvas(
             ventana,
-            bg="#0c0656",
+            bg="#07032f",
             highlightthickness=0,
         )
         self.lienzo.pack(fill="both", expand=True, padx=16, pady=(16, 4))
