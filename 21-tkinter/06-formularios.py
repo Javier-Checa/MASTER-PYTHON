@@ -40,7 +40,13 @@ label.grid(row=3, column=0, sticky=E, padx=5, pady=5)
 
 # Campo de texto GRANDE (descripción)
 campo_grande = Text(ventana)
-campo_grande.grid(row=3, column=1)
-campo_grande.config(width=30, height=5)
+campo_grande.grid(row=3, column=1, sticky=W)
+campo_grande.config(
+    width=30, 
+    height=5,
+    font=("Arial", 12),
+    padx=15,
+    pady=15
+)
 
 ventana.mainloop()
