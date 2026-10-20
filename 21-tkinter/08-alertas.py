@@ -3,7 +3,7 @@ from tkinter import messagebox as MessageBox
 
 ventana = Tk()
 ventana.title("Ventana para alertas | Javier Checa")
-ventana.geometry("700x500")
+ventana.geometry("500x300")
 ventana.config(bd=50)
 
 def sacarAlerta():
