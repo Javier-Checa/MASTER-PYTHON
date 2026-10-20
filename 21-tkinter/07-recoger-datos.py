@@ -7,7 +7,15 @@ ventana.config(
     bg="#ccc"
 )
 
-Label(ventana, text="Mete un texto").pack(anchor=NW)
-Entry(ventana).pack(anchor=NW)
+dato = ""
+
+Label(ventana, text="Introduce un texto: ").pack(anchor=NW)
+Entry(ventana, textvariable=dato).pack(anchor=NW)
+
+Label(ventana, text="Dato recogido: ").pack(anchor=NW)
+Label(ventana, text=dato).pack(anchor=NW)
+
+Button(ventana, text="Mostrar dato").pack()
+
 
 ventana.mainloop()
