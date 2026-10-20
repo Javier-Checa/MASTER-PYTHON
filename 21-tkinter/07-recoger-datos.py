@@ -18,7 +18,12 @@ Label(ventana, text="Introduce un texto: ").pack(anchor=NW)
 Entry(ventana, textvariable=dato).pack(anchor=NW)
 
 Label(ventana, text="Dato recogido: ").pack(anchor=NW)
-Label(ventana, textvariable=resultado).pack(anchor=NW)
+texto_recogido = Label(ventana, textvariable=resultado)
+texto_recogido.config(
+    bg="darkblue",
+    fg="yellow"
+)
+texto_recogido.pack(anchor=NW)
 
 Button(ventana, text="Mostrar dato", command=getDato).pack(anchor=NW)
 
