@@ -54,5 +54,6 @@ Label(ventana).grid(row=4, column=1)
 
 boton = Button(ventana, text="Enviar")
 boton.grid(row=5, column=1, sticky=W)
+boton.config(padx=25, pady=12, bg="darkgreen", fg="white")
 
 ventana.mainloop()
