@@ -7,6 +7,7 @@ ventana.config(
     bg="#ccc"
 )
 
-Label(ventana, text="Mete un texto").pack()
+Label(ventana, text="Mete un texto").pack(anchor=NW)
+Entry(ventana).pack(anchor=NW)
 
 ventana.mainloop()
