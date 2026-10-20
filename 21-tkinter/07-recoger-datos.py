@@ -30,5 +30,4 @@ texto_recogido.pack(anchor=NW)
 
 Button(ventana, text="Mostrar dato", command=getDato).pack(anchor=NW)
 
-
 ventana.mainloop()
