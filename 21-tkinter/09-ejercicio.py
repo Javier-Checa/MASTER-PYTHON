@@ -25,7 +25,10 @@ Entry(ventana, textvariable=numero1).pack()
 Label(ventana, text="Segundo número: ").pack()
 Entry(ventana, textvariable=numero2).pack()
 
-
+Button(ventana, text="Sumar").pack()
+Button(ventana, text="Restar").pack()
+Button(ventana, text="Multiplicar").pack()
+Button(ventana, text="Dividir").pack()
 
 
 
