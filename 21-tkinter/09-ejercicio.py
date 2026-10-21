@@ -22,7 +22,7 @@ resultado = StringVar()
 marco = Frame(ventana, width=250, height=250)
 marco.config(
     bd=5,
-    relief=SOLID  
+    relief=GROOVE  
 )
 marco.pack(side=TOP, anchor=CENTER)
 marco.pack_propagate(False)
@@ -35,10 +35,10 @@ Entry(marco, textvariable=numero2).pack()
 
 Label(marco, text="").pack()
 
-Button(marco, text="Sumar").pack(side="left")
-Button(marco, text="Restar").pack(side="left")
-Button(marco, text="Multiplicar").pack(side="left")
-Button(marco, text="Dividir").pack(side="left")
+Button(marco, text="Sumar +").pack(side="left")
+Button(marco, text="Restar -").pack(side="left")
+Button(marco, text="Multiplicar x").pack(side="left")
+Button(marco, text="Dividir /").pack(side="left")
 
 
 ventana.mainloop()
