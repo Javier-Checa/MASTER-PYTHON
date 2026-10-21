@@ -21,6 +21,8 @@ resultado = StringVar()
 
 marco = Frame(ventana, width=250, height=250)
 marco.config(
+    padx=5,
+    pady=5,
     bd=5,
     relief=GROOVE  
 )
