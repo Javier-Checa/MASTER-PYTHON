@@ -10,7 +10,7 @@ from tkinter import messagebox
 
 ventana = Tk()
 ventana.title("EJERCICIO COMPLETO CON TKINTER")
-ventana.geometry("700x400")
+ventana.geometry("400x400")
 ventana.config(bd=25)
 
 
@@ -19,20 +19,26 @@ numero2 = StringVar()
 resultado = StringVar()
 
 
-Label(ventana, text="Primer número: ").pack()
-Entry(ventana, textvariable=numero1).pack()
+marco = Frame(ventana, width=250, height=250)
+marco.config(
+    bd=5,
+    relief=SOLID  
+)
+marco.pack(side=TOP, anchor=CENTER)
+marco.pack_propagate(False)
 
-Label(ventana, text="Segundo número: ").pack()
-Entry(ventana, textvariable=numero2).pack()
+Label(marco, text="Primer número: ").pack()
+Entry(marco, textvariable=numero1).pack()
 
-Label(ventana, text="").pack()
+Label(marco, text="Segundo número: ").pack()
+Entry(marco, textvariable=numero2).pack()
 
-Button(ventana, text="Sumar").pack(side="left")
-Button(ventana, text="Restar").pack(side="left")
-Button(ventana, text="Multiplicar").pack(side="left")
-Button(ventana, text="Dividir").pack(side="left")
+Label(marco, text="").pack()
 
-
+Button(marco, text="Sumar").pack(side="left")
+Button(marco, text="Restar").pack(side="left")
+Button(marco, text="Multiplicar").pack(side="left")
+Button(marco, text="Dividir").pack(side="left")
 
 
 ventana.mainloop()
