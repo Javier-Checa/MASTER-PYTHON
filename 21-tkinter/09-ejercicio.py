@@ -30,7 +30,9 @@ def dividir():
     mostrarResultado()
 
 def mostrarResultado():
-    messagebox.showinfo("Resultado", f"El resultadode de la operación es: {resultado.get()}"
+    messagebox.showinfo("Resultado", f"El resultadode de la operación es: {resultado.get()}")
+    numero1.set("")
+    numero2.set("")
 
 numero1 = StringVar()
 numero2 = StringVar()
