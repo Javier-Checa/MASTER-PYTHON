@@ -19,7 +19,7 @@ numero2 = StringVar()
 resultado = StringVar()
 
 
-marco = Frame(ventana, width=250, height=200)
+marco = Frame(ventana, width=300, height=200)
 marco.config(
     padx=5,
     pady=5,
@@ -30,10 +30,10 @@ marco.pack(side=TOP, anchor=CENTER)
 marco.pack_propagate(False)
 
 Label(marco, text="Primer número: ").pack()
-Entry(marco, textvariable=numero1).pack()
+Entry(marco, textvariable=numero1, justify="center").pack()
 
 Label(marco, text="Segundo número: ").pack()
-Entry(marco, textvariable=numero2).pack()
+Entry(marco, textvariable=numero2, justify="center").pack()
 
 Label(marco, text="").pack()
 
