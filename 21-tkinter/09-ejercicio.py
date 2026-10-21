@@ -19,7 +19,7 @@ numero2 = StringVar()
 resultado = StringVar()
 
 
-marco = Frame(ventana, width=250, height=250)
+marco = Frame(ventana, width=250, height=200)
 marco.config(
     padx=5,
     pady=5,
@@ -37,10 +37,10 @@ Entry(marco, textvariable=numero2).pack()
 
 Label(marco, text="").pack()
 
-Button(marco, text="Sumar +").pack(side="left")
-Button(marco, text="Restar -").pack(side="left")
-Button(marco, text="Multiplicar x").pack(side="left")
-Button(marco, text="Dividir /").pack(side="left")
+Button(marco, text="Sumar +").pack(side="left", fill=X, expand=YES)
+Button(marco, text="Restar -").pack(side="left", fill=X, expand=YES)
+Button(marco, text="Multiplicar x").pack(side="left", fill=X, expand=YES)
+Button(marco, text="Dividir /").pack(side="left", fill=X, expand=YES)
 
 
 ventana.mainloop()
