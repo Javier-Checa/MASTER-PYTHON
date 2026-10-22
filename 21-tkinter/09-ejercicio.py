@@ -13,20 +13,30 @@ ventana.title("EJERCICIO COMPLETO CON TKINTER")
 ventana.geometry("400x400")
 ventana.config(bd=25)
 
+def cFloat(numero):
+    try:
+        result = float(numero)
+    except:
+        result = 0
+        messagebox.showerror("Error!!", "Por favor, introduce bien los datos.")    
+    return result
+
+
 def sumar():
-    resultado.set(float(numero1.get()) + float(numero2.get()))
+    resultado.set(cFloat(numero1.get()) + cFloat(numero2.get()))
     mostrarResultado()
+   
 
 def restar():
-    resultado.set(float(numero1.get()) - float(numero2.get()))
+    resultado.set(cFloat(numero1.get()) - cFloat(numero2.get()))
     mostrarResultado()
 
 def multiplicar():
-    resultado.set(float(numero1.get()) * float(numero2.get()))
+    resultado.set(cFloat(numero1.get()) * cFloat(numero2.get()))
     mostrarResultado()
 
 def dividir():
-    resultado.set(float(numero1.get()) / float(numero2.get()))
+    resultado.set(cFloat(numero1.get()) / cFloat(numero2.get()))
     mostrarResultado()
 
 def mostrarResultado():
