@@ -9,9 +9,11 @@ from tkinter import messagebox
 
 class Calculadora:
 
-    numero1 = StringVar()
-    numero2 = StringVar()
-    resultado = StringVar()
+    def __init__(self, alertas):
+        self.numero1 = StringVar()
+        self.numero2 = StringVar()
+        self.resultado = StringVar()
+        self.alertas = alertas
 
     def cFloat(self, numero):
         try:
@@ -39,7 +41,7 @@ class Calculadora:
         self.ostrarResultado()
 
     def mostrarResultado(self):
-        messagebox.showinfo("Resultado", f"El resultadode de la operación es: {self.resultado.get()}")
+        self.alertas.showinfo("Resultado", f"El resultadode de la operación es: {self.resultado.get()}")
         self.numero1.set("")
         self.numero2.set("")
 
@@ -49,8 +51,8 @@ ventana.title("EJERCICIO COMPLETO CON TKINTER")
 ventana.geometry("400x400")
 ventana.config(bd=25)
 
-calculadora = Calculadora()
 
+calculadora = Calculadora(messagebox)
 
 marco = Frame(ventana, width=300, height=200)
 marco.config(
@@ -63,17 +65,17 @@ marco.pack(side=TOP, anchor=CENTER)
 marco.pack_propagate(False)
 
 Label(marco, text="Primer número: ").pack()
-Entry(marco, textvariable=numero1, justify="center").pack()
+Entry(marco, textvariable=calculadora.numero1, justify="center").pack()
 
 Label(marco, text="Segundo número: ").pack()
-Entry(marco, textvariable=numero2, justify="center").pack()
+Entry(marco, textvariable=calculadora.numero2, justify="center").pack()
 
 Label(marco, text="").pack()
 
-Button(marco, text="Sumar +", command=sumar).pack(side="left", fill=X, expand=YES)
-Button(marco, text="Restar -", command=restar).pack(side="left", fill=X, expand=YES)
-Button(marco, text="Multiplicar x", command=multiplicar).pack(side="left", fill=X, expand=YES)
-Button(marco, text="Dividir /", command=dividir).pack(side="left", fill=X, expand=YES)
+Button(marco, text="Sumar +", command=calculadora.sumar).pack(side="left", fill=X, expand=YES)
+Button(marco, text="Restar -", command=calculadora.restar).pack(side="left", fill=X, expand=YES)
+Button(marco, text="Multiplicar x", command=calculadora.multiplicar).pack(side="left", fill=X, expand=YES)
+Button(marco, text="Dividir /", command=calculadora.dividir).pack(side="left", fill=X, expand=YES)
 
 
 ventana.mainloop()
