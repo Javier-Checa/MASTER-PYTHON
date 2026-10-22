@@ -13,6 +13,6 @@ encabezado.config(
     bg="green",
     font=("Consolas", 18)
 )
-encabezado.pack(anchor=CENTER, side=TOP, fill=X)
+encabezado.pack(anchor=N, side=TOP, fill=X)
 
 ventana.mainloop()
