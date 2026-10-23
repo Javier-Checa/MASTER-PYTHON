@@ -67,18 +67,20 @@ def marcar():
 
 opcion = IntVar()
 
-Label(ventana, "¿Cuál es tu género?"). grid(row=5)
+Label(ventana, text="¿Cuál es tu género?"). grid(row=5)
 
 Radiobutton(
     ventana,
     text="Masculino",
-    varialbe=opcion,
+    value="Machote",
+    variable=opcion,
     command=marcar
 ).grid(row=6)
 
 Radiobutton(
     ventana, 
     text="Femenino",
+    value="Mariquita",
     variable=opcion,
     command=marcar
 ).grid(row=7)
