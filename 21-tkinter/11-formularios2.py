@@ -23,7 +23,10 @@ def mostrarProfesion():
         texto += "Desarrollo web"
  
     if movil.get():
-         texto += "Desarrollo móvil"       
+        if web.get():
+            texto += " y desarrollo móvil"  
+        else:
+            texto += "Desarrollo móvil"
         
         
     mostrar.config(
