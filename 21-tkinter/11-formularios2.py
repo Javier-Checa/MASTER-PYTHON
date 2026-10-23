@@ -21,8 +21,16 @@ def mostrarProfesion():
     
     if web.get():
         texto += "Desarrollo web"
+ 
+    if movil.get():
+         texto += "Desarrollo móvil"       
         
-    mostrar.config(text=texto)
+        
+    mostrar.config(
+        text=texto,
+        bg="green",
+        fg="yellow"
+    )
      
 web = IntVar()
 movil = IntVar()
@@ -46,7 +54,7 @@ Checkbutton(
     command=mostrarProfesion
 ).grid(row=3, column=0)
 
-mostrar = Label(ventana, bg="green")
+mostrar = Label(ventana)
 mostrar.grid(row=4, column=0)
 
 # Radio buttons
