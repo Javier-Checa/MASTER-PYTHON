@@ -69,7 +69,7 @@ def marcar():
     marcado.config(text=opcion.get())
 
 opcion = StringVar()
-opcion.set = (None)
+opcion.set(None)
 
 Label(ventana, text="¿Cuál es tu género?"). grid(row=5)
 
