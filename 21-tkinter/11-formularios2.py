@@ -2,7 +2,7 @@ from tkinter import *
 
 ventana = Tk()
 ventana.title("Formularios 2")
-ventana.geometry("500x400")
+ventana.geometry("800x500")
 
 
 encabezado = Label(ventana, text="Formularios avanzados")
