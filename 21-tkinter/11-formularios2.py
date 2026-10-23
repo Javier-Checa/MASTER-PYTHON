@@ -31,8 +31,13 @@ Checkbutton(
 Checkbutton(
     ventana, 
     text="Desarrollo móvil",
-    
+    variable=movil,
+    onvalue=1,
+    offvalue=0 
 ).grid(row=3, column=0)
+
+mostrar = Label(ventana, bg="green")
+mostrar.grid(row=4, column=0)
 
 # Radio buttons
 
