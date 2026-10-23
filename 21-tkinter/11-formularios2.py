@@ -61,8 +61,9 @@ mostrar = Label(ventana)
 mostrar.grid(row=4, column=0)
 
 # Radio buttons
-Radiobutton(ventana, text="Masculino").grid(row=5)
-Radiobutton(ventana, text="Femenino").grid(row=6)
+Label(ventana, "¿Cuál es tu género?"). grid(row=5)
+Radiobutton(ventana, text="Masculino").grid(row=6)
+Radiobutton(ventana, text="Femenino").grid(row=7)
 
 
 # Option menu
