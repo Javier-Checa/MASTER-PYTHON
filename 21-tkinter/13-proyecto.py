@@ -1,8 +1,8 @@
 """
 Crear un progrma que tenga:
-- Ventana
-- Tamaño fijo de la ventana
-- No redimensionable
+- (hecho) Ventana
+- (hecho)Tamaño fijo de la ventana
+- (hecho)No redimensionable
 - Un menú
 - Diferentes pantallas
 - Formulario de añadir productos
@@ -13,7 +13,7 @@ Crear un progrma que tenga:
 from tkinter import *
 
 ventana = Tk()
-ventana.geometry("900x500")
+ventana.geometry("800x500")
 ventana.title("Proyecto Tkinter - Master en Python")
 ventana.resizable(0, 0)
 
