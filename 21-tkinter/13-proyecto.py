@@ -12,9 +12,23 @@ Crear un progrma que tenga:
 """
 from tkinter import *
 
+
+# Definir ventana
 ventana = Tk()
 ventana.geometry("800x500")
 ventana.title("Proyecto Tkinter - Master en Python")
 ventana.resizable(0, 0)
 
+# Menú superior desplegable
+menu_superior = Menu(ventana)
+menu_superior.add_command(label="Inicio")
+menu_superior.add_command(label="Añadir")
+menu_superior.add_command(label="Información")
+menu_superior.add_command(label="Salir")
+
+# Cargar menú
+ventana. config(menu=menu_superior)
+
+
+# Cargar ventana
 ventana.mainloop()
