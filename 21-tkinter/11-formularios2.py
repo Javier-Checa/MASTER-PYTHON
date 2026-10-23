@@ -60,19 +60,23 @@ Checkbutton(
 mostrar = Label(ventana)
 mostrar.grid(row=4, column=0)
 
+
+
+
 # Radio buttons
 
 def marcar():
-    marcado.config(text=opcion.get)
+    marcado.config(text=opcion.get())
 
-opcion = IntVar()
+opcion = StringVar()
+opcion.set = (None)
 
 Label(ventana, text="¿Cuál es tu género?"). grid(row=5)
 
 Radiobutton(
     ventana,
     text="Masculino",
-    value="Machote",
+    value="MACHOTE",
     variable=opcion,
     command=marcar
 ).grid(row=6)
@@ -80,7 +84,7 @@ Radiobutton(
 Radiobutton(
     ventana, 
     text="Femenino",
-    value="Mariquita",
+    value="MARIQUILLA",
     variable=opcion,
     command=marcar
 ).grid(row=7)
