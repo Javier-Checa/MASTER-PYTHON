@@ -93,8 +93,14 @@ marcado = Label(ventana)
 marcado.grid(row=8)
 
 
-# Option menu
 
+# Option menu
+opcion = StringVar()
+
+Label(ventana, text="Selecciona una opción:").grid(row=10)
+
+select = OptionMenu(ventana, opcion, "Opción 1", "Opción 2", "Opción 3")
+select.grid()
 
 
 ventana.mainloop()
