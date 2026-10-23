@@ -16,6 +16,14 @@ encabezado.config(
 encabezado.grid(row=0, column=0, columnspan=6, sticky=W)
 
 # Botones check
+def mostrarProfesion():
+    texto = ""
+    
+    if web.get():
+        texto += "Desarrollo web"
+        
+    mostrar.config(text=texto)
+     
 web = IntVar()
 movil = IntVar()
 
@@ -25,7 +33,8 @@ Checkbutton(
     text="Desarrollo web",
     variable=web,
     onvalue=1,
-    offvalue=0  
+    offvalue=0,
+    command=mostrarProfesion
 ).grid(row=2, column=0)
 
 Checkbutton(
@@ -33,7 +42,8 @@ Checkbutton(
     text="Desarrollo móvil",
     variable=movil,
     onvalue=1,
-    offvalue=0 
+    offvalue=0,
+    command=mostrarProfesion
 ).grid(row=3, column=0)
 
 mostrar = Label(ventana, bg="green")
