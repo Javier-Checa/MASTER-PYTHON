@@ -1,10 +1,10 @@
 """
 Crear un progrma que tenga:
-- (hecho) Ventana
-- (hecho) Tamaño fijo de la ventana
-- (hecho) No redimensionable
-- (hecho) Un menú
-- (hecho) Opción de salir 
+- (hecho) - Ventana
+- (hecho) - Tamaño fijo de la ventana
+- (hecho) - No redimensionable
+- (hecho) - Un menú
+- (hecho) - Opción de salir 
 - Diferentes pantallas
 - Formulario de añadir productos
 - Guardar datos temporalmente sin usar una base de datos
@@ -28,7 +28,7 @@ menu_superior.add_command(label="Información")
 menu_superior.add_command(label="Salir", command=ventana.quit)
 
 # Cargar menú
-ventana. config(menu=menu_superior)
+ventana.config(menu=menu_superior)
 
 
 # Cargar ventana
