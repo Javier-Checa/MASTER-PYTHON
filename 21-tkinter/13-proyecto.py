@@ -22,7 +22,8 @@ ventana.resizable(0, 0)
 
 # Pantallas
 def home():
-    home_label = Label(ventana, text= "Inicio")
+# Mostrar pantalla    
+    
     home_label.config(
         fg= "white",
         bg= "black",
@@ -32,11 +33,14 @@ def home():
     )
     home_label.grid(row=0, column=0)
     
+    # Ocultar otras pantallas
+    add_label.grid_remove()
+    info_label.grid_remove()
+    data_label.grid_remove()    
     
     return True
 
 def add():
-    add_label = Label(ventana, text= "Añadir producto")
     add_label.config(
         fg= "white",
         bg= "black",
@@ -49,7 +53,6 @@ def add():
     return True
 
 def info():
-    info_label = Label(ventana, text= "Información del producto")
     info_label.config(
         fg= "white",
         bg= "black",
@@ -59,10 +62,15 @@ def info():
     )
     info_label.grid(row=0, column=0)
     
-    data_label = Label(ventana, text= "Creado por Javier Checa - 2026")
     data_label.grid(row=1, column=0)
-    
+   
     return True
+
+# Definir cambios de pantallas
+home_label = Label(ventana, text= "Inicio")
+add_label = Label(ventana, text= "Añadir producto")
+info_label = Label(ventana, text= "Información del producto")
+data_label = Label(ventana, text= "Creado por Javier Checa - 2026")
 
 
 # Cargar pantalla inicio
