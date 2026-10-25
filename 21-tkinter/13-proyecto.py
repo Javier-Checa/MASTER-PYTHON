@@ -91,6 +91,9 @@ add_label = Label(ventana, text= "Añadir producto")
 add_name_label = Label(ventana, text="Nombre del producto")
 add_name_entry = Entry(ventana, textvariable=name_data)
 
+add_price_label = Label(ventana, text="Precio del producto")
+add_price_entry = Entry(ventana, textvariable=price_data)
+
 
 
 # Definir campos de pantalla (INFO)
