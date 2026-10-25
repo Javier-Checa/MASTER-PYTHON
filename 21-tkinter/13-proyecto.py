@@ -5,7 +5,7 @@ Crear un progrma que tenga:
 - (hecho) - No redimensionable
 - (hecho) - Un menú
 - (hecho) - Opción de salir 
-- Diferentes pantallas
+- (hecho) - Diferentes pantallas
 - Formulario de añadir productos
 - Guardar datos temporalmente sin usar una base de datos
 - Mostrar los datos listados en la pantalla principal o home (landing)
@@ -16,7 +16,7 @@ from tkinter import *
 
 # Definir ventana
 ventana = Tk()
-ventana.geometry("800x500")
+ventana.geometry("600x600")
 ventana.title("Proyecto Tkinter - Master en Python")
 ventana.resizable(0, 0)
 
@@ -29,7 +29,7 @@ def home():
         fg= "white",
         bg= "black",
         font=("Arial", 30),
-        padx=20,
+        padx=140,
         pady=20
     )
     home_label.grid(row=0, column=0)
@@ -46,7 +46,7 @@ def add():
         fg= "white",
         bg= "green",
         font=("Arial", 30),
-        padx=20,
+        padx=140,
         pady=20
     )
     add_label.grid(row=0, column=0)
@@ -62,8 +62,9 @@ def info():
         fg= "white",
         bg= "blue",
         font=("Arial", 30),
-        padx=20,
+        padx=180,
         pady=20
+        
     )
     info_label.grid(row=0, column=0)
     
@@ -76,13 +77,13 @@ def info():
     return True
 
 # Definir campos de pantalla (INCIO)
-home_label = Label(ventana, text= "Inicio")
+home_label = Label(ventana, text= "Pantalla de inicio")
 
 # Definir campos de pantalla (ADD)
 add_label = Label(ventana, text= "Añadir producto")
 
 # Definir campos de pantalla (INFO)
-info_label = Label(ventana, text= "Información del producto")
+info_label = Label(ventana, text= "Información")
 data_label = Label(ventana, text= "Creado por Javier Checa - 2026")
 
 
