@@ -44,7 +44,7 @@ def home():
 def add():
     add_label.config(
         fg= "white",
-        bg= "black",
+        bg= "green",
         font=("Arial", 30),
         padx=20,
         pady=20
@@ -60,7 +60,7 @@ def add():
 def info():
     info_label.config(
         fg= "white",
-        bg= "black",
+        bg= "blue",
         font=("Arial", 30),
         padx=20,
         pady=20
