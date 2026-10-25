@@ -42,6 +42,7 @@ def home():
     return True
 
 def add():
+    # Encabezado
     add_label.config(
         fg= "white",
         bg= "green",
@@ -49,7 +50,15 @@ def add():
         padx=140,
         pady=20
     )
-    add_label.grid(row=0, column=0)
+    add_label.grid(row=0, column=0, columnspan=4)
+    
+    # Campos del formulario
+    add_name_label.grid(row=1, column=0, padx=5, pady=5)
+    add_name_entry.grid(row=1, column=1, padx=5, pady=5, sticky=W)
+    add_price_label.grid(row=2, column=0, padx=5, pady=5)
+    add_price_entry.grid(row=2, column=1, padx=5, pady=5, sticky=W)
+    
+    
     # Ocultar otras pantallas
     home_label.grid_remove()
     info_label.grid_remove()
@@ -81,6 +90,7 @@ name_data = StringVar()
 price_data = StringVar()
 
 
+
 # Definir campos de pantalla (INCIO)
 home_label = Label(ventana, text= "Pantalla de inicio")
 
@@ -93,6 +103,9 @@ add_name_entry = Entry(ventana, textvariable=name_data)
 
 add_price_label = Label(ventana, text="Precio del producto")
 add_price_entry = Entry(ventana, textvariable=price_data)
+
+add_description_label = Label(ventana, text="Descripción")
+add_description_entry = Text(ventana)
 
 
 
