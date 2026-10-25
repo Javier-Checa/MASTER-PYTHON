@@ -21,6 +21,7 @@ ventana.title("Proyecto Tkinter - Master en Python")
 ventana.resizable(0, 0)
 
 # Pantallas
+
 def home():
 # Mostrar pantalla    
     
@@ -49,6 +50,10 @@ def add():
         pady=20
     )
     add_label.grid(row=0, column=0)
+    # Ocultar otras pantallas
+    home_label.grid_remove()
+    info_label.grid_remove()
+    data_label.grid_remove()  
     
     return True
 
@@ -63,12 +68,20 @@ def info():
     info_label.grid(row=0, column=0)
     
     data_label.grid(row=1, column=0)
-   
+    
+    # Ocultar otras pantallas
+    add_label.grid_remove()
+    home_label.grid_remove()
+    
     return True
 
-# Definir cambios de pantallas
+# Definir campos de pantalla (INCIO)
 home_label = Label(ventana, text= "Inicio")
+
+# Definir campos de pantalla (ADD)
 add_label = Label(ventana, text= "Añadir producto")
+
+# Definir campos de pantalla (INFO)
 info_label = Label(ventana, text= "Información del producto")
 data_label = Label(ventana, text= "Creado por Javier Checa - 2026")
 
