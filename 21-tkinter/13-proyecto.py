@@ -29,7 +29,7 @@ def home():
         fg= "white",
         bg= "black",
         font=("Arial", 30),
-        padx=140,
+        padx=125,
         pady=20
     )
     home_label.grid(row=0, column=0)
