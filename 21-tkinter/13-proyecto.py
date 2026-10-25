@@ -76,11 +76,22 @@ def info():
     
     return True
 
+# Variables importantes
+name_data = StringVar()
+price_data = StringVar()
+
+
 # Definir campos de pantalla (INCIO)
 home_label = Label(ventana, text= "Pantalla de inicio")
 
 # Definir campos de pantalla (ADD)
 add_label = Label(ventana, text= "Añadir producto")
+
+# Campos del formulario
+add_name_label = Label(ventana, text="Nombre del producto")
+add_name_entry = Entry(ventana, textvariable=name_data)
+
+
 
 # Definir campos de pantalla (INFO)
 info_label = Label(ventana, text= "Información")
