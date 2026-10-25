@@ -22,7 +22,7 @@ ventana.resizable(0, 0)
 
 # Pantallas
 def home():
-    home_label = label(ventana, text= "Inicio")
+    home_label = Label(ventana, text= "Inicio")
     home_label.config(
         fg= "white",
         bg= "black",
