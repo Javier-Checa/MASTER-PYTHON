@@ -50,7 +50,7 @@ def add():
         padx=140,
         pady=20
     )
-    add_label.grid(row=0, column=0, columnspan=4)
+    add_label.grid(row=0, column=0, columnspan=10)
     
     # Campos del formulario
     add_name_label.grid(row=1, column=0, padx=5, pady=5)
@@ -72,8 +72,7 @@ def info():
         bg= "blue",
         font=("Arial", 30),
         padx=180,
-        pady=20
-        
+        pady=20   
     )
     info_label.grid(row=0, column=0)
     
@@ -90,7 +89,6 @@ name_data = StringVar()
 price_data = StringVar()
 
 
-
 # Definir campos de pantalla (INCIO)
 home_label = Label(ventana, text= "Pantalla de inicio")
 
@@ -98,13 +96,13 @@ home_label = Label(ventana, text= "Pantalla de inicio")
 add_label = Label(ventana, text= "Añadir producto")
 
 # Campos del formulario
-add_name_label = Label(ventana, text="Nombre del producto")
+add_name_label = Label(ventana, text="Nombre: ")
 add_name_entry = Entry(ventana, textvariable=name_data)
 
-add_price_label = Label(ventana, text="Precio del producto")
+add_price_label = Label(ventana, text="Precio: ")
 add_price_entry = Entry(ventana, textvariable=price_data)
 
-add_description_label = Label(ventana, text="Descripción")
+add_description_label = Label(ventana, text="Descripción: ")
 add_description_entry = Text(ventana)
 
 
