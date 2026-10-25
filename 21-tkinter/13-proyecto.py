@@ -58,6 +58,10 @@ def info():
         pady=20
     )
     info_label.grid(row=0, column=0)
+    
+    data_label = Label(ventana, text= "Creado por Javier Checa - 2026")
+    data_label.grid(row=1, column=0)
+    
     return True
 
 
