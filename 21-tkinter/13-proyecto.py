@@ -20,7 +20,32 @@ ventana.geometry("800x500")
 ventana.title("Proyecto Tkinter - Master en Python")
 ventana.resizable(0, 0)
 
-# Menú superior desplegable
+# Pantallas
+def home():
+    home_label = label(ventana, text= "Inicio")
+    home_label.config(
+        fg= "white",
+        bg= "black",
+        font=("Arial", 30),
+        padx=20,
+        pady=20
+    )
+    home_label.grid(row=0, column=0)
+    
+    
+    return True
+
+def add():
+    return True
+
+def info():
+    return True
+
+
+# Cargar pantalla inicio
+home()
+
+# Menú superior
 menu_superior = Menu(ventana)
 menu_superior.add_command(label="Inicio")
 menu_superior.add_command(label="Añadir")
