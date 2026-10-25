@@ -36,9 +36,28 @@ def home():
     return True
 
 def add():
+    add_label = Label(ventana, text= "Añadir producto")
+    add_label.config(
+        fg= "white",
+        bg= "black",
+        font=("Arial", 30),
+        padx=20,
+        pady=20
+    )
+    add_label.grid(row=0, column=0)
+    
     return True
 
 def info():
+    info_label = Label(ventana, text= "Información del producto")
+    info_label.config(
+        fg= "white",
+        bg= "black",
+        font=("Arial", 30),
+        padx=20,
+        pady=20
+    )
+    info_label.grid(row=0, column=0)
     return True
 
 
@@ -47,9 +66,9 @@ home()
 
 # Menú superior
 menu_superior = Menu(ventana)
-menu_superior.add_command(label="Inicio")
-menu_superior.add_command(label="Añadir")
-menu_superior.add_command(label="Información")
+menu_superior.add_command(label="Inicio", command=home)
+menu_superior.add_command(label="Añadir", command=add)
+menu_superior.add_command(label="Información", command=info)
 menu_superior.add_command(label="Salir", command=ventana.quit)
 
 # Cargar menú
