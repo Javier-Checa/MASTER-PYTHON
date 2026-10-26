@@ -71,8 +71,8 @@ def add():
     
     boton.grid(row=5, column=1, sticky=NW)
     boton.config(
-        padx=15
-        bg="green"
+        padx=15,
+        bg="green",
         fg="white"
     )
     
