@@ -37,7 +37,8 @@ def home():
     # Ocultar otras pantallas
     add_label.grid_remove()
     info_label.grid_remove()
-    data_label.grid_remove()    
+    data_label.grid_remove() 
+    add_frame.grid_remove()   
     
     return True
 
@@ -105,6 +106,7 @@ def info():
     # Ocultar otras pantallas
     add_label.grid_remove()
     home_label.grid_remove()
+    add_frame.grid_remove()
     
     return True
 
@@ -120,7 +122,7 @@ home_label = Label(ventana, text= "Pantalla de inicio")
 add_label = Label(ventana, text= "Añadir producto")
 
 # Campos del formulario
-add_frame = Frame(ventana) = Frame(ventana)
+add_frame = Frame(ventana)
 
 add_name_label = Label(add_frame, text="Nombre: ")
 add_name_entry = Entry(add_frame, textvariable=name_data)
