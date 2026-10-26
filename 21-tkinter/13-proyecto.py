@@ -59,7 +59,7 @@ def add():
     add_price_label.grid(row=2, column=0, padx=5, pady=5, sticky=E)
     add_price_entry.grid(row=2, column=1, padx=5, pady=5, sticky=W)
     
-    add_description_label.grid(row=3, column=0, padx=5, pady=5, sticky=E)
+    add_description_label.grid(row=3, column=0, padx=5, pady=5, sticky=NE)
     add_description_entry.grid(row=3, column=1, padx=5, pady=5, sticky=W)
     add_description_entry.config(
         width=30,
