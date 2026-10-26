@@ -71,7 +71,7 @@ def add():
     
     add_separator.grid(row=5, column=1)
     
-    boton.grid(row=6, column=1, sticky=NW)
+    boton.grid(row=6, column=1, sticky=E)
     boton.config(
         padx=15,
         pady=5,
