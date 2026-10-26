@@ -6,7 +6,7 @@ Crear un progrma que tenga:
 - (hecho) - Un menú
 - (hecho) - Opción de salir 
 - (hecho) - Diferentes pantallas
-- Formulario de añadir productos
+- (hecho) - Formulario de añadir productos
 - Guardar datos temporalmente sin usar una base de datos
 - Mostrar los datos listados en la pantalla principal o home (landing)
 
