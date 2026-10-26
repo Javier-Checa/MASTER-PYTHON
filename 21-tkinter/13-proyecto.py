@@ -69,6 +69,9 @@ def add():
         pady=15
     )
     
+    boton.grid(row=5, column=1, sticky=NW)
+    
+    
     
     # Ocultar otras pantallas
     home_label.grid_remove()
@@ -115,6 +118,8 @@ add_price_entry = Entry(ventana, textvariable=price_data)
 
 add_description_label = Label(ventana, text="Descripción: ")
 add_description_entry = Text(ventana)
+
+boton = Button(ventana, text="Guardar")
 
 
 
