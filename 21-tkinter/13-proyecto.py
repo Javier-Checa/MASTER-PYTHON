@@ -69,9 +69,12 @@ def add():
         pady=15
     )
     
-    boton.grid(row=5, column=1, sticky=NW)
+    add_separator.grid(row=5, column=1)
+    
+    boton.grid(row=6, column=1, sticky=NW)
     boton.config(
         padx=15,
+        pady=5,
         bg="green",
         fg="white"
     )
@@ -123,6 +126,8 @@ add_price_entry = Entry(ventana, textvariable=price_data)
 
 add_description_label = Label(ventana, text="Descripción: ")
 add_description_entry = Text(ventana)
+
+add_separator = Label(ventana)
 
 boton = Button(ventana, text="Guardar")
 
