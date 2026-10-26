@@ -61,6 +61,13 @@ def add():
     
     add_description_label.grid(row=3, column=0, padx=5, pady=5, sticky=E)
     add_description_entry.grid(row=3, column=1, padx=5, pady=5, sticky=W)
+    add_description_entry.config(
+        width=30,
+        height=5,
+        font=("Consolas", 12),
+        padx=15,
+        pady=15
+    )
     
     
     # Ocultar otras pantallas
