@@ -40,6 +40,7 @@ def home():
     
     for product in products:
         if len(product) == 3:
+            product.append("added")
             Label(products_box, text=product[0]).grid()
             Label(products_box, text=product[1]).grid()
             Label(products_box, text=product[2]).grid()
