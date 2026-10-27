@@ -147,7 +147,7 @@ add_description_entry = Text(add_frame)
 
 add_separator = Label(add_frame)
 
-boton = Button(add_frame, text="Guardar")
+boton = Button(add_frame, text="Guardar", command=add_product)
 
 
 
