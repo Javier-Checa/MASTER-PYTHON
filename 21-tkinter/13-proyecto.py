@@ -42,12 +42,10 @@ def home():
         if len(product) == 3:
             Label(products_box, text=product[0]).grid()
             Label(products_box, text=product[1]).grid()
-            Label(products_box, text=product[3]).grid()
+            Label(products_box, text=product[2]).grid()
             Label(products_box, text="----------------------").grid()
     
-    
-    
-    
+      
     # Ocultar otras pantallas
     add_label.grid_remove()
     info_label.grid_remove()
