@@ -117,6 +117,9 @@ def add_product():
         price_data.get(),
         add_description_entry.get("1.0", "end-1c")
     ])
+    name_data.set("")
+    price_data.set("")
+    add_description_entry.delete("1.0", END)
 
     print(products)
 
