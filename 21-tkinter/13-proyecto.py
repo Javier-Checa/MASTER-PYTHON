@@ -110,7 +110,19 @@ def info():
     
     return True
 
+
+def add_product():
+    products.append([
+        name_data.get(),
+        price_data.get(),
+        add_description_entry.get("1.0", "end-1c")
+    ])
+
+    print(products)
+
+
 # Variables importantes
+products = []
 name_data = StringVar()
 price_data = StringVar()
 
