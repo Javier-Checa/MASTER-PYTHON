@@ -121,7 +121,7 @@ def add_product():
     price_data.set("")
     add_description_entry.delete("1.0", END)
 
-    print(products)
+    home()
 
 
 # Variables importantes
