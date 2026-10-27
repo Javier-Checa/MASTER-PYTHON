@@ -34,6 +34,20 @@ def home():
     )
     home_label.grid(row=0, column=0)
     
+    products_box.grid(row=1)
+    
+    # Listar productos
+    
+    for product in products:
+        if len(product) == 3:
+            Label(products_box, text=product[0]).grid()
+            Label(products_box, text=product[1]).grid()
+            Label(products_box, text=product[3]).grid()
+            Label(products_box, text="----------------------").grid()
+    
+    
+    
+    
     # Ocultar otras pantallas
     add_label.grid_remove()
     info_label.grid_remove()
