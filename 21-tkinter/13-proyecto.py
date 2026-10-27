@@ -100,7 +100,8 @@ def add():
     # Ocultar otras pantallas
     home_label.grid_remove()
     info_label.grid_remove()
-    data_label.grid_remove()  
+    data_label.grid_remove()
+    products_box.grid_remove()  
     
     return True
 
@@ -120,6 +121,7 @@ def info():
     add_label.grid_remove()
     home_label.grid_remove()
     add_frame.grid_remove()
+    products_box.grid_remove() 
     
     return True
 
