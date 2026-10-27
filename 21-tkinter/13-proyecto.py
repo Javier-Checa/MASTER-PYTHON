@@ -7,7 +7,7 @@ Crear un progrma que tenga:
 - (hecho) - Opción de salir 
 - (hecho) - Diferentes pantallas
 - (hecho) - Formulario de añadir productos
-- Guardar datos temporalmente sin usar una base de datos
+- (hecho) - Guardar datos temporalmente sin usar una base de datos
 - Mostrar los datos listados en la pantalla principal o home (landing)
 
 """
@@ -132,6 +132,7 @@ price_data = StringVar()
 
 # Definir campos de pantalla (INCIO)
 home_label = Label(ventana, text= "Pantalla de inicio")
+products_box = Frame(ventana, width=250)
 
 # Definir campos de pantalla (ADD)
 add_label = Label(ventana, text= "Añadir producto")
