@@ -153,6 +153,9 @@ products_box = Frame(ventana, width=250)
 
 Label(products_box).grid(row=0)
 products_table = ttk.Treeview(height=12, columns=2)
+products_table.grid(row=1, column=0, columnspan=2)
+products_table.heading("#0", text="Producto", anchor=W)
+products_table.heading("#1", text="Precio", anchor=W)
 
 # Definir campos de pantalla (ADD)
 add_label = Label(ventana, text= "Añadir producto")
