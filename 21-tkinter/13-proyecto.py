@@ -12,6 +12,7 @@ Crear un progrma que tenga:
 
 """
 from tkinter import *
+from tkinter import ttk
 
 
 # Definir ventana
@@ -146,9 +147,12 @@ name_data = StringVar()
 price_data = StringVar()
 
 
-# Definir campos de pantalla (INCIO)
+# Definir campos de pantalla (INICIO)
 home_label = Label(ventana, text= "Pantalla de inicio")
 products_box = Frame(ventana, width=250)
+
+Label(products_box).grid(row=0)
+products_table = ttk.Treeview(height=12, columns=2)
 
 # Definir campos de pantalla (ADD)
 add_label = Label(ventana, text= "Añadir producto")
