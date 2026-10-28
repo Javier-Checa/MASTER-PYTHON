@@ -52,7 +52,7 @@ def home():
     for product in products:
         if len(product) == 3:
             product.append("added")
-            products_table.insert("", 0, text=product[0], values = (product[1]))
+            products_box.insert("", 0, text=product[0], values = (product[1]))
       
     # Ocultar otras pantallas
     add_label.grid_remove()
@@ -154,12 +154,12 @@ price_data = StringVar()
 
 # Definir campos de pantalla (INICIO)
 home_label = Label(ventana, text= "Pantalla de inicio")
-products_box = Frame(ventana, width=250)
+# products_box = Frame(ventana, width=250)
 
-products_table = ttk.Treeview(height=12, columns=2)
-products_table.grid(row=1, column=0, columnspan=2)
-products_table.heading("#0", text="Producto", anchor=W)
-products_table.heading("#1", text="Precio", anchor=W)
+products_box = ttk.Treeview(height=12, columns=2)
+products_box.grid(row=1, column=0, columnspan=2)
+products_box.heading("#0", text="Producto", anchor=W)
+products_box.heading("#1", text="Precio", anchor=W)
 
 # Definir campos de pantalla (ADD)
 add_label = Label(ventana, text= "Añadir producto")
