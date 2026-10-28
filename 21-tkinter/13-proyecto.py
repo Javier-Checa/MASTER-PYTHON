@@ -8,7 +8,7 @@ Crear un progrma que tenga:
 - (hecho) - Diferentes pantallas
 - (hecho) - Formulario de añadir productos
 - (hecho) - Guardar datos temporalmente sin usar una base de datos
-- Mostrar los datos listados en la pantalla principal o home (landing)
+- (hecho) - Mostrar los datos listados en la pantalla principal o home (landing)
 
 """
 from tkinter import *
