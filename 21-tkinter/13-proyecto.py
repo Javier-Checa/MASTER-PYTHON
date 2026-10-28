@@ -36,7 +36,7 @@ def home():
     )
     home_label.grid(row=0, column=0)
     
-    products_box.grid(row=1)
+    products_box.grid(row=2)
     
     # Listar productos
     """
@@ -102,8 +102,7 @@ def add():
         fg="white"
     )
     
-    
-    
+      
     # Ocultar otras pantallas
     home_label.grid_remove()
     info_label.grid_remove()
@@ -156,6 +155,7 @@ price_data = StringVar()
 home_label = Label(ventana, text= "Pantalla de inicio")
 # products_box = Frame(ventana, width=250)
 
+Label(ventana).grid(row=1)
 products_box = ttk.Treeview(height=12, columns=2)
 products_box.grid(row=1, column=0, columnspan=2)
 products_box.heading("#0", text="Producto", anchor=W)
