@@ -52,3 +52,36 @@
         }
     </style>
 </head>
+<body>
+
+    <div class="container">
+        <h2>Mis Tareas</h2>
+
+        <!-- Formulario para agregar tarea -->
+        <form action="/agregar" method="POST">
+            <input type="text" name="tarea" placeholder="Nueva tarea..." required>
+            <button type="submit">Añadir</button>
+        </form>
+
+        <!-- Lista de tareas cargada desde Flask -->
+        <ul>
+            {% for tarea in tareas %}
+                <li>
+                    <span>{{ tarea }}</span>
+                    <a href="/eliminar/{{ loop.index0 }}" 
+                       class="btn-eliminar" 
+                       onclick="return confirmarEliminacion('{{ tarea }}')">✕</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- JavaScript para interactividad sencilla -->
+    <script>
+        function confirmarEliminacion(nombreTarea) {
+            return confirm('¿Estás seguro de que quieres eliminar "' + nombreTarea + '"?');
+        }
+    </script>
+
+</body>
+</html>
