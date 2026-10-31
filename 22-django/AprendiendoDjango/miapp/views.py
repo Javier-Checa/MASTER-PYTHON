@@ -4,5 +4,5 @@ from django.shortcuts import render, HttpResponse
 # MVC = Modelo Vista Controlador -> Acciones (métodos)
 # MVT = Modelo Template Vista -> Acciones (métodos)
 
-def holaMundo(request):
+def hola_mundo(request):
     return HttpResponse("Hola mundo con Django")

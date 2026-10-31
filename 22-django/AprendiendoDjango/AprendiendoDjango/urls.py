@@ -21,5 +21,5 @@ from miapp import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('hola-mundo/', views.holaMundo, name="hola_mundo")
+    path('hola-mundo/', views.hola_mundo, name="hola_mundo")
 ]
