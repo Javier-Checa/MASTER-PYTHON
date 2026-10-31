@@ -5,4 +5,4 @@ from django.shortcuts import render, HttpResponse
 # MVT = Modelo Template Vista -> Acciones (métodos)
 
 def hola_mundo(request):
-    return HttpResponse("Hola mundo con Django")
+    return HttpResponse("Hola mundo con Django!!")
