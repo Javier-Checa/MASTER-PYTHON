@@ -18,7 +18,7 @@ class Calculadora:
             root, 
             font=("Consolas", 24), 
             bg="#181825", 
-            fg="#25a739", 
+            fg="#1de53b", 
             bd=0, 
             justify="right", 
             insertbackground="#cdd6f4"
