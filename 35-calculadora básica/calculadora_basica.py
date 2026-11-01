@@ -43,8 +43,8 @@ class Calculadora:
 
         # Crear botones con estilos
         for (texto, fila, columna) in botones:
-            bg_color = "#313244"
-            fg_color = "#cdd6f4"
+            bg_color = "#1C8BD1"
+            fg_color = "#81deee"
             
             if texto in ['MC', 'MR', 'M+', 'M-']:
                 bg_color = "#6b74c3"
