@@ -13,4 +13,14 @@ class Calculadora:
         self.memoria = 0.0
         self.expresion = ""
         
-        
+        # Pantalla de visualización
+        self.pantalla = tk.Entry(
+            root, 
+            font=("Consolas", 24), 
+            bg="#181825", 
+            fg="#cdd6f4", 
+            bd=0, 
+            justify="right", 
+            insertbackground="#cdd6f4"
+        )
+        self.pantalla.grid(row=0, column=0, columnspan=4, ipadx=8, ipady=15, padx=10, pady=15, sticky="nsew")        
