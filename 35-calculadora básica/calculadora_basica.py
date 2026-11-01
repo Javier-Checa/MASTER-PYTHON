@@ -50,7 +50,7 @@ class Calculadora:
                 bg_color = "#55ed53"
             elif texto in ['C', '√', '%', '÷', '×', '-', '+', '±']:
                 bg_color = "#EE9A12"
-                fg_color = "#dbdea1"
+                fg_color = "#f7f8f3"
             elif texto == '=':
                 bg_color = "#dc1111"
                 fg_color = "#e4e4ee"
