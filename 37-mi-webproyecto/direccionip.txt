@@ -1,0 +1,7 @@
+Instrucciones para ejecutar la web con el formulario: 
+
+
+1. Ejecuta el archivo de Python en la consola: python app1.py
+
+2. Abre tu navegador e ingresa a [http://127.0.0.1:5000](http://127.0.0.1:5000)
+
