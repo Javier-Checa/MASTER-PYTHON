@@ -111,4 +111,10 @@ Button(ventana, text=("Ver la opción"), command=seleccionar).grid(row=7, column
 seleccionado = Label(ventana)
 seleccionado.grid(row=8, column=1)
 
+# Botones check
+
+# Radio buttons
+
+# Option menu
+
 ventana.mainloop()
