@@ -15,4 +15,10 @@ encabezado.config(
 )
 encabezado.pack(anchor=N, side=TOP, fill=X)
 
+# Botones check
+
+# Radio buttons
+
+# Option menu
+
 ventana.mainloop()
