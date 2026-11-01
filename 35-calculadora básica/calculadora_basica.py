@@ -52,8 +52,8 @@ class Calculadora:
                 bg_color = "#fab387"
                 fg_color = "#11111b"
             elif texto == '=':
-                bg_color = "#89b4fa"
-                fg_color = "#11111b"
+                bg_color = "#dc1111"
+                fg_color = "#e4e4ee"
 
             btn = tk.Button(
                 root, 
