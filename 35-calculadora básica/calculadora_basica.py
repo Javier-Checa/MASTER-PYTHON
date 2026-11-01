@@ -47,10 +47,10 @@ class Calculadora:
             fg_color = "#81deee"
             
             if texto in ['MC', 'MR', 'M+', 'M-']:
-                bg_color = "#6b74c3"
+                bg_color = "#020a4d"
             elif texto in ['C', '√', '%', '÷', '×', '-', '+', '±']:
-                bg_color = "#fab387"
-                fg_color = "#11111b"
+                bg_color = "#095708"
+                fg_color = "#c0e9c4"
             elif texto == '=':
                 bg_color = "#dc1111"
                 fg_color = "#e4e4ee"
