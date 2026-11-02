@@ -47,7 +47,7 @@ class Calculadora:
             fg_color = "#021A09"
             
             if texto in ['MC', 'MR', 'M+', 'M-']:
-                bg_color = "#55ed53"
+                bg_color = "#5b925a"
             elif texto in ['C', '√', '%', '÷', '×', '-', '+', '±']:
                 bg_color = "#EE9A12"
                 fg_color = "#f7f8f3"
