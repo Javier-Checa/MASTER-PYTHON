@@ -58,7 +58,7 @@ class Calculadora:
             btn = tk.Button(
                 root, 
                 text=texto, 
-                font=("Segoe UI", 14, "bold"),
+                font=("Arial", 14, "bold"),
                 bg=bg_color, 
                 fg=fg_color, 
                 activebackground="#585b70",
