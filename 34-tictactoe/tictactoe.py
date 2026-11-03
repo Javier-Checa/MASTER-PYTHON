@@ -33,3 +33,20 @@ class TicTacToe:
         )
         self.btn_reiniciar.pack(pady=10)
         
+    def crear_tablero(self):
+        for i in range(9):
+            fila = i // 3
+            columna = i % 3
+            btn = tk.Button(
+                self.frame_tablero,
+                text="",
+                font=("Arial", 24, "bold"),
+                width=5,
+                height=2,
+                command=lambda idx=i: self.presionar_boton(idx),
+            )
+            btn.grid(row=fila, column=columna, padx=2, pady=2)
+            self.botones.append(btn)
+            
+    
+        
