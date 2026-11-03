@@ -90,4 +90,3 @@ if __name__ == "__main__":
         root = tk.Tk()
         juego = TicTacToe(root)
         root.mainloop()    
-        
