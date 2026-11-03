@@ -48,5 +48,21 @@ class TicTacToe:
             btn.grid(row=fila, column=columna, padx=2, pady=2)
             self.botones.append(btn)
             
+    def presionar_boton(self, idx):
+        if self.tablero[idx] == "" and not self.hay_ganador():
+            self.tablero[idx] = self.turno
+            color = "#1f77b4" if self.turno == "X" else "#d62728"
+            self.botones[idx].config(text=self.turno, fg=color)
+
+            if self.hay_ganador():
+                self.label_estado.config(text=f"¡El jugador {self.turno} ha ganado!")
+                messagebox.showinfo("Fin del juego", f"¡Felicidades! Ganó {self.turno}")
+            elif "" not in self.tablero:
+                self.label_estado.config(text="¡Empate!")
+                messagebox.showinfo("Fin del juego", "¡Es un empate!")
+            else:
+                self.turno = "O" if self.turno == "X" else "X"
+                self.label_estado.config(text=f"Turno del jugador: {self.turno}")
+                
     
         
