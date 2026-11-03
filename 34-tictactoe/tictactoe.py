@@ -23,3 +23,13 @@ class TicTacToe:
 
         # Crear los 9 botones de la cuadrícula
         self.crear_tablero()
+        
+        # Botón para reiniciar
+        self.btn_reiniciar = tk.Button(
+            root,
+            text="Reiniciar Juego",
+            font=("Arial", 12),
+            command=self.reiniciar_juego,
+        )
+        self.btn_reiniciar.pack(pady=10)
+        
