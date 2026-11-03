@@ -51,7 +51,7 @@ class TicTacToe:
     def presionar_boton(self, idx):
         if self.tablero[idx] == "" and not self.hay_ganador():
             self.tablero[idx] = self.turno
-            color = "#1f77b4" if self.turno == "X" else "#d62728"
+            color = "#1630d9" if self.turno == "X" else "#d62728"
             self.botones[idx].config(text=self.turno, fg=color)
 
             if self.hay_ganador():
