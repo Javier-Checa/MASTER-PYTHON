@@ -64,5 +64,30 @@ class TicTacToe:
                 self.turno = "O" if self.turno == "X" else "X"
                 self.label_estado.config(text=f"Turno del jugador: {self.turno}")
                 
-    
+    def hay_ganador(self):
+        combinaciones = [
+            (0, 1, 2), (3, 4, 5), (6, 7, 8),  # Filas
+            (0, 3, 6), (1, 4, 7), (2, 5, 8),  # Columnas
+            (0, 4, 8), (2, 4, 6)               # Diagonales
+        ]
+        for a, b, c in combinaciones:
+            if self.tablero[a] == self.tablero[b] == self.tablero[c] != "":
+                # Resaltar combinación ganadora
+                self.botones[a].config(bg="#a1e5ab")
+                self.botones[b].config(bg="#a1e5ab")
+                self.botones[c].config(bg="#a1e5ab")
+                return True
+        return False
+
+    def reiniciar_juego(self):
+                self.turno = "X"
+                self.tablero = [""] * 9
+                self.label_estado.config(text="Turno del jugador: X")
+                for btn in self.botones:
+                    btn.config(text="", bg="SystemButtonFace")
+
+if __name__ == "__main__":
+        root = tk.Tk()
+        juego = TicTacToe(root)
+        root.mainloop()    
         
