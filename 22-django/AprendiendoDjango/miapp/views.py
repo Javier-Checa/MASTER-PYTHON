@@ -4,6 +4,12 @@ from django.shortcuts import render, HttpResponse
 # MVC = Modelo Vista Controlador -> Acciones (métodos)
 # MVT = Modelo Template Vista -> Acciones (métodos)
 
+def index(request):
+    return HttpResponse("""
+                <h1>Inicio</h1>
+            """)
+
+
 def hola_mundo(request):
     return HttpResponse("""
         <h1>¡Hola, Mundo, con Django!</h1>
