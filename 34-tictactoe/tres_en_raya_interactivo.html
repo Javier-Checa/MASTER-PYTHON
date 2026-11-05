@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tres en Raya - Tic-Tac-Toe Premium</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Canvas Confetti para animación de victoria -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311042 100%);
+            min-height: 100vh;
+        }
+
+        /* Animaciones para X y O */
+        .cell-x {
+            color: #38bdf8;
+            text-shadow: 0 0 15px rgba(56, 189, 248, 0.5);
+            animation: popIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        .cell-o {
+            color: #f43f5e;
+            text-shadow: 0 0 15px rgba(244, 63, 94, 0.5);
+            animation: popIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0) rotate(-10deg);
+                opacity: 0;
+            }
+            80% {
+                transform: scale(1.15) rotate(5deg);
+            }
+            100% {
+                transform: scale(1) rotate(0);
+                opacity: 1;
+            }
+        }
+
+        /* Resaltado de celda ganadora */
+        .winning-cell {
+            animation: pulseGlow 1.2s infinite alternate ease-in-out;
+        }
+
+        @keyframes pulseGlow {
+            0% {
+                background-color: rgba(255, 255, 255, 0.1);
+                transform: scale(1);
+            }
+            100% {
+                background-color: rgba(255, 255, 255, 0.25);
+                transform: scale(1.03);
+            }
+        }
+
+        /* Efecto hover suave */
+        .cell-btn {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .cell-btn:hover:not(:disabled) {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .cell-btn:active:not(:disabled) {
+            transform: translateY(0) scale(0.97);
+        }
+
+        /* Modo de juego activo */
+        .mode-active {
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-between p-4 sm:p-6 text-slate-100">
+
+    <!-- Encabezado -->
+    <header class="text-center my-4">
+        <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-sky-400 via-indigo-300 to-rose-400 drop-shadow-sm">
+            Tres en Raya
+        </h1>
+        <p class="text-slate-400 text-sm sm:text-base mt-1">El clásico Tic-Tac-Toe redefinido</p>
+    </header>
+
+    <!-- Contenedor Principal -->
+    <main class="w-full max-w-md flex flex-col items-center gap-6">
+
+        <!-- Selector de Modo de Juego -->
+        <div class="bg-slate-900/60 backdrop-blur-md p-1.5 rounded-2xl border border-slate-800 flex w-full gap-1 shadow-xl">
+            <button id="mode-2p" onclick="setMode('2p')" class="mode-btn mode-active flex-1 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 flex items-center justify-center gap-2">
+                <i class="fa-solid fa-users text-sm"></i>
+                <span>2 Jugadores</span>
+            </button>
+            <button id="mode-easy" onclick="setMode('easy')" class="mode-btn flex-1 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-semibold text-slate-400 hover:text-white transition-all duration-200 flex items-center justify-center gap-2">
+                <i class="fa-solid fa-robot text-sm"></i>
+                <span>IA Fácil</span>
+            </button>
+            <button id="mode-hard" onclick="setMode('hard')" class="mode-btn flex-1 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-semibold text-slate-400 hover:text-white transition-all duration-200 flex items-center justify-center gap-2">
+                <i class="fa-solid fa-brain text-sm"></i>
+                <span>IA Pro</span>
+            </button>
+        </div>
+
+        <!-- Indicador de Turno y Estado -->
+        <div class="w-full bg-slate-900/40 backdrop-blur-md border border-slate-800/80 rounded-2xl py-3 px-4 flex items-center justify-between shadow-lg">
+            <div id="turn-indicator" class="flex items-center gap-3 font-semibold text-sm sm:text-base">
+                <span class="text-slate-400">Turno:</span>
+                <span id="current-player" class="flex items-center gap-2 text-sky-400 font-bold text-lg">
+                    <i class="fa-solid fa-xmark"></i> Jugador X
+                </span>
+            </div>
+            <div id="status-message" class="hidden text-sm font-bold text-amber-400 animate-pulse">
+                Pensando IA...
+            </div>
+        </div>
+
+        <!-- Marcador de Puntuación -->
+        <div class="grid grid-cols-3 gap-3 w-full">
+            <div class="bg-slate-900/60 border border-sky-500/30 rounded-2xl p-3 text-center shadow-lg relative overflow-hidden group">
+                <div class="absolute top-0 left-0 w-full h-1 bg-sky-400"></div>
+                <p id="score-x-label" class="text-xs uppercase tracking-wider text-slate-400 font-bold mb-1">X (Tú)</p>
+                <p id="score-x" class="text-2xl sm:text-3xl font-extrabold text-sky-400">0</p>
+            </div>
+            <div class="bg-slate-900/60 border border-slate-700/50 rounded-2xl p-3 text-center shadow-lg relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-1 bg-slate-400"></div>
+                <p class="text-xs uppercase tracking-wider text-slate-400 font-bold mb-1">Empate</p>
+                <p id="score-ties" class="text-2xl sm:text-3xl font-extrabold text-slate-300">0</p>
+            </div>
+            <div class="bg-slate-900/60 border border-rose-500/30 rounded-2xl p-3 text-center shadow-lg relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-1 bg-rose-500"></div>
+                <p id="score-o-label" class="text-xs uppercase tracking-wider text-slate-400 font-bold mb-1">O (Jugador 2)</p>
+                <p id="score-o" class="text-2xl sm:text-3xl font-extrabold text-rose-500">0</p>
+            </div>
+        </div>
+
+        <!-- Tablero de Juego -->
+        <div class="relative w-full aspect-square bg-slate-900/80 backdrop-blur-md border border-slate-800 rounded-3xl p-3 sm:p-4 shadow-2xl">
+            <div class="grid grid-cols-3 grid-rows-3 gap-2.5 sm:gap-3 w-full h-full">
+                <!-- Celdas indexadas de 0 a 8 -->
+                <button onclick="makeMove(0)" class="cell-btn bg-slate-800/80 rounded-2xl flex items-center justify-center text-4xl sm:text-5xl font-extrabold text-slate-700 focus:outline-none" data-index="0"></button>
+                <button onclick="makeMove(1)" class="cell-btn bg-slate-800/80 rounded-2xl flex items-center justify-center text-4xl sm:text-5xl font-extrabold text-slate-700 focus:outline-none" data-index="1"></button>
+                <button onclick="makeMove(2)" class="cell-btn bg-slate-800/80 rounded-2xl flex items-center justify-center text-4xl sm:text-5xl font-extrabold text-slate-700 focus:outline-none" data-index="2"></button>
+                <button onclick="makeMove(3)" class="cell-btn bg-slate-800/80 rounded-2xl flex items-center justify-center text-4xl sm:text-5xl font-extrabold text-slate-700 focus:outline-none" data-index="3"></button>
+                <button onclick="makeMove(4)" class="cell-btn bg-slate-800/80 rounded-2xl flex items-center justify-center text-4xl sm:text-5xl font-extrabold text-slate-700 focus:outline-none" data-index="4"></button>
+                <button onclick="makeMove(5)" class="cell-btn bg-slate-800/80 rounded-2xl flex items-center justify-center text-4xl sm:text-5xl font-extrabold text-slate-700 focus:outline-none" data-index="5"></button>
+                <button onclick="makeMove(6)" class="cell-btn bg-slate-800/80 rounded-2xl flex items-center justify-center text-4xl sm:text-5xl font-extrabold text-slate-700 focus:outline-none" data-index="6"></button>
+                <button onclick="makeMove(7)" class="cell-btn bg-slate-800/80 rounded-2xl flex items-center justify-center text-4xl sm:text-5xl font-extrabold text-slate-700 focus:outline-none" data-index="7"></button>
+                <button onclick="makeMove(8)" class="cell-btn bg-slate-800/80 rounded-2xl flex items-center justify-center text-4xl sm:text-5xl font-extrabold text-slate-700 focus:outline-none" data-index="8"></button>
+            </div>
+        </div>
+
+        <!-- Botones de Control / Reinicio -->
+        <div class="flex gap-3 w-full">
+            <button onclick="resetGame()" class="flex-1 py-3 px-4 bg-slate-800 hover:bg-slate-700 active:scale-95 border border-slate-700 rounded-2xl font-semibold text-sm transition-all duration-200 flex items-center justify-center gap-2 shadow-md">
+                <i class="fa-solid fa-rotate-right"></i>
+                <span>Reiniciar Partida</span>
+            </button>
+            <button onclick="resetScoreboard()" class="py-3 px-4 bg-slate-800/50 hover:bg-slate-800 hover:text-rose-400 active:scale-95 border border-slate-800 rounded-2xl font-semibold text-sm text-slate-400 transition-all duration-200 flex items-center justify-center gap-2 shadow-md" title="Reiniciar marcador">
+                <i class="fa-solid fa-trash-can"></i>
+            </button>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-6 text-center text-xs text-slate-500">
+        <p>Tres en Raya • Creado con HTML, CSS & JS</p>
+    </footer>
+
+    <!-- Lógica JavaScript -->
+    <script>
+        // Estado del juego
+        let board = ['', '', '', '', '', '', '', '', ''];
+        let currentPlayer = 'X';
+        let isGameActive = true;
+        let gameMode = '2p'; // '2p', 'easy', 'hard'
+        let scores = { X: 0, O: 0, ties: 0 };
+        let isAiThinking = false;
+
+        // Combinaciones ganadoras posibles
+        const WINNING_COMBINATIONS = [
+            [0, 1, 2], [3, 4, 5], [6, 7, 8], // Horizontales
+            [0, 3, 6], [1, 4, 7], [2, 5, 8], // Verticales
+            [0, 4, 8], [2, 4, 6]             // Diagonales
+        ];
+
+        // Elementos DOM
+        const cells = document.querySelectorAll('.cell-btn');
+        const currentPlayerElement = document.getElementById('current-player');
+        const statusMessage = document.getElementById('status-message');
+        const scoreXElement = document.getElementById('score-x');
+        const scoreOElement = document.getElementById('score-o');
+        const scoreTiesElement = document.getElementById('score-ties');
+        const scoreOLabel = document.getElementById('score-o-label');
+        const scoreXLabel = document.getElementById('score-x-label');
+
+        // Cambiar modo de juego
+        function setMode(mode) {
+            if (gameMode === mode) return;
+
+            gameMode = mode;
+            
+            // Actualizar interfaz del selector de modos
+            document.querySelectorAll('.mode-btn').forEach(btn => {
+                btn.classList.remove('mode-active');
+                btn.classList.add('text-slate-400');
+            });
+
+            const activeBtn = document.getElementById(`mode-${mode}`);
+            activeBtn.classList.add('mode-active');
+            activeBtn.classList.remove('text-slate-400');
+
+            // Actualizar etiquetas según modo
+            if (mode === '2p') {
+                scoreXLabel.textContent = 'Jugador X';
+                scoreOLabel.textContent = 'Jugador O';
+            } else {
+                scoreXLabel.textContent = 'Jugador (X)';
+                scoreOLabel.textContent = 'IA (O)';
+            }
+
+            resetGame();
+        }
+
+        // Ejecutar movimiento al hacer clic
+        function makeMove(index) {
+            if (board[index] !== '' || !isGameActive || isAiThinking) return;
+
+            // Movimiento del jugador actual
+            executeMove(index, currentPlayer);
+
+            // Verificar estado del juego tras el movimiento
+            const winnerData = checkWin(board);
+            
+            if (winnerData) {
+                endGame(winnerData);
+                return;
+            } else if (checkTie(board)) {
+                endGame({ winner: 'tie' });
+                return;
+            }
+
+            // Cambiar turno
+            switchTurn();
+
+            // Si es contra la IA y es turno de la IA (O)
+            if (isGameActive && gameMode !== '2p' && currentPlayer === 'O') {
+                isAiThinking = true;
+                statusMessage.classList.remove('hidden');
+                
+                // Retardo ligero para simular pensamiento de la IA
+                setTimeout(() => {
+                    let aiMove;
+                    if (gameMode === 'easy') {
+                        aiMove = getRandomMove();
+                    } else if (gameMode === 'hard') {
+                        aiMove = getBestMoveMinimax();
+                    }
+                    
+                    executeMove(aiMove, 'O');
+                    statusMessage.classList.add('hidden');
+                    isAiThinking = false;
+
+                    const aiWinnerData = checkWin(board);
+                    if (aiWinnerData) {
+                        endGame(aiWinnerData);
+                    } else if (checkTie(board)) {
+                        endGame({ winner: 'tie' });
+                    } else {
+                        switchTurn();
+                    }
+                }, 400);
+            }
+        }
+
+        // Aplicar el movimiento en la celda y en el estado
+        function executeMove(index, player) {
+            board[index] = player;
+            const cell = cells[index];
+            cell.disabled = true;
+
+            if (player === 'X') {
+                cell.innerHTML = '<i class="fa-solid fa-xmark cell-x"></i>';
+            } else {
+                cell.innerHTML = '<i class="fa-regular fa-circle cell-o"></i>';
+            }
+        }
+
+        // Cambiar el turno activo
+        function switchTurn() {
+            currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+            if (currentPlayer === 'X') {
+                currentPlayerElement.className = "flex items-center gap-2 text-sky-400 font-bold text-lg";
+                currentPlayerElement.innerHTML = `<i class="fa-solid fa-xmark"></i> Turno: X`;
+            } else {
+                currentPlayerElement.className = "flex items-center gap-2 text-rose-500 font-bold text-lg";
+                currentPlayerElement.innerHTML = `<i class="fa-regular fa-circle"></i> Turno: O`;
+            }
+        }
+
+        // Comprobar si alguien ha ganado
+        function checkWin(currentBoard) {
+            for (let combination of WINNING_COMBINATIONS) {
+                const [a, b, c] = combination;
+                if (currentBoard[a] && currentBoard[a] === currentBoard[b] && currentBoard[a] === currentBoard[c]) {
+                    return { winner: currentBoard[a], combo: combination };
+                }
+            }
+            return null;
+        }
+
+        // Comprobar si hay empate
+        function checkTie(currentBoard) {
+            return currentBoard.every(cell => cell !== '');
+        }
+
+        // Finalizar el juego (Victoria o Empate)
+        function endGame(winnerData) {
+            isGameActive = false;
+
+            if (winnerData.winner === 'tie') {
+                scores.ties++;
+                scoreTiesElement.textContent = scores.ties;
+                currentPlayerElement.className = "flex items-center gap-2 text-amber-400 font-bold text-lg";
+                currentPlayerElement.innerHTML = `<i class="fa-solid fa-handshake"></i> ¡Empate!`;
+            } else {
+                const winner = winnerData.winner;
+                scores[winner]++;
+                
+                if (winner === 'X') {
+                    scoreXElement.textContent = scores.X;
+                    currentPlayerElement.className = "flex items-center gap-2 text-sky-400 font-bold text-lg";
+                    currentPlayerElement.innerHTML = `<i class="fa-solid fa-trophy"></i> ¡Ganador X!`;
+                } else {
+                    scoreOElement.textContent = scores.O;
+                    currentPlayerElement.className = "flex items-center gap-2 text-rose-500 font-bold text-lg";
+                    currentPlayerElement.innerHTML = `<i class="fa-solid fa-trophy"></i> ¡Ganador O!`;
+                }
+
+                // Resaltar celdas ganadoras
+                winnerData.combo.forEach(index => {
+                    cells[index].classList.add('winning-cell');
+                });
+
+                // Lanzar confeti si gana el jugador X (o cualquiera en 2p)
+                triggerConfetti();
+            }
+        }
+
+        // Efecto de Confeti
+        function triggerConfetti() {
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 80,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
+            }
+        }
+
+        // Reiniciar tablero actual
+        function resetGame() {
+            board = ['', '', '', '', '', '', '', '', ''];
+            isGameActive = true;
+            isAiThinking = false;
+            currentPlayer = 'X';
+            statusMessage.classList.add('hidden');
+
+            currentPlayerElement.className = "flex items-center gap-2 text-sky-400 font-bold text-lg";
+            currentPlayerElement.innerHTML = `<i class="fa-solid fa-xmark"></i> Turno: X`;
+
+            cells.forEach(cell => {
+                cell.innerHTML = '';
+                cell.disabled = false;
+                cell.classList.remove('winning-cell');
+            });
+        }
+
+        // Reiniciar marcador completo
+        function resetScoreboard() {
+            scores = { X: 0, O: 0, ties: 0 };
+            scoreXElement.textContent = '0';
+            scoreOElement.textContent = '0';
+            scoreTiesElement.textContent = '0';
+            resetGame();
+        }
+
+        // --- ALGORITMOS IA ---
+
+        // 1. Movimiento Aleatorio (Modo Fácil)
+        function getRandomMove() {
+            const emptyIndices = [];
+            board.forEach((cell, index) => {
+                if (cell === '') emptyIndices.push(index);
+            });
+            const randomIndex = Math.floor(Math.random() * emptyIndices.length);
+            return emptyIndices[randomIndex];
+        }
+
+        // 2. Movimiento Imbatible (Modo Minimax)
+        function getBestMoveMinimax() {
+            let bestScore = -Infinity;
+            let bestMove;
+
+            for (let i = 0; i < 9; i++) {
+                if (board[i] === '') {
+                    board[i] = 'O'; // Probar movimiento IA
+                    let score = minimax(board, 0, false);
+                    board[i] = ''; // Deshacer movimiento
+                    if (score > bestScore) {
+                        bestScore = score;
+                        bestMove = i;
+                    }
+                }
+            }
+            return bestMove;
+        }
+
+        // Algoritmo Minimax para IA Imbatible
+        function minimax(tempBoard, depth, isMaximizing) {
+            const winData = checkWin(tempBoard);
+            if (winData) {
+                return winData.winner === 'O' ? (10 - depth) : (depth - 10);
+            }
+            if (checkTie(tempBoard)) {
+                return 0;
+            }
+
+            if (isMaximizing) {
+                let bestScore = -Infinity;
+                for (let i = 0; i < 9; i++) {
+                    if (tempBoard[i] === '') {
+                        tempBoard[i] = 'O';
+                        let score = minimax(tempBoard, depth + 1, false);
+                        tempBoard[i] = '';
+                        bestScore = Math.max(score, bestScore);
+                    }
+                }
+                return bestScore;
+            } else {
+                let bestScore = Infinity;
+                for (let i = 0; i < 9; i++) {
+                    if (tempBoard[i] === '') {
+                        tempBoard[i] = 'X';
+                        let score = minimax(tempBoard, depth + 1, true);
+                        tempBoard[i] = '';
+                        bestScore = Math.min(score, bestScore);
+                    }
+                }
+                return bestScore;
+            }
+        }
+    </script>
+</body>
+</html>
