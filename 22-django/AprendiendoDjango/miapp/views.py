@@ -18,6 +18,6 @@ def hola_mundo(request):
     
 def pagina(request):
     return HttpResponse("""
-        <h1>Página de mi web</h1>
+        <h1>Página de mi sitio web</h1>
         <p>Creada por Javier Checa</p>
     """)   
