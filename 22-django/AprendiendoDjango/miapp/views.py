@@ -7,4 +7,5 @@ from django.shortcuts import render, HttpResponse
 def hola_mundo(request):
     return HttpResponse("""
         <h1>¡Hola, Mundo, con Django!</h1>
-        <p>Este es mi primer proyecto con Django</p>""")
+        <p>Este es mi primer proyecto con Django</p>
+        <p>Estamos en la ruta: <strong>/hola-mundo/</strong></p>""")
