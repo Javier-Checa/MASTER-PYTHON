@@ -15,3 +15,9 @@ def hola_mundo(request):
         <h1>¡Hola, Mundo, con Django!</h1>
         <p>Este es mi primer proyecto con Django</p>
         <p>Estamos en la ruta: <strong>/hola-mundo/</strong></p>""")
+    
+def pagina(request):
+    return HttpResponse("""
+        <h1>Página de mi web</h1>
+        <p>Creada por Javier Checa</p>
+    """)   
