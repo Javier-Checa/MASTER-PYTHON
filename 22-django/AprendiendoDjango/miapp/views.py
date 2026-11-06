@@ -24,6 +24,18 @@ def index(request):
         
     return HttpResponse(html)
 
+def tictactoe(request):
+    # Ruta absoluta de tu archivo HTML del juego
+    ruta_archivo = r"c:/wamp64/www/master-python/34-tictactoe/tres_en_raya_interactivo.html"
+    
+    try:
+        # Abrimos y leemos el archivo HTML externo
+        with open(ruta_archivo, 'r', encoding='utf-8') as archivo:
+            contenido_html = archivo.read()
+        return HttpResponse(contenido_html)
+    except FileNotFoundError:
+        return HttpResponse("<h1>Error: No se encontró el archivo del juego Tic Tac Toe en la ruta especificada.</h1>", status=404)
+
 def hola_mundo(request):
     return HttpResponse("""
         <h1>¡Hola, Mundo, con Django!</h1>
