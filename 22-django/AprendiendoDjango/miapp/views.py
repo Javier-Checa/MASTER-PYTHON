@@ -19,8 +19,7 @@ layout = """
     </li>
     <li> 
         <a href="/pagina">Página de pruebas</a> 
-    </li>    
-    
+    </li>      
 </ul>
 
 """
