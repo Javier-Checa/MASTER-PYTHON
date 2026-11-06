@@ -7,12 +7,21 @@ from django.shortcuts import render, HttpResponse
 def index(request):
     
     html = """
-        
         <h1>Proyecto Web con Django</h1>
         <p>Creado por Javier Checa</p>
         <p>Estamos en la ruta: <strong>/</strong></p>
+        <br>
+        <p> Años hasta el 2050: </p>
+        <ul>
+    """
+    year = 2026
         
-        """
+    while year <= 2050:
+            html += f"<li>{str(year)}</li>"
+            year += 1
+            
+    html += "</ul>"
+        
     return HttpResponse(html)
 
 def hola_mundo(request):
