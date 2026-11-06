@@ -5,9 +5,15 @@ from django.shortcuts import render, HttpResponse
 # MVT = Modelo Template Vista -> Acciones (métodos)
 
 def index(request):
-    return HttpResponse("""
-                <h1>Inicio</h1>
-            """)
+    
+    html = """
+        
+        <h1>Proyecto Web con Django</h1>
+        <p>Creado por Javier Checa</p>
+        <p>Estamos en la ruta: <strong>/</strong></p>
+        
+        """
+    return HttpResponse(html)
 
 def hola_mundo(request):
     return HttpResponse("""
