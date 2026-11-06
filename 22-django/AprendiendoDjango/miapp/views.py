@@ -9,9 +9,18 @@ layout = """
 <hr/>
 <ul>
     <li> 
-        <a href="/">Inicio</a> 
+        <a href="/inicio">Inicio</a> 
     </li>
-
+    <li> 
+        <a href="/hola-mundo">Hola Mundo</a> 
+    </li>
+    <li> 
+        <a href="/tictactoe">Tic Tac Toe</a> 
+    </li>
+    <li> 
+        <a href="/pagina">Página de pruebas</a> 
+    </li>    
+    
 </ul>
 
 """
