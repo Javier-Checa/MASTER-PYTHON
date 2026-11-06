@@ -43,7 +43,7 @@ def index(request):
             
     html += "</ul>"
         
-    return HttpResponse(html)
+    return HttpResponse(layout + html)
 
 def tictactoe(request):
     # Ruta absoluta de tu archivo HTML del juego
@@ -53,18 +53,18 @@ def tictactoe(request):
         # Abrimos y leemos el archivo HTML externo
         with open(ruta_archivo, 'r', encoding='utf-8') as archivo:
             contenido_html = archivo.read()
-        return HttpResponse(contenido_html)
+        return HttpResponse(layout + contenido_html)
     except FileNotFoundError:
         return HttpResponse("<h1>Error: No se encontró el archivo del juego Tic Tac Toe en la ruta especificada.</h1>", status=404)
 
 def hola_mundo(request):
-    return HttpResponse("""
+    return HttpResponse(layout + """
         <h1>¡Hola, Mundo, con Django!</h1>
         <p>Este es mi primer proyecto con Django</p>
         <p>Estamos en la ruta: <strong>/hola-mundo/</strong></p>""")
     
 def pagina(request):
-    return HttpResponse("""
+    return HttpResponse(layout + """
         <h1>Página de mi sitio web</h1>
         <p>Creada por Javier Checa</p>
     """)   
