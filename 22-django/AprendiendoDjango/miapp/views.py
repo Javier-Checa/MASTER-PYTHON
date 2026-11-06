@@ -17,7 +17,8 @@ def index(request):
     year = 2026
         
     while year <= 2050:
-            html += f"<li>{str(year)}</li>"
+            if year % 2 == 0:           
+                html += f"<li>{str(year)}</li>"
             year += 1
             
     html += "</ul>"
