@@ -18,7 +18,7 @@ layout = """
         <a href="/tictactoe">Tic Tac Toe</a> 
     </li>
     <li> 
-        <a href="/pagina">Página de pruebas</a> 
+        <a href="/pagina-pruebas">Página de pruebas</a> 
     </li>      
 </ul>
 
