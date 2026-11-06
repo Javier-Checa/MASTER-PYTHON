@@ -21,6 +21,7 @@ layout = """
         <a href="/pagina-pruebas">Página de pruebas</a> 
     </li>      
 </ul>
+<hr/>
 
 """
 
