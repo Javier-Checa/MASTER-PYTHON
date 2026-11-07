@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Personas - Sistema CRUD</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0284c7',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Estilos personalizados para animaciones y scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #094179;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .fade-in {
+            animation: fadeIn 0.2s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Header / Navbar -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="bg-brand-600 text-white p-2 rounded-xl flex items-center justify-center shadow-md shadow-brand-500/20">
+                    <i class="fa-solid fa-users-gear text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold text-slate-900 leading-tight">Directorio de Personas</h1>
+                    <p class="text-xs text-slate-500 hidden sm:block">Sistema local de gestión CRUD</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-2">
+                <button id="btnLoadDemo" class="text-xs sm:text-sm font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-2 rounded-lg transition-colors flex items-center gap-2">
+                    <i class="fa-solid fa-database text-brand-600"></i>
+                    <span class="hidden md:inline">Cargar</span> Datos Demo
+                </button>
+                <button id="btnExportJSON" class="text-xs sm:text-sm font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-2 rounded-lg transition-colors flex items-center gap-2">
+                    <i class="fa-solid fa-file-export text-emerald-600"></i>
+                    <span class="hidden md:inline">Exportar</span> JSON
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- Formulario (Izquierda en desktop, arriba en móvil) -->
+        <section class="lg:col-span-4 bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/80 shadow-sm h-fit sticky top-22">
+            <div class="flex items-center justify-between pb-4 mb-4 border-b border-slate-100">
+                <h2 id="formTitle" class="text-base font-bold text-slate-900 flex items-center gap-2">
+                    <i class="fa-solid fa-user-plus text-brand-600"></i>
+                    <span>Nueva Persona</span>
+                </h2>
+                <span id="badgeEdit" class="hidden bg-amber-100 text-amber-700 text-xs font-semibold px-2.5 py-0.5 rounded-full">
+                    Modo Edición
+                </span>
+            </div>
+
+            <form id="personForm" class="space-y-4" novalidate>
+                <input type="hidden" id="personId">
+
+                <!-- Nombre y Apellidos -->
+                <div class="grid grid-cols-1 gap-3">
+                    <div>
+                        <label for="nombre" class="block text-xs font-medium text-slate-700 mb-1">Nombre *</label>
+                        <input type="text" id="nombre" required
+                            class="w-full text-sm px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all"
+                            placeholder="Ej. María">
+                        <span class="error-msg text-xs text-rose-500 hidden mt-1">El nombre es obligatorio.</span>
+                    </div>
+
+                    <div>
+                        <label for="apellidos" class="block text-xs font-medium text-slate-700 mb-1">Apellidos *</label>
+                        <input type="text" id="apellidos" required
+                            class="w-full text-sm px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all"
+                            placeholder="Ej. García López">
+                        <span class="error-msg text-xs text-rose-500 hidden mt-1">Los apellidos son obligatorios.</span>
+                    </div>
+                </div>
+
+                <!-- Email & Teléfono -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
+                    <div>
+                        <label for="email" class="block text-xs font-medium text-slate-700 mb-1">Correo Electrónico *</label>
+                        <input type="email" id="email" required
+                            class="w-full text-sm px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all"
+                            placeholder="maria@ejemplo.com">
+                        <span class="error-msg text-xs text-rose-500 hidden mt-1">Introduce un email válido.</span>
+                    </div>
+
+                    <div>
+                        <label for="telefono" class="block text-xs font-medium text-slate-700 mb-1">Teléfono *</label>
+                        <input type="tel" id="telefono" pattern="^[0-9\s\+\-\(\)]{9,15}$" required
+                            class="w-full text-sm px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all"
+                            placeholder="Ej. 612345678">
+                        <span class="error-msg text-xs text-rose-500 hidden mt-1">Número de teléfono no válido.</span>
+                    </div>
+                </div>
+
+                <!-- Dirección -->
+                <div>
+                    <label for="direccion" class="block text-xs font-medium text-slate-700 mb-1">Dirección *</label>
+                    <input type="text" id="direccion" required
+                        class="w-full text-sm px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all"
+                        placeholder="Calle, número, piso...">
+                    <span class="error-msg text-xs text-rose-500 hidden mt-1">La dirección es obligatoria.</span>
+                </div>
+
+                <!-- Código Postal y Población -->
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label for="codigoPostal" class="block text-xs font-medium text-slate-700 mb-1">C.P. *</label>
+                        <input type="text" id="codigoPostal" pattern="^[0-9]{5}$" required
+                            class="w-full text-sm px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all"
+                            placeholder="28001">
+                        <span class="error-msg text-xs text-rose-500 hidden mt-1">C.P. de 5 dígitos.</span>
+                    </div>
+
+                    <div>
+                        <label for="poblacion" class="block text-xs font-medium text-slate-700 mb-1">Población *</label>
+                        <input type="text" id="poblacion" required
+                            class="w-full text-sm px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all"
+                            placeholder="Ej. Madrid">
+                        <span class="error-msg text-xs text-rose-500 hidden mt-1">Campo obligatorio.</span>
+                    </div>
+                </div>
+
+                <!-- Fechas -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
+                    <div>
+                        <label for="fechaNacimiento" class="block text-xs font-medium text-slate-700 mb-1">Fecha Nacimiento *</label>
+                        <input type="date" id="fechaNacimiento" required
+                            class="w-full text-sm px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all">
+                        <span class="error-msg text-xs text-rose-500 hidden mt-1">Selecciona una fecha.</span>
+                    </div>
+
+                    <div>
+                        <label for="fechaInscripcion" class="block text-xs font-medium text-slate-700 mb-1">Fecha Inscripción</label>
+                        <input type="date" id="fechaInscripcion"
+                            class="w-full text-sm px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all bg-slate-50">
+                    </div>
+                </div>
+
+                <!-- Botones del formulario -->
+                <div class="pt-3 flex items-center gap-2">
+                    <button type="submit" id="btnSubmit"
+                        class="flex-1 bg-brand-600 hover:bg-brand-700 text-white font-medium text-sm py-2.5 px-4 rounded-lg shadow-sm transition-colors flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-floppy-disk"></i>
+                        <span>Guardar</span>
+                    </button>
+                    <button type="button" id="btnCancel"
+                        class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium text-sm py-2.5 px-3 rounded-lg transition-colors flex items-center justify-center gap-1"
+                        title="Limpiar campos">
+                        <i class="fa-solid fa-rotate-left"></i>
+                        <span>Limpiar</span>
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Tabla / Lista (Derecha en desktop) -->
+        <section class="lg:col-span-8 flex flex-col gap-4">
+
+            <!-- Card de Filtros y Estadísticas -->
+            <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-3">
+                <div class="relative w-full sm:w-80">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                    <input type="text" id="searchInput"
+                        class="w-full pl-9 pr-8 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all"
+                        placeholder="Buscar por nombre, email o población...">
+                    <button id="btnClearSearch" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
+                        <i class="fa-solid fa-circle-xmark"></i>
+                    </button>
+                </div>
+                
+                <div class="text-xs font-semibold text-slate-500 bg-slate-100 px-3 py-2 rounded-lg w-full sm:w-auto text-center">
+                    Total registros: <span id="totalCounter" class="text-brand-600 font-bold">0</span>
+                </div>
+            </div>
+
+            <!-- Contenedor de Registros -->
+            <div class="bg-white border border-slate-200/80 rounded-2xl shadow-sm overflow-hidden flex-1 flex flex-col">
+                
+                <!-- Vista Escritorio: Tabla -->
+                <div class="hidden md:block overflow-x-auto">
+                    <table class="w-full text-left text-sm text-slate-600">
+                        <thead class="bg-slate-50 border-b border-slate-200 text-xs uppercase text-slate-500 font-bold tracking-wider">
+                            <tr>
+                                <th class="py-3.5 px-4">Persona</th>
+                                <th class="py-3.5 px-4">Contacto</th>
+                                <th class="py-3.5 px-4">Ubicación</th>
+                                <th class="py-3.5 px-4">Fechas</th>
+                                <th class="py-3.5 px-4 text-right">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody" class="divide-y divide-slate-100">
+                            <!-- Filas dinámicas -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Vista Móvil: Tarjetas -->
+                <div id="mobileCardsContainer" class="block md:hidden divide-y divide-slate-100">
+                    <!-- Tarjetas dinámicas -->
+                </div>
+
+                <!-- Estado Vacío -->
+                <div id="emptyState" class="hidden p-8 text-center flex-1 flex flex-col items-center justify-center">
+                    <div class="w-16 h-16 bg-slate-100 text-slate-400 rounded-full flex items-center justify-center text-2xl mb-3">
+                        <i class="fa-solid fa-users-slash"></i>
+                    </div>
+                    <h3 class="text-sm font-bold text-slate-700">No se encontraron personas</h3>
+                    <p class="text-xs text-slate-500 mt-1 max-w-sm">No hay registros almacenados o los términos de búsqueda no coinciden.</p>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal de Confirmación para Eliminar -->
+    <div id="deleteModal" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 fade-in">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl border border-slate-100">
+            <div class="flex items-center gap-3 text-rose-600 mb-3">
+                <div class="bg-rose-100 p-3 rounded-full">
+                    <i class="fa-solid fa-triangle-exclamation text-xl"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-900">Confirmar eliminación</h3>
+            </div>
+            <p class="text-sm text-slate-600 mb-6">
+                ¿Estás seguro de que deseas eliminar este registro? Esta acción es permanente y no se podrá deshacer.
+            </p>
+            <div class="flex justify-end gap-3">
+                <button id="btnCancelDelete" class="px-4 py-2 text-sm font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors">
+                    Cancelar
+                </button>
+                <button id="btnConfirmDelete" class="px-4 py-2 text-sm font-medium text-white bg-rose-600 hover:bg-rose-700 rounded-lg transition-colors flex items-center gap-2">
+                    <i class="fa-solid fa-trash-can"></i> Eliminar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+        <div class="bg-slate-900 text-white text-sm px-4 py-3 rounded-xl shadow-lg flex items-center gap-3">
+            <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
+            <span id="toastMessage">Operación realizada con éxito</span>
+        </div>
+    </div>
+
+    <!-- JavaScript Principal -->
+    <script>
+        // Data State
+        let people = [];
+        let editingId = null;
+        let deleteTargetId = null;
+
+        // Datos de Demostración Iniciales
+        const demoData = [
+            {
+                id: "p-101",
+                nombre: "Lucía",
+                apellidos: "Gómez Fernández",
+                direccion: "Av. de la Constitución 45, 2ºB",
+                codigoPostal: "28013",
+                poblacion: "Madrid",
+                email: "lucia.gomez@ejemplo.com",
+                telefono: "622114455",
+                fechaNacimiento: "1992-04-15",
+                fechaInscripcion: "2024-01-10"
+            },
+            {
+                id: "p-102",
+                nombre: "Carlos",
+                apellidos: "Martínez Ruiz",
+                direccion: "Calle Mayor 12",
+                codigoPostal: "08001",
+                poblacion: "Barcelona",
+                email: "carlos.mtz@ejemplo.com",
+                telefono: "655998877",
+                fechaNacimiento: "1988-11-23",
+                fechaInscripcion: "2024-02-01"
+            },
+            {
+                id: "p-103",
+                nombre: "Elena",
+                apellidos: "Sánchez Pardo",
+                direccion: "Paseo de la Castellana 120",
+                codigoPostal: "28046",
+                poblacion: "Madrid",
+                email: "elena.sanchez@ejemplo.com",
+                telefono: "677332211",
+                fechaNacimiento: "1996-08-05",
+                fechaInscripcion: "2024-03-12"
+            }
+        ];
+
+        // Elementos DOM
+        const personForm = document.getElementById('personForm');
+        const formTitle = document.getElementById('formTitle');
+        const badgeEdit = document.getElementById('badgeEdit');
+        const btnSubmit = document.getElementById('btnSubmit');
+        const btnCancel = document.getElementById('btnCancel');
+        const searchInput = document.getElementById('searchInput');
+        const btnClearSearch = document.getElementById('btnClearSearch');
+        const tableBody = document.getElementById('tableBody');
+        const mobileCardsContainer = document.getElementById('mobileCardsContainer');
+        const emptyState = document.getElementById('emptyState');
+        const totalCounter = document.getElementById('totalCounter');
+        const btnLoadDemo = document.getElementById('btnLoadDemo');
+        const btnExportJSON = document.getElementById('btnExportJSON');
+        const deleteModal = document.getElementById('deleteModal');
+        const btnCancelDelete = document.getElementById('btnCancelDelete');
+        const btnConfirmDelete = document.getElementById('btnConfirmDelete');
+
+        // Inicialización de la aplicación
+        window.addEventListener('DOMContentLoaded', () => {
+            loadFromLocalStorage();
+            setTodayDefaultDate();
+            renderList();
+        });
+
+        // Establecer fecha de inscripción actual por defecto
+        function setTodayDefaultDate() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('fechaInscripcion').value = today;
+        }
+
+        // Cargar datos desde localStorage
+        function loadFromLocalStorage() {
+            const stored = localStorage.getItem('crud_people_data');
+            if (stored) {
+                try {
+                    people = JSON.parse(stored);
+                } catch (e) {
+                    people = [];
+                }
+            } else {
+                // Si no hay datos, cargar la demo por primera vez
+                people = [...demoData];
+                saveToLocalStorage();
+            }
+        }
+
+        // Guardar datos en localStorage
+        function saveToLocalStorage() {
+            localStorage.setItem('crud_people_data', JSON.stringify(people));
+        }
+
+        // Renderizar registros (Tabla & Cards móviles)
+        function renderList() {
+            const query = searchInput.value.toLowerCase().trim();
+            
+            const filtered = people.filter(person => {
+                return (
+                    person.nombre.toLowerCase().includes(query) ||
+                    person.apellidos.toLowerCase().includes(query) ||
+                    person.email.toLowerCase().includes(query) ||
+                    person.poblacion.toLowerCase().includes(query) ||
+                    person.telefono.includes(query)
+                );
+            });
+
+            totalCounter.textContent = filtered.length;
+
+            if (filtered.length === 0) {
+                tableBody.innerHTML = '';
+                mobileCardsContainer.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+
+            // Render Desktop Table
+            tableBody.innerHTML = filtered.map(person => `
+                <tr class="hover:bg-slate-50/80 transition-colors fade-in">
+                    <td class="py-3 px-4">
+                        <div class="font-semibold text-slate-900">${escapeHTML(person.nombre)} ${escapeHTML(person.apellidos)}</div>
+                        <div class="text-xs text-slate-500">Nac: ${formatDate(person.fechaNacimiento)}</div>
+                    </td>
+                    <td class="py-3 px-4">
+                        <div class="text-xs font-medium text-slate-800"><i class="fa-regular fa-envelope text-slate-400 mr-1"></i>${escapeHTML(person.email)}</div>
+                        <div class="text-xs text-slate-500 mt-0.5"><i class="fa-solid fa-phone text-slate-400 mr-1"></i>${escapeHTML(person.telefono)}</div>
+                    </td>
+                    <td class="py-3 px-4">
+                        <div class="text-xs text-slate-800">${escapeHTML(person.direccion)}</div>
+                        <div class="text-xs text-slate-500">${escapeHTML(person.codigoPostal)} - ${escapeHTML(person.poblacion)}</div>
+                    </td>
+                    <td class="py-3 px-4 text-xs text-slate-500">
+                        <span class="inline-flex items-center gap-1 bg-slate-100 text-slate-600 px-2 py-0.5 rounded font-medium">
+                            <i class="fa-regular fa-calendar-check text-slate-400"></i>
+                            ${formatDate(person.fechaInscripcion)}
+                        </span>
+                    </td>
+                    <td class="py-3 px-4 text-right">
+                        <div class="flex items-center justify-end gap-1">
+                            <button onclick="editPerson('${person.id}')" class="p-1.5 text-slate-500 hover:text-brand-600 hover:bg-brand-50 rounded-lg transition-colors" title="Editar">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button onclick="openDeleteModal('${person.id}')" class="p-1.5 text-slate-500 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors" title="Eliminar">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+
+            // Render Mobile Cards
+            mobileCardsContainer.innerHTML = filtered.map(person => `
+                <div class="p-4 space-y-2 fade-in">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <h3 class="font-bold text-slate-900">${escapeHTML(person.nombre)} ${escapeHTML(person.apellidos)}</h3>
+                            <p class="text-xs text-slate-500">Inscrito: ${formatDate(person.fechaInscripcion)}</p>
+                        </div>
+                        <div class="flex gap-1">
+                            <button onclick="editPerson('${person.id}')" class="p-2 text-slate-600 hover:text-brand-600 bg-slate-100 rounded-lg">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button onclick="openDeleteModal('${person.id}')" class="p-2 text-rose-600 hover:bg-rose-50 bg-slate-100 rounded-lg">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="text-xs space-y-1 text-slate-600 pt-1 border-t border-slate-50">
+                        <div><i class="fa-regular fa-envelope text-slate-400 w-4"></i> ${escapeHTML(person.email)}</div>
+                        <div><i class="fa-solid fa-phone text-slate-400 w-4"></i> ${escapeHTML(person.telefono)}</div>
+                        <div><i class="fa-solid fa-location-dot text-slate-400 w-4"></i> ${escapeHTML(person.direccion)}, ${escapeHTML(person.codigoPostal)} ${escapeHTML(person.poblacion)}</div>
+                        <div><i class="fa-cake-candles fa-regular text-slate-400 w-4"></i> Nacimiento: ${formatDate(person.fechaNacimiento)}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Validación de Formularios
+        function validateForm() {
+            let isValid = true;
+            const inputs = personForm.querySelectorAll('input[required]');
+            
+            inputs.forEach(input => {
+                const errorSpan = input.nextElementSibling;
+                if (!input.checkValidity()) {
+                    isValid = false;
+                    input.classList.add('border-rose-400', 'bg-rose-50/20');
+                    if (errorSpan && errorSpan.classList.contains('error-msg')) {
+                        errorSpan.classList.remove('hidden');
+                    }
+                } else {
+                    input.classList.remove('border-rose-400', 'bg-rose-50/20');
+                    if (errorSpan && errorSpan.classList.contains('error-msg')) {
+                        errorSpan.classList.add('hidden');
+                    }
+                }
+            });
+
+            return isValid;
+        }
+
+        // Enviar Formulario (Crear / Actualizar)
+        personForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            if (!validateForm()) {
+                showToast("Por favor, completa los campos correctamente.", "error");
+                return;
+            }
+
+            const formData = {
+                id: editingId || 'p-' + Date.now(),
+                nombre: document.getElementById('nombre').value.trim(),
+                apellidos: document.getElementById('apellidos').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                telefono: document.getElementById('telefono').value.trim(),
+                direccion: document.getElementById('direccion').value.trim(),
+                codigoPostal: document.getElementById('codigoPostal').value.trim(),
+                poblacion: document.getElementById('poblacion').value.trim(),
+                fechaNacimiento: document.getElementById('fechaNacimiento').value,
+                fechaInscripcion: document.getElementById('fechaInscripcion').value || new Date().toISOString().split('T')[0]
+            };
+
+            if (editingId) {
+                // Actualizar
+                const index = people.findIndex(p => p.id === editingId);
+                if (index !== -1) {
+                    people[index] = formData;
+                    showToast("Persona actualizada correctamente.");
+                }
+            } else {
+                // Crear
+                people.unshift(formData);
+                showToast("Nueva persona agregada con éxito.");
+            }
+
+            saveToLocalStorage();
+            resetForm();
+            renderList();
+        });
+
+        // Cargar datos en el formulario para Editar
+        window.editPerson = function(id) {
+            const person = people.find(p => p.id === id);
+            if (!person) return;
+
+            editingId = id;
+            document.getElementById('personId').value = person.id;
+            document.getElementById('nombre').value = person.nombre;
+            document.getElementById('apellidos').value = person.apellidos;
+            document.getElementById('email').value = person.email;
+            document.getElementById('telefono').value = person.telefono;
+            document.getElementById('direccion').value = person.direccion;
+            document.getElementById('codigoPostal').value = person.codigoPostal;
+            document.getElementById('poblacion').value = person.poblacion;
+            document.getElementById('fechaNacimiento').value = person.fechaNacimiento;
+            document.getElementById('fechaInscripcion').value = person.fechaInscripcion;
+
+            // Cambiar UI a modo edición
+            formTitle.querySelector('span').textContent = 'Editar Persona';
+            formTitle.querySelector('i').className = 'fa-solid fa-user-pen text-amber-600';
+            badgeEdit.classList.remove('hidden');
+            btnSubmit.innerHTML = `<i class="fa-solid fa-floppy-disk"></i> <span>Guardar Cambios</span>`;
+            btnSubmit.classList.replace('bg-brand-600', 'bg-amber-600');
+            btnSubmit.classList.replace('hover:bg-brand-700', 'hover:bg-amber-700');
+
+            // Scroll suave hacia el formulario en pantallas pequeñas
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Resetear Formulario
+        function resetForm() {
+            editingId = null;
+            personForm.reset();
+            setTodayDefaultDate();
+            
+            // Restablecer estilos de validación
+            personForm.querySelectorAll('input').forEach(input => {
+                input.classList.remove('border-rose-400', 'bg-rose-50/20');
+            });
+            personForm.querySelectorAll('.error-msg').forEach(msg => msg.classList.add('hidden'));
+
+            // Restablecer UI del formulario
+            formTitle.querySelector('span').textContent = 'Nueva Persona';
+            formTitle.querySelector('i').className = 'fa-solid fa-user-plus text-brand-600';
+            badgeEdit.classList.add('hidden');
+            btnSubmit.innerHTML = `<i class="fa-solid fa-floppy-disk"></i> <span>Guardar</span>`;
+            btnSubmit.classList.replace('bg-amber-600', 'bg-brand-600');
+            btnSubmit.classList.replace('hover:bg-amber-700', 'hover:bg-brand-700');
+        }
+
+        btnCancel.addEventListener('click', resetForm);
+
+        // Modal de Eliminación
+        window.openDeleteModal = function(id) {
+            deleteTargetId = id;
+            deleteModal.classList.remove('hidden');
+        }
+
+        btnCancelDelete.addEventListener('click', () => {
+            deleteTargetId = null;
+            deleteModal.classList.add('hidden');
+        });
+
+        btnConfirmDelete.addEventListener('click', () => {
+            if (deleteTargetId) {
+                people = people.filter(p => p.id !== deleteTargetId);
+                saveToLocalStorage();
+                renderList();
+                showToast("Registro eliminado.", "info");
+                if (editingId === deleteTargetId) {
+                    resetForm();
+                }
+            }
+            deleteTargetId = null;
+            deleteModal.classList.add('hidden');
+        });
+
+        // Buscador
+        searchInput.addEventListener('input', (e) => {
+            if (e.target.value) {
+                btnClearSearch.classList.remove('hidden');
+            } else {
+                btnClearSearch.classList.add('hidden');
+            }
+            renderList();
+        });
+
+        btnClearSearch.addEventListener('click', () => {
+            searchInput.value = '';
+            btnClearSearch.classList.add('hidden');
+            renderList();
+        });
+
+        // Cargar datos de prueba
+        btnLoadDemo.addEventListener('click', () => {
+            people = [...demoData];
+            saveToLocalStorage();
+            renderList();
+            showToast("Datos de demostración cargados.");
+        });
+
+        // Exportar a JSON
+        btnExportJSON.addEventListener('click', () => {
+            if (people.length === 0) {
+                showToast("No hay datos para exportar", "error");
+                return;
+            }
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(people, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", `personas_${new Date().toISOString().split('T')[0]}.json`);
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+            showToast("Archivo JSON descargado.");
+        });
+
+        // Utilidades: Formatear Fechas (YYYY-MM-DD -> DD/MM/YYYY)
+        function formatDate(dateStr) {
+            if (!dateStr) return '-';
+            const [year, month, day] = dateStr.split('-');
+            return `${day}/${month}/${year}`;
+        }
+
+        // Sanitización para evitar XSS
+        function escapeHTML(str) {
+            if (!str) return '';
+            return str.replace(/[&<>'"]/g, 
+                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+            );
+        }
+
+        // Toast de notificación
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            const toastIcon = document.getElementById('toastIcon');
+
+            toastMessage.textContent = message;
+            
+            if (type === 'error') {
+                toastIcon.className = 'fa-solid fa-circle-exclamation text-rose-400 text-lg';
+            } else if (type === 'info') {
+                toastIcon.className = 'fa-solid fa-circle-info text-sky-400 text-lg';
+            } else {
+                toastIcon.className = 'fa-solid fa-circle-check text-emerald-400 text-lg';
+            }
+
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
