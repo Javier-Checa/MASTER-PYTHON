@@ -71,4 +71,9 @@ def pagina(request):
     """)
     
 def contacto(request, nombre="", apellidos=""):
-    return HttpResponse(layout + f"""<h2>Contacto {nombre} {apellidos}</h2>""")
+    html = ""
+    
+    if nombre and apellidos:
+        html += f"<h3>El nombre completo es: <strong>{nombre} {apellidos}</strong></h3>"
+     
+    return HttpResponse(layout + f"<h2>Contacto</h2>" + html)
