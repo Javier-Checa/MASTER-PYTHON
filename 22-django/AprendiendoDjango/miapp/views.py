@@ -73,7 +73,7 @@ def pagina(request):
 def contacto(request, nombre="", apellidos=""):
     html = ""
     
-    if nombre and apellidos:
+    if nombre or apellidos:
         html += f"<p>El nombre completo es: </p>"
         html += f"<h3><strong>{nombre} {apellidos}</strong></h3>"
      
