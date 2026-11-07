@@ -68,4 +68,9 @@ def pagina(request):
     return HttpResponse(layout + """
         <h1>Página de mi sitio web</h1>
         <p>Creada por Javier Checa</p>
-    """)   
+    """)
+    
+def contacto(request):
+    return HttpResponse(layout + """
+        <h2>Contacto</h2>
+        """)
