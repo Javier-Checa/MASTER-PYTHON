@@ -70,5 +70,5 @@ def pagina(request):
         <p>Creada por Javier Checa</p>
     """)
     
-def contacto(request, nombre="Antonio", apellidos="Pérez"):
+def contacto(request, nombre="", apellidos=""):
     return HttpResponse(layout + f"""<h2>Contacto {nombre} {apellidos}</h2>""")
