@@ -19,7 +19,10 @@ layout = """
     </li>
     <li> 
         <a href="/pagina-pruebas">Página de pruebas</a> 
-    </li>      
+    </li>
+    <li> 
+        <a href="/contacto">Contacto</a> 
+    </li>         
 </ul>
 <hr/>
 
