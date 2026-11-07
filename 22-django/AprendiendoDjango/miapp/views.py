@@ -74,6 +74,7 @@ def contacto(request, nombre="", apellidos=""):
     html = ""
     
     if nombre and apellidos:
-        html += f"<h3>El nombre completo es: <strong>{nombre} {apellidos}</strong></h3>"
+        html += f"<p>El nombre completo es: </p>"
+        html += f"<h3><strong>{nombre} {apellidos}</strong></h3>"
      
     return HttpResponse(layout + f"<h2>Contacto</h2>" + html)
