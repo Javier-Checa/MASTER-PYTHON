@@ -70,7 +70,7 @@ def pagina(request):
         <p>Creada por Javier Checa</p>
     """)
     
-def contacto(request):
-    return HttpResponse(layout + """
-        <h2>Contacto</h2>
-        """)
+def contacto(request, nombre):
+    return HttpResponse(layout + f"
+        <h2>Contacto {nombre}</h2>
+        ")
