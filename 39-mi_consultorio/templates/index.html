@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Consultorio Médico</title>
+    <style>
+        :root {
+            --primary: #2b6cb0;
+            --primary-hover: #2c5282;
+            --bg: #f7fafc;
+            --card-bg: #ffffff;
+            --text: #2d3748;
+            --border: #e2e8f0;
+            --danger: #e53e3e;
+            --success: #38a169;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--bg); color: var(--text); display: flex; min-height: 100vh; }
+
+        /* Sidebar Nav */
+        nav { width: 240px; background-color: #1a202c; color: white; padding: 20px; display: flex; flex-direction: column; gap: 15px; }
+        nav h2 { font-size: 1.2rem; margin-bottom: 20px; color: #63b3ed; text-align: center; }
+        nav button { background: none; border: none; color: #a0aec0; padding: 12px; text-align: left; font-size: 1rem; cursor: pointer; border-radius: 6px; transition: 0.2s; }
+        nav button.active, nav button:hover { background-color: #2d3748; color: white; }
+
+        /* Main Content Area */
+        main { flex: 1; padding: 30px; overflow-y: auto; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+
+        /* General Forms & Inputs */
+        form { background: var(--card-bg); padding: 20px; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 25px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+        .form-group { display: flex; flex-direction: column; gap: 5px; }
+        label { font-size: 0.85rem; font-weight: 600; color: #4a5568; }
+        input, select, textarea { padding: 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.95rem; width: 100%; }
+        .full-width { grid-column: 1 / -1; }
+        
+        button.btn { background: var(--primary); color: white; border: none; padding: 10px 18px; border-radius: 6px; cursor: pointer; font-weight: 600; transition: 0.2s; }
+        button.btn:hover { background: var(--primary-hover); }
+        button.btn-danger { background: var(--danger); }
+        button.btn-danger:hover { background: #c53030; }
+
+        /* Tables */
+        .table-container { background: var(--card-bg); border-radius: 8px; border: 1px solid var(--border); overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.95rem; }
+        th, td { padding: 12px 16px; border-bottom: 1px solid var(--border); }
+        th { background: #edf2f7; font-weight: 600; }
+        tr:hover { background: #f8fafc; }
+        .badge { padding: 4px 8px; border-radius: 12px; font-size: 0.8rem; font-weight: bold; background: #e2e8f0; }
+        .badge-esp { background: #ebf8ff; color: #2b6cb0; }
+        .actions { display: flex; gap: 8px; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <h2>🩺 Consultorio</h2>
+        <button class="active" onclick="switchTab('citas')">📅 Agendar Citas</button>
+        <button onclick="switchTab('pacientes')">👤 Pacientes</button>
+        <button onclick="switchTab('medicos')">👨‍⚕️ Médicos</button>
+    </nav>
+
+    <main>
+        <!-- CITAS -->
+        <section id="tab-citas" class="tab-content active">
+            <div class="header"><h1>Gestión de Citas Médicas</h1></div>
+            <form id="form-cita" onsubmit="guardarCita(event)">
+                <input type="hidden" id="cita-id">
+                <div class="form-group">
+                    <label>Paciente</label>
+                    <select id="cita-paciente" required><option value="">Seleccione...</option></select>
+                </div>
+                <div class="form-group">
+                    <label>Médico / Especialidad</label>
+                    <select id="cita-medico" required><option value="">Seleccione...</option></select>
+                </div>
+                <div class="form-group">
+                    <label>Fecha</label>
+                    <input type="date" id="cita-fecha" required>
+                </div>
+                <div class="form-group">
+                    <label>Hora</label>
+                    <input type="time" id="cita-hora" required>
+                </div>
+                <div class="form-group">
+                    <label>Estado</label>
+                    <select id="cita-estado">
+                        <option value="Programada">Programada</option>
+                        <option value="Completada">Completada</option>
+                        <option value="Cancelada">Cancelada</option>
+                    </select>
+                </div>
+                <div class="form-group full-width">
+                    <label>Motivo de Consulta</label>
+                    <input type="text" id="cita-motivo" placeholder="Ej. Chequeo general, Dolor agudo...">
+                </div>
+                <div class="full-width">
+                    <button type="submit" class="btn">Agendar Cita</button>
+                    <button type="button" class="btn btn-danger" onclick="limpiarFormCita()" style="display:none;" id="btn-cancelar-cita">Cancelar Edición</button>
+                </div>
+            </form>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Fecha/Hora</th>
+                            <th>Paciente</th>
+                            <th>Médico</th>
+                            <th>Especialidad</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-citas"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- PACIENTES -->
+        <section id="tab-pacientes" class="tab-content">
+            <div class="header"><h1>Directorio de Pacientes</h1></div>
+            <form id="form-paciente" onsubmit="guardarPaciente(event)">
+                <input type="hidden" id="paciente-id">
+                <div class="form-group">
+                    <label>Nombre Completo</label>
+                    <input type="text" id="paciente-nombre" required>
+                </div>
+                <div class="form-group">
+                    <label>Documento ID</label>
+                    <input type="text" id="paciente-doc" required>
+                </div>
+                <div class="form-group">
+                    <label>Teléfono</label>
+                    <input type="tel" id="paciente-telefono">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="paciente-email">
+                </div>
+                <div class="full-width">
+                    <button type="submit" class="btn">Guardar Paciente</button>
+                    <button type="button" class="btn btn-danger" onclick="limpiarFormPaciente()" style="display:none;" id="btn-cancelar-paciente">Cancelar Edición</button>
+                </div>
+            </form>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Doc. ID</th>
+                            <th>Nombre</th>
+                            <th>Teléfono</th>
+                            <th>Email</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-pacientes"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- MEDICOS -->
+        <section id="tab-medicos" class="tab-content">
+            <div class="header"><h1>Registro de Médicos</h1></div>
+            <form id="form-medico" onsubmit="guardarMedico(event)">
+                <input type="hidden" id="medico-id">
+                <div class="form-group">
+                    <label>Nombre Completo</label>
+                    <input type="text" id="medico-nombre" required>
+                </div>
+                <div class="form-group">
+                    <label>Especialidad (6 disponibles)</label>
+                    <select id="medico-especialidad" required><option value="">Seleccione...</option></select>
+                </div>
+                <div class="form-group">
+                    <label>Teléfono</label>
+                    <input type="tel" id="medico-telefono">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="medico-email">
+                </div>
+                <div class="full-width">
+                    <button type="submit" class="btn">Guardar Médico</button>
+                    <button type="button" class="btn btn-danger" onclick="limpiarFormMedico()" style="display:none;" id="btn-cancelar-medico">Cancelar Edición</button>
+                </div>
+            </form>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Especialidad</th>
+                            <th>Teléfono</th>
+                            <th>Email</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-medicos"></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Navegación entre pestañas
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('nav button').forEach(el => el.classList.remove('active'));
+            document.getElementById(`tab-${tabId}`).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Cargar datos al iniciar
+        document.addEventListener('DOMContentLoaded', () => {
+            cargarEspecialidades();
+            cargarMedicos();
+            cargarPacientes();
+            cargarCitas();
+        });
+
+        // --- ESPECIALIDADES ---
+        async function cargarEspecialidades() {
+            const res = await fetch('/api/especialidades');
+            const data = await res.json();
+            const selectMedico = document.getElementById('medico-especialidad');
+            selectMedico.innerHTML = '<option value="">Seleccione...</option>';
+            data.forEach(e => selectMedico.innerHTML += `<option value="${e.id}">${e.nombre}</option>`);
+        }
+
+        // --- MÉRCOS (CRUD) ---
+        async function cargarMedicos() {
+            const res = await fetch('/api/medicos');
+            const data = await res.json();
+            const tabla = document.getElementById('tabla-medicos');
+            const selectCita = document.getElementById('cita-medico');
+            
+            tabla.innerHTML = '';
+            selectCita.innerHTML = '<option value="">Seleccione...</option>';
+            
+            data.forEach(m => {
+                tabla.innerHTML += `
+                    <tr>
+                        <td>Dr(a). ${m.nombre}</td>
+                        <td><span class="badge badge-esp">${m.especialidad}</span></td>
+                        <td>${m.telefono || '-'}</td>
+                        <td>${m.email || '-'}</td>
+                        <td class="actions">
+                            <button class="btn" onclick='editarMedico(${JSON.stringify(m)})'>Editar</button>
+                            <button class="btn btn-danger" onclick="eliminarMedico(${m.id})">Eliminar</button>
+                        </td>
+                    </tr>`;
+                selectCita.innerHTML += `<option value="${m.id}">Dr(a). ${m.nombre} (${m.especialidad})</option>`;
+            });
+        }
+
+        async function guardarMedico(e) {
+            e.preventDefault();
+            const id = document.getElementById('medico-id').value;
+            const body = {
+                nombre: document.getElementById('medico-nombre').value,
+                especialidad_id: document.getElementById('medico-especialidad').value,
+                telefono: document.getElementById('medico-telefono').value,
+                email: document.getElementById('medico-email').value
+            };
+            
+            const method = id ? 'PUT' : 'POST';
+            const url = id ? `/api/medicos/${id}` : '/api/medicos';
+            
+            await fetch(url, { method, headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body) });
+            limpiarFormMedico();
+            cargarMedicos();
+            cargarCitas();
+        }
+
+        function editarMedico(m) {
+            document.getElementById('medico-id').value = m.id;
+            document.getElementById('medico-nombre').value = m.nombre;
+            document.getElementById('medico-especialidad').value = m.especialidad_id;
+            document.getElementById('medico-telefono').value = m.telefono;
+            document.getElementById('medico-email').value = m.email;
+            document.getElementById('btn-cancelar-medico').style.display = 'inline-block';
+        }
+
+        function limpiarFormMedico() {
+            document.getElementById('form-medico').reset();
+            document.getElementById('medico-id').value = '';
+            document.getElementById('btn-cancelar-medico').style.display = 'none';
+        }
+
+        async function eliminarMedico(id) {
+            if(confirm('¿Seguro que deseas eliminar este médico?')) {
+                await fetch(`/api/medicos/${id}`, { method: 'DELETE' });
+                cargarMedicos();
+                cargarCitas();
+            }
+        }
+
+        // --- PACIENTES (CRUD) ---
+        async function cargarPacientes() {
+            const res = await fetch('/api/pacientes');
+            const data = await res.json();
+            const tabla = document.getElementById('tabla-pacientes');
+            const selectCita = document.getElementById('cita-paciente');
+            
+            tabla.innerHTML = '';
+            selectCita.innerHTML = '<option value="">Seleccione...</option>';
+            
+            data.forEach(p => {
+                tabla.innerHTML += `
+                    <tr>
+                        <td>${p.documento}</td>
+                        <td>${p.nombre}</td>
+                        <td>${p.telefono || '-'}</td>
+                        <td>${p.email || '-'}</td>
+                        <td class="actions">
+                            <button class="btn" onclick='editarPaciente(${JSON.stringify(p)})'>Editar</button>
+                            <button class="btn btn-danger" onclick="eliminarPaciente(${p.id})">Eliminar</button>
+                        </td>
+                    </tr>`;
+                selectCita.innerHTML += `<option value="${p.id}">${p.nombre} (ID: ${p.documento})</option>`;
+            });
+        }
+
+        async function guardarPaciente(e) {
+            e.preventDefault();
+            const id = document.getElementById('paciente-id').value;
+            const body = {
+                nombre: document.getElementById('paciente-nombre').value,
+                documento: document.getElementById('paciente-doc').value,
+                telefono: document.getElementById('paciente-telefono').value,
+                email: document.getElementById('paciente-email').value
+            };
+            
+            const method = id ? 'PUT' : 'POST';
+            const url = id ? `/api/pacientes/${id}` : '/api/pacientes';
+            
+            const res = await fetch(url, { method, headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body) });
+            if(!res.ok) {
+                const err = await res.json();
+                alert(err.error || 'Error al guardar');
+                return;
+            }
+            limpiarFormPaciente();
+            cargarPacientes();
+            cargarCitas();
+        }
+
+        function editarPaciente(p) {
+            document.getElementById('paciente-id').value = p.id;
+            document.getElementById('paciente-nombre').value = p.nombre;
+            document.getElementById('paciente-doc').value = p.documento;
+            document.getElementById('paciente-telefono').value = p.telefono;
+            document.getElementById('paciente-email').value = p.email;
+            document.getElementById('btn-cancelar-paciente').style.display = 'inline-block';
+        }
+
+        function limpiarFormPaciente() {
+            document.getElementById('form-paciente').reset();
+            document.getElementById('paciente-id').value = '';
+            document.getElementById('btn-cancelar-paciente').style.display = 'none';
+        }
+
+        async function eliminarPaciente(id) {
+            if(confirm('¿Seguro que deseas eliminar este paciente?')) {
+                await fetch(`/api/pacientes/${id}`, { method: 'DELETE' });
+                cargarPacientes();
+                cargarCitas();
+            }
+        }
+
+        // --- CITAS (CRUD) ---
+        async function cargarCitas() {
+            const res = await fetch('/api/citas');
+            const data = await res.json();
+            const tabla = document.getElementById('tabla-citas');
+            tabla.innerHTML = '';
+            
+            data.forEach(c => {
+                tabla.innerHTML += `
+                    <tr>
+                        <td><strong>${c.fecha}</strong> a las ${c.hora}</td>
+                        <td>${c.paciente_nombre}</td>
+                        <td>Dr(a). ${c.medico_nombre}</td>
+                        <td><span class="badge badge-esp">${c.especialidad}</span></td>
+                        <td><span class="badge">${c.estado}</span></td>
+                        <td class="actions">
+                            <button class="btn" onclick='editarCita(${JSON.stringify(c)})'>Editar</button>
+                            <button class="btn btn-danger" onclick="eliminarCita(${c.id})">Cancelar</button>
+                        </td>
+                    </tr>`;
+            });
+        }
+
+        async function guardarCita(e) {
+            e.preventDefault();
+            const id = document.getElementById('cita-id').value;
+            const body = {
+                paciente_id: document.getElementById('cita-paciente').value,
+                medico_id: document.getElementById('cita-medico').value,
+                fecha: document.getElementById('cita-fecha').value,
+                hora: document.getElementById('cita-hora').value,
+                estado: document.getElementById('cita-estado').value,
+                motivo: document.getElementById('cita-motivo').value
+            };
+            
+            const method = id ? 'PUT' : 'POST';
+            const url = id ? `/api/citas/${id}` : '/api/citas';
+            
+            await fetch(url, { method, headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body) });
+            limpiarFormCita();
+            cargarCitas();
+        }
+
+        function editarCita(c) {
+            document.getElementById('cita-id').value = c.id;
+            document.getElementById('cita-paciente').value = c.paciente_id;
+            document.getElementById('cita-medico').value = c.medico_id;
+            document.getElementById('cita-fecha').value = c.fecha;
+            document.getElementById('cita-hora').value = c.hora;
+            document.getElementById('cita-estado').value = c.estado;
+            document.getElementById('cita-motivo').value = c.motivo;
+            document.getElementById('btn-cancelar-cita').style.display = 'inline-block';
+        }
+
+        function limpiarFormCita() {
+            document.getElementById('form-cita').reset();
+            document.getElementById('cita-id').value = '';
+            document.getElementById('btn-cancelar-cita').style.display = 'none';
+        }
+
+        async function eliminarCita(id) {
+            if(confirm('¿Deseas cancelar/eliminar esta cita?')) {
+                await fetch(`/api/citas/${id}`, { method: 'DELETE' });
+                cargarCitas();
+            }
+        }
+    </script>
+</body>
+</html>
