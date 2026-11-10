@@ -68,9 +68,11 @@ def hola_mundo(request):
         <p>Estamos en la ruta: <strong>/hola-mundo/</strong></p>""")
     
 def pagina(request, redirigir=0):
+    
     if redirigir == 1:
-        return redirect("inicio")
-    return HttpResponse(layout + """
+        return redirect('/contacto/javier/checa')
+    
+    return HttpResponse(layout+"""
         <h1>Página de mi sitio web</h1>
         <p>Creada por Javier Checa</p>
     """)
