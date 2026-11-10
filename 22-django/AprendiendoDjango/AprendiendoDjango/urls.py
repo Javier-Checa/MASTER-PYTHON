@@ -18,16 +18,16 @@ from django.urls import path
 
 # Importamos la vista que creamos en miapp/views.py
 # from miapp import views
-import miapp.views
+from miapp import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', miapp.views.index, name="index"),
-    path('inicio/', miapp.views.index, name="inicio"),
-    path('hola-mundo/', miapp.views.hola_mundo, name="hola_mundo"),
-    path('tictactoe/', miapp.views.tictactoe, name="tictactoe"),    
-    path('pagina-pruebas/<int:redirigir>', miapp.views.pagina, name="pagina"),
-    path('contacto/', miapp.views.contacto, name="contacto"),
-    path('contacto/<str:nombre>', miapp.views.contacto, name="contacto"),
-    path('contacto/<str:nombre>/<str:apellidos>', miapp.views.contacto, name="contacto")
+    path('', views.index, name="index"),
+    path('inicio/', views.index, name="inicio"),
+    path('hola-mundo/', views.hola_mundo, name="hola_mundo"),
+    path('tictactoe/', views.tictactoe, name="tictactoe"),    
+    path('pagina-pruebas/<int:redirigir>', views.pagina, name="pagina"),
+    path('contacto/', views.contacto, name="contacto"),
+    path('contacto/<str:nombre>', views.contacto, name="contacto"),
+    path('contacto/<str:nombre>/<str:apellidos>', views.contacto, name="contacto")
 ]
