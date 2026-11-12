@@ -126,3 +126,993 @@
             border-radius: 4px;
         }
     </style>
+
+
+</head>
+<body class="wood-pattern min-h-screen text-amber-100 font-sans flex flex-col justify-between overflow-x-hidden">
+
+    <!-- Header / Barra Superior -->
+    <header class="w-full bg-stone-950/80 backdrop-blur-md border-b border-amber-900/40 px-4 py-3 sticky top-0 z-40 shadow-xl">
+        <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-3">
+            
+            <!-- Logo & Título -->
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-600 to-amber-900 flex items-center justify-center shadow-lg border border-amber-400/40">
+                    <span class="font-oriental text-2xl font-bold text-amber-200">🀄</span>
+                </div>
+                <div>
+                    <h1 class="font-cinzel text-xl md:text-2xl font-extrabold tracking-wider bg-gradient-to-r from-amber-200 via-amber-400 to-yellow-600 bg-clip-text text-transparent">
+                        MAHJONG CONNECT
+                    </h1>
+                    <p class="text-xs text-amber-400/70 font-oriental tracking-widest hidden sm:block">連連看 · SHISEN-SHO</p>
+                </div>
+            </div>
+
+            <!-- Métricas Principales (Tiempo, Score, Parejas) -->
+            <div class="flex items-center gap-4 sm:gap-6 bg-stone-900/90 px-4 py-1.5 rounded-2xl border border-amber-800/40 shadow-inner">
+                <!-- Temporizador -->
+                <div class="flex items-center gap-2">
+                    <i class="fa-regular font-bold fa-clock text-amber-400 text-sm"></i>
+                    <div class="flex flex-col">
+                        <span class="text-[10px] text-amber-400/70 uppercase tracking-wider font-semibold">Tiempo</span>
+                        <span id="timerDisplay" class="font-mono font-bold text-base md:text-lg text-amber-100 leading-none">00:00</span>
+                    </div>
+                </div>
+
+                <div class="h-6 w-px bg-amber-900/50"></div>
+
+                <!-- Puntuación -->
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-trophy text-amber-400 text-sm"></i>
+                    <div class="flex flex-col">
+                        <span class="text-[10px] text-amber-400/70 uppercase tracking-wider font-semibold">Puntos</span>
+                        <span id="scoreDisplay" class="font-mono font-bold text-base md:text-lg text-yellow-400 leading-none">0</span>
+                    </div>
+                </div>
+
+                <div class="h-6 w-px bg-amber-900/50"></div>
+
+                <!-- Parejas Restantes -->
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-layer-group text-emerald-400 text-sm"></i>
+                    <div class="flex flex-col">
+                        <span class="text-[10px] text-emerald-400/70 uppercase tracking-wider font-semibold">Restantes</span>
+                        <span id="pairsDisplay" class="font-mono font-bold text-base md:text-lg text-emerald-300 leading-none">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Acciones Rápidas (Sonido / Ayuda) -->
+            <div class="flex items-center gap-2">
+                <button id="soundBtn" class="p-2.5 rounded-xl bg-stone-800/80 hover:bg-stone-700 text-amber-300 border border-amber-700/30 transition-all shadow-md active:scale-95" title="Silenciar / Activar Sonido">
+                    <i id="soundIcon" class="fa-solid fa-volume-high text-lg"></i>
+                </button>
+                <button id="helpBtn" class="p-2.5 rounded-xl bg-stone-800/80 hover:bg-stone-700 text-amber-300 border border-amber-700/30 transition-all shadow-md active:scale-95" title="Instrucciones">
+                    <i class="fa-solid fa-circle-question text-lg"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sub-Barra de Controles de Partida -->
+    <nav class="max-w-6xl w-full mx-auto px-4 py-2 flex flex-wrap items-center justify-between gap-3 text-sm">
+        
+        <!-- Seleccionador de Dificultad -->
+        <div class="flex items-center gap-1 bg-stone-950/60 p-1 rounded-xl border border-amber-900/30">
+            <button data-diff="easy" class="diff-btn px-3 py-1 rounded-lg text-xs font-semibold transition-all">Fácil</button>
+            <button data-diff="normal" class="diff-btn px-3 py-1 rounded-lg text-xs font-semibold transition-all">Normal</button>
+            <button data-diff="hard" class="diff-btn px-3 py-1 rounded-lg text-xs font-semibold transition-all">Difícil</button>
+        </div>
+
+        <!-- Indicador de Multiplicador Combo -->
+        <div id="comboBadge" class="hidden items-center gap-1.5 px-3 py-1 rounded-full bg-gradient-to-r from-amber-600 to-red-600 text-white font-bold text-xs shadow-lg animate-bounce">
+            <i class="fa-solid fa-bolt"></i>
+            <span id="comboText">COMBO x2</span>
+        </div>
+
+        <!-- Botones de Utilidades de Juego -->
+        <div class="flex items-center gap-2">
+            <button id="hintBtn" class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-emerald-800 to-emerald-900 hover:from-emerald-700 hover:to-emerald-800 text-emerald-100 border border-emerald-500/40 shadow-lg font-semibold text-xs transition-all active:scale-95">
+                <i class="fa-solid fa-lightbulb text-yellow-300"></i>
+                <span>Pista (<span id="hintCount">3</span>)</span>
+            </button>
+            
+            <button id="shuffleBtn" class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-800 to-amber-900 hover:from-amber-700 hover:to-amber-800 text-amber-100 border border-amber-500/40 shadow-lg font-semibold text-xs transition-all active:scale-95">
+                <i class="fa-solid fa-shuffle text-amber-300"></i>
+                <span>Mezclar (<span id="shuffleCount">2</span>)</span>
+            </button>
+
+            <button id="restartBtn" class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-stone-800 hover:bg-stone-700 text-amber-200 border border-amber-800/40 shadow-md font-semibold text-xs transition-all active:scale-95">
+                <i class="fa-solid fa-rotate-right"></i>
+                <span>Reiniciar</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Area Principal del Tablero -->
+    <main class="flex-grow flex items-center justify-center p-2 sm:p-4 relative">
+        <!-- Banner de Mensaje Flotante (Auto-mezcla / Toast) -->
+        <div id="toastMessage" class="hidden absolute top-4 left-1/2 -translate-x-1/2 z-50 px-6 py-2.5 rounded-2xl bg-amber-500/90 text-stone-950 font-bold text-sm sm:text-base shadow-2xl backdrop-blur-md border border-amber-300 animate-pulse text-center">
+            ¡Sin movimientos! Mezclando tablero...
+        </div>
+
+        <!-- Contenedor Relativo del Tablero y Canvas -->
+        <div class="relative flex items-center justify-center p-3 sm:p-5 rounded-3xl bg-stone-950/70 border-2 border-amber-900/50 shadow-2xl backdrop-blur-sm max-w-full overflow-auto">
+            <!-- Canvas para trazado del camino de conexión -->
+            <canvas id="pathCanvas"></canvas>
+
+            <!-- Grid de Fichas -->
+            <div id="boardGrid" class="grid gap-1.5 sm:gap-2 justify-center items-center relative z-20">
+                <!-- Se llena dinámicamente con JS -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full text-center py-2 text-xs text-amber-500/50 font-oriental border-t border-amber-900/20">
+        Mahjong Connect Oriental · Desafía tu mente vinculando símbolos milenarios
+    </footer>
+
+    <!-- MODAL: Instrucciones de Juego -->
+    <div id="helpModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-stone-900 border-2 border-amber-600/60 rounded-3xl p-6 max-w-lg w-full text-amber-100 shadow-2xl transform scale-95 transition-transform duration-300 relative">
+            <button id="closeHelpBtn" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-stone-800 text-amber-400 hover:bg-stone-700 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="flex items-center gap-3 mb-4">
+                <span class="text-3xl">🀄</span>
+                <h2 class="font-cinzel text-xl font-bold text-amber-300">¿Cómo jugar Mahjong Connect?</h2>
+            </div>
+            <div class="space-y-3 text-sm text-amber-200/90 leading-relaxed">
+                <p><strong class="text-amber-400">Objetivo:</strong> Elimina todas las fichas del tablero conectando parejas de símbolos idénticos.</p>
+                <div class="bg-stone-950/70 p-3 rounded-xl border border-amber-900/40 space-y-2">
+                    <p class="font-semibold text-amber-300 text-xs uppercase tracking-wider">Regla del Camino (Shisen-Sho):</p>
+                    <ul class="list-disc list-inside space-y-1 text-xs text-amber-100">
+                        <li>El camino entre 2 fichas idénticas puede tener como máximo <strong>3 segmentos rectos</strong> (hasta 2 giros de 90°).</li>
+                        <li>El camino no puede atravesar ninguna otra ficha.</li>
+                        <li>¡Se pueden usar los espacios vacíos del <strong>borde exterior</strong> del tablero!</li>
+                    </ul>
+                </div>
+                <div class="space-y-1 text-xs">
+                    <p>⚡ <strong class="text-amber-300">Combos:</strong> Conecta parejas rápidamente para multiplicar tu puntuación.</p>
+                    <p>💡 <strong class="text-amber-300">Pistas y Mezcla:</strong> Utilízalos si te quedas atascado. El juego mezclará el tablero automáticamente si no existen movimientos posibles.</p>
+                </div>
+            </div>
+            <button id="understoodHelpBtn" class="mt-6 w-full py-2.5 rounded-xl bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-stone-950 font-bold text-sm shadow-lg transition-all">
+                ¡Entendido, a jugar!
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL: Victoria / Final de Juego -->
+    <div id="victoryModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-stone-900 border-2 border-yellow-500/80 rounded-3xl p-6 sm:p-8 max-w-md w-full text-center text-amber-100 shadow-2xl transform scale-95 transition-transform duration-300">
+            <div class="text-5xl mb-2 animate-bounce">🏆</div>
+            <h2 class="font-cinzel text-2xl font-extrabold text-yellow-400 mb-1">¡VICTORIA REGAL!</h2>
+            <p class="text-xs text-amber-300/80 font-oriental mb-6">Has completado el tablero con maestría</p>
+
+            <!-- Resumen de Estadísticas -->
+            <div class="bg-stone-950/80 rounded-2xl p-4 border border-amber-800/40 space-y-3 mb-6">
+                <div class="flex justify-between items-center text-sm">
+                    <span class="text-amber-400/80">Tiempo Total:</span>
+                    <span id="winTime" class="font-mono font-bold text-amber-200">00:00</span>
+                </div>
+                <div class="flex justify-between items-center text-sm">
+                    <span class="text-amber-400/80">Puntuación Final:</span>
+                    <span id="winScore" class="font-mono font-bold text-yellow-400 text-lg">0</span>
+                </div>
+                <div class="flex justify-between items-center text-sm">
+                    <span class="text-amber-400/80">Combo Máximo:</span>
+                    <span id="winCombo" class="font-mono font-bold text-emerald-400">x1</span>
+                </div>
+                <div class="flex justify-between items-center text-sm">
+                    <span class="text-amber-400/80">Pistas Usadas:</span>
+                    <span id="winHints" class="font-mono font-bold text-amber-300">0</span>
+                </div>
+            </div>
+
+            <!-- Botones de Acción -->
+            <button id="playAgainBtn" class="w-full py-3 rounded-xl bg-gradient-to-r from-yellow-500 via-amber-500 to-yellow-600 hover:from-yellow-400 hover:to-yellow-500 text-stone-950 font-extrabold text-base shadow-xl transition-all transform active:scale-95">
+                Jugar de Nuevo
+            </button>
+        </div>
+    </div>
+
+    <!-- CÓDIGO JS PRINCIPAL DEL JUEGO -->
+    <script>
+        /* ==========================================================================
+           1. SISTEMA DE SONIDOS SINTETIZADOS (Web Audio API)
+           ========================================================================== */
+        class SoundSystem {
+            constructor() {
+                this.ctx = null;
+                this.muted = false;
+            }
+
+            init() {
+                if (!this.ctx) {
+                    const AudioContext = window.AudioContext || window.webkitAudioContext;
+                    this.ctx = new AudioContext();
+                }
+                if (this.ctx.state === 'suspended') {
+                    this.ctx.resume();
+                }
+            }
+
+            playClick() {
+                if (this.muted) return;
+                this.init();
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(400, this.ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(120, this.ctx.currentTime + 0.08);
+                gain.gain.setValueAtTime(0.3, this.ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.08);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(this.ctx.currentTime + 0.08);
+            }
+
+            playMatch() {
+                if (this.muted) return;
+                this.init();
+                const notes = [523.25, 659.25, 783.99, 1046.50]; // Arpegio Do Mayor (C5, E5, G5, C6)
+                notes.forEach((freq, idx) => {
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, this.ctx.currentTime + idx * 0.06);
+                    gain.gain.setValueAtTime(0.2, this.ctx.currentTime + idx * 0.06);
+                    gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + idx * 0.06 + 0.25);
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.start(this.ctx.currentTime + idx * 0.06);
+                    osc.stop(this.ctx.currentTime + idx * 0.06 + 0.25);
+                });
+            }
+
+            playError() {
+                if (this.muted) return;
+                this.init();
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(160, this.ctx.currentTime);
+                osc.frequency.linearRampToValueAtTime(110, this.ctx.currentTime + 0.15);
+                gain.gain.setValueAtTime(0.2, this.ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.15);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(this.ctx.currentTime + 0.15);
+            }
+
+            playShuffle() {
+                if (this.muted) return;
+                this.init();
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(300, this.ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(800, this.ctx.currentTime + 0.2);
+                gain.gain.setValueAtTime(0.25, this.ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.2);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(this.ctx.currentTime + 0.2);
+            }
+
+            playWin() {
+                if (this.muted) return;
+                this.init();
+                const melody = [392, 523.25, 659.25, 783.99, 1046.50];
+                melody.forEach((freq, idx) => {
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(freq, this.ctx.currentTime + idx * 0.12);
+                    gain.gain.setValueAtTime(0.3, this.ctx.currentTime + idx * 0.12);
+                    gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + idx * 0.12 + 0.4);
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.start(this.ctx.currentTime + idx * 0.12);
+                    osc.stop(this.ctx.currentTime + idx * 0.12 + 0.4);
+                });
+            }
+        }
+
+        const audio = new SoundSystem();
+
+        /* ==========================================================================
+           2. DEFINICIÓN DE FICHAS DE MAHJONG (Unicode y Render HTML Nítido)
+           ========================================================================== */
+        const TILE_CATALOG = [
+            // Caracteres (Wan)
+            { id: 'wan_1', label: '一萬', type: 'wan', color: 'text-red-700' },
+            { id: 'wan_2', label: '二萬', type: 'wan', color: 'text-red-700' },
+            { id: 'wan_3', label: '三萬', type: 'wan', color: 'text-red-700' },
+            { id: 'wan_4', label: '四萬', type: 'wan', color: 'text-blue-800' },
+            { id: 'wan_5', label: '五萬', type: 'wan', color: 'text-emerald-700' },
+            { id: 'wan_6', label: '六萬', type: 'wan', color: 'text-red-700' },
+            { id: 'wan_7', label: '七萬', type: 'wan', color: 'text-blue-800' },
+            { id: 'wan_8', label: '八萬', type: 'wan', color: 'text-emerald-700' },
+            { id: 'wan_9', label: '九萬', type: 'wan', color: 'text-red-700' },
+
+            // Bambúes (Tiao)
+            { id: 'bamboo_1', symbol: '🀀', label: '🎋', type: 'bamboo', color: 'text-emerald-700' },
+            { id: 'bamboo_2', symbol: '🀁', label: '🎋2', type: 'bamboo', color: 'text-emerald-700' },
+            { id: 'bamboo_3', symbol: '🀂', label: '🎋3', type: 'bamboo', color: 'text-emerald-700' },
+            { id: 'bamboo_4', symbol: '🀃', label: '🎋4', type: 'bamboo', color: 'text-emerald-700' },
+            { id: 'bamboo_5', symbol: '🀄', label: '🎋5', type: 'bamboo', color: 'text-emerald-700' },
+            { id: 'bamboo_6', symbol: '🀅', label: '🎋6', type: 'bamboo', color: 'text-emerald-700' },
+
+            // Círculos (Pin)
+            { id: 'pin_1', label: '🔴', type: 'pin', color: 'text-red-600' },
+            { id: 'pin_2', label: '🔵', type: 'pin', color: 'text-blue-600' },
+            { id: 'pin_3', label: '🟢', type: 'pin', color: 'text-emerald-600' },
+            { id: 'pin_4', label: '🟡', type: 'pin', color: 'text-amber-500' },
+            { id: 'pin_5', label: '🟣', type: 'pin', color: 'text-purple-600' },
+
+            // Vientos y Dragones
+            { id: 'wind_east', label: '東', type: 'honor', color: 'text-blue-900 font-bold' },
+            { id: 'wind_south', label: '南', type: 'honor', color: 'text-red-800 font-bold' },
+            { id: 'wind_west', label: '西', type: 'honor', color: 'text-emerald-800 font-bold' },
+            { id: 'wind_north', label: '北', type: 'honor', color: 'text-stone-800 font-bold' },
+            { id: 'dragon_red', label: '中', type: 'honor', color: 'text-red-600 font-extrabold' },
+            { id: 'dragon_green', label: '發', type: 'honor', color: 'text-emerald-600 font-extrabold' },
+            { id: 'dragon_white', label: '白', type: 'honor', color: 'text-blue-600 font-extrabold' },
+
+            // Flores / Estaciones
+            { id: 'flower_1', label: '🌸', type: 'flower', color: 'text-pink-600' },
+            { id: 'flower_2', label: '🪷', type: 'flower', color: 'text-teal-600' },
+            { id: 'flower_3', label: '菊', type: 'flower', color: 'text-amber-600 font-bold' }
+        ];
+
+        /* Configuración de dificultades */
+        const DIFFICULTIES = {
+            easy: { rows: 6, cols: 8, tileTypes: 8, label: 'Fácil' },
+            normal: { rows: 8, cols: 10, tileTypes: 14, label: 'Normal' },
+            hard: { rows: 8, cols: 14, tileTypes: 22, label: 'Difícil' }
+        };
+
+        /* ==========================================================================
+           3. ESTADO DEL JUEGO Y VARIABLES GLOBAL
+           ========================================================================== */
+        let currentDiff = 'normal';
+        let gridRows = 8;
+        let gridCols = 10;
+        let grid = []; // Matriz con acolchado de ceros: (gridRows + 2) x (gridCols + 2)
+        let selectedTile = null; // { r, c }
+        let hintsLeft = 3;
+        let shufflesLeft = 2;
+        let score = 0;
+        let pairsRemaining = 0;
+        let timerInterval = null;
+        let secondsElapsed = 0;
+        let combo = 0;
+        let lastMatchTime = 0;
+        let hintsUsedTotal = 0;
+        let maxComboReached = 1;
+        let isProcessingMatch = false;
+
+        /* Referencias al DOM */
+        const boardGrid = document.getElementById('boardGrid');
+        const pathCanvas = document.getElementById('pathCanvas');
+        const ctx = pathCanvas.getContext('2d');
+        const timerDisplay = document.getElementById('timerDisplay');
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        const pairsDisplay = document.getElementById('pairsDisplay');
+        const comboBadge = document.getElementById('comboBadge');
+        const comboText = document.getElementById('comboText');
+        const hintCount = document.getElementById('hintCount');
+        const shuffleCount = document.getElementById('shuffleCount');
+        const toastMessage = document.getElementById('toastMessage');
+
+        /* ==========================================================================
+           4. INICIALIZACIÓN Y GESTIÓN DE TABLERO
+           ========================================================================== */
+        function initGame() {
+            clearInterval(timerInterval);
+            secondsElapsed = 0;
+            score = 0;
+            combo = 0;
+            lastMatchTime = 0;
+            hintsUsedTotal = 0;
+            maxComboReached = 1;
+            selectedTile = null;
+            isProcessingMatch = false;
+
+            hintsLeft = currentDiff === 'easy' ? 4 : (currentDiff === 'normal' ? 3 : 2);
+            shufflesLeft = currentDiff === 'easy' ? 3 : (currentDiff === 'normal' ? 2 : 1);
+
+            updateUIHeader();
+
+            const config = DIFFICULTIES[currentDiff];
+            gridRows = config.rows;
+            gridCols = config.cols;
+
+            // Generar tablero con parejas aseguradas y resoluble
+            generateSolvableBoard(config);
+
+            startTimer();
+            renderBoard();
+            resizeCanvas();
+
+            // Verificar si el tablero inicial tiene parejas válidas
+            checkAvailableMovesOrShuffle(false);
+        }
+
+        function generateSolvableBoard(config) {
+            const totalCells = gridRows * gridCols;
+            const numPairs = totalCells / 2;
+            pairsRemaining = numPairs;
+
+            // Seleccionar subconjunto de fichas del catálogo
+            const selectedTypes = TILE_CATALOG.slice(0, config.tileTypes);
+
+            // Crear lista de fichas en pares
+            let tilePool = [];
+            for (let i = 0; i < numPairs; i++) {
+                const type = selectedTypes[i % selectedTypes.length];
+                tilePool.push({ ...type }, { ...type });
+            }
+
+            // Desordenar pool
+            shuffleArray(tilePool);
+
+            // Construir matriz con acolchado exterior (0)
+            grid = Array.from({ length: gridRows + 2 }, () => Array(gridCols + 2).fill(null));
+
+            let idx = 0;
+            for (let r = 1; r <= gridRows; r++) {
+                for (let c = 1; c <= gridCols; c++) {
+                    grid[r][c] = tilePool[idx++];
+                }
+            }
+        }
+
+        function shuffleArray(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+        }
+
+        /* ==========================================================================
+           5. ALGORITMO DE RUTA SHISEN-SHO (Línea de 3 segmentos / 2 giros máximo)
+           ========================================================================== */
+        function isClearLine(r1, c1, r2, c2) {
+            if (r1 === r2) {
+                const minC = Math.min(c1, c2);
+                const maxC = Math.max(c1, c2);
+                for (let c = minC + 1; c < maxC; c++) {
+                    if (grid[r1][c] !== null) return false;
+                }
+                return true;
+            }
+            if (c1 === c2) {
+                const minR = Math.min(r1, r2);
+                const maxR = Math.max(r1, r2);
+                for (let r = minR + 1; r < maxR; r++) {
+                    if (grid[r][c1] !== null) return false;
+                }
+                return true;
+            }
+            return false;
+        }
+
+        function findPath(r1, c1, r2, c2) {
+            // Fichas deben ser idénticas y distintas celdas
+            if (r1 === r2 && c1 === c2) return null;
+            if (!grid[r1][c1] || !grid[r2][c2]) return null;
+            if (grid[r1][c1].id !== grid[r2][c2].id) return null;
+
+            // 1. Conexión Directa (0 Giros / 1 Segmento)
+            if (isClearLine(r1, c1, r2, c2)) {
+                return [{ r: r1, c: c1 }, { r: r2, c: c2 }];
+            }
+
+            // 2. Conexión con 1 Giro (2 Segmentos)
+            // Esquina A: (r1, c2)
+            if (grid[r1][c2] === null && isClearLine(r1, c1, r1, c2) && isClearLine(r1, c2, r2, c2)) {
+                return [{ r: r1, c: c1 }, { r: r1, c: c2 }, { r: r2, c: c2 }];
+            }
+            // Esquina B: (r2, c1)
+            if (grid[r2][c1] === null && isClearLine(r1, c1, r2, c1) && isClearLine(r2, c1, r2, c2)) {
+                return [{ r: r1, c: c1 }, { r: r2, c: c1 }, { r: r2, c: c2 }];
+            }
+
+            // 3. Conexión con 2 Giros (3 Segmentos)
+            // Explorar rayos horizontales desde (r1, c1)
+            const totalR = gridRows + 2;
+            const totalC = gridCols + 2;
+
+            // Escaneo hacia los 4 puntos cardinales desde (r1, c1)
+            // Horizontal
+            for (let c = c1 + 1; c < totalC; c++) {
+                if (grid[r1][c] !== null) break;
+                if (isClearLine(r1, c, r2, c) && isClearLine(r2, c, r2, c2) && (grid[r2][c] === null || (r2 === r2 && c === c2))) {
+                    return [{ r: r1, c: c1 }, { r: r1, c: c }, { r: r2, c: c }, { r: r2, c: c2 }];
+                }
+            }
+            for (let c = c1 - 1; c >= 0; c--) {
+                if (grid[r1][c] !== null) break;
+                if (isClearLine(r1, c, r2, c) && isClearLine(r2, c, r2, c2) && (grid[r2][c] === null || (r2 === r2 && c === c2))) {
+                    return [{ r: r1, c: c1 }, { r: r1, c: c }, { r: r2, c: c }, { r: r2, c: c2 }];
+                }
+            }
+
+            // Vertical
+            for (let r = r1 + 1; r < totalR; r++) {
+                if (grid[r][c1] !== null) break;
+                if (isClearLine(r, c1, r, c2) && isClearLine(r, c2, r2, c2) && (grid[r][c2] === null || (r === r2 && c2 === c2))) {
+                    return [{ r: r1, c: c1 }, { r: r, c: c1 }, { r: r, c: c2 }, { r: r2, c: c2 }];
+                }
+            }
+            for (let r = r1 - 1; r >= 0; r--) {
+                if (grid[r][c1] !== null) break;
+                if (isClearLine(r, c1, r, c2) && isClearLine(r, c2, r2, c2) && (grid[r][c2] === null || (r === r2 && c2 === c2))) {
+                    return [{ r: r1, c: c1 }, { r: r, c: c1 }, { r: r, c: c2 }, { r: r2, c: c2 }];
+                }
+            }
+
+            return null; // No hay camino válido
+        }
+
+        /* Obtener todas las parejas conectables actualmente */
+        function getAvailablePairs() {
+            const tiles = [];
+            for (let r = 1; r <= gridRows; r++) {
+                for (let c = 1; c <= gridCols; c++) {
+                    if (grid[r][c] !== null) {
+                        tiles.push({ r, c, tile: grid[r][c] });
+                    }
+                }
+            }
+
+            const pairs = [];
+            for (let i = 0; i < tiles.length; i++) {
+                for (let j = i + 1; j < tiles.length; j++) {
+                    if (tiles[i].tile.id === tiles[j].tile.id) {
+                        const path = findPath(tiles[i].r, tiles[i].c, tiles[j].r, tiles[j].c);
+                        if (path) {
+                            pairs.push({ t1: tiles[i], t2: tiles[j], path });
+                        }
+                    }
+                }
+            }
+            return pairs;
+        }
+
+        /* ==========================================================================
+           6. RENDERIZADO DEL TABLERO Y EVENTOS
+           ========================================================================== */
+        function renderBoard() {
+            boardGrid.innerHTML = '';
+            // Establecer columnas en CSS Grid dinámicamente
+            boardGrid.style.gridTemplateColumns = `repeat(${gridCols}, minmax(0, 1fr))`;
+
+            for (let r = 1; r <= gridRows; r++) {
+                for (let c = 1; c <= gridCols; c++) {
+                    const tileData = grid[r][c];
+                    const tileDiv = document.createElement('div');
+                    
+                    // Tamaño responsivo adaptable
+                    tileDiv.className = 'w-9 h-12 sm:w-12 sm:h-16 md:w-14 md:h-18 flex flex-col items-center justify-center rounded-xl font-oriental text-lg sm:text-2xl cursor-pointer select-none transition-all';
+                    tileDiv.dataset.row = r;
+                    tileDiv.dataset.col = c;
+
+                    if (tileData) {
+                        tileDiv.classList.add('mahjong-tile', tileData.color);
+
+                        // Contenido de la ficha
+                        if (tileData.type === 'wan') {
+                            const numChar = tileData.label.charAt(0);
+                            const wanChar = tileData.label.charAt(1);
+                            tileDiv.innerHTML = `
+                                <span class="text-xs sm:text-sm leading-none font-bold">${numChar}</span>
+                                <span class="text-xs sm:text-base leading-none text-red-700 font-extrabold mt-0.5">${wanChar}</span>
+                            `;
+                        } else {
+                            tileDiv.innerHTML = `<span class="drop-shadow-sm">${tileData.label}</span>`;
+                        }
+
+                        if (selectedTile && selectedTile.r === r && selectedTile.c === c) {
+                            tileDiv.classList.add('selected');
+                        }
+
+                        tileDiv.addEventListener('click', () => handleTileClick(r, c));
+                    } else {
+                        // Espacio vacío en la rejilla
+                        tileDiv.classList.add('opacity-0', 'pointer-events-none');
+                    }
+
+                    boardGrid.appendChild(tileDiv);
+                }
+            }
+        }
+
+        function handleTileClick(r, c) {
+            if (isProcessingMatch) return;
+            const clicked = grid[r][c];
+            if (!clicked) return;
+
+            // Quitar resaltados de pistas previas
+            clearHints();
+
+            audio.playClick();
+
+            if (!selectedTile) {
+                // Primera selección
+                selectedTile = { r, c };
+                renderBoard();
+            } else if (selectedTile.r === r && selectedTile.c === c) {
+                // Deseleccionar si hace clic en la misma
+                selectedTile = null;
+                renderBoard();
+            } else {
+                // Intentar emparejar con la ficha previa
+                const path = findPath(selectedTile.r, selectedTile.c, r, c);
+                if (path) {
+                    // ¡Pareja válida encontrada!
+                    executeMatch(selectedTile, { r, c }, path);
+                } else {
+                    // Pareja inválida
+                    audio.playError();
+                    selectedTile = { r, c }; // Cambiar selección a la nueva ficha
+                    renderBoard();
+                }
+            }
+        }
+
+        /* Ejecutar la eliminación de fichas con animación de camino */
+        function executeMatch(t1, t2, path) {
+            isProcessingMatch = true;
+
+            // Calcular Combo
+            const now = Date.now();
+            if (now - lastMatchTime < 4000) {
+                combo++;
+            } else {
+                combo = 1;
+            }
+            lastMatchTime = now;
+            if (combo > maxComboReached) maxComboReached = combo;
+
+            // Puntuación
+            const basePoints = 100;
+            const comboBonus = (combo - 1) * 50;
+            score += basePoints + comboBonus;
+            pairsRemaining--;
+
+            updateUIHeader();
+            audio.playMatch();
+
+            // Dibujar la línea resplandeciente en el canvas
+            drawConnectionPath(path);
+
+            // Resaltar visualmente las fichas involucradas
+            const el1 = getTileElement(t1.r, t1.c);
+            const el2 = getTileElement(t2.r, t2.c);
+            if (el1) el1.classList.add('selected');
+            if (el2) el2.classList.add('selected');
+
+            // Pausa breve para disfrutar la animación y limpiar
+            setTimeout(() => {
+                if (el1) el1.classList.add('matched');
+                if (el2) el2.classList.add('matched');
+
+                grid[t1.r][t1.c] = null;
+                grid[t2.r][t2.c] = null;
+                selectedTile = null;
+
+                clearCanvas();
+                renderBoard();
+                isProcessingMatch = false;
+
+                // Verificar Victoria o Bloqueo sin movimientos
+                if (pairsRemaining === 0) {
+                    triggerVictory();
+                } else {
+                    checkAvailableMovesOrShuffle(true);
+                }
+            }, 300);
+        }
+
+        /* ==========================================================================
+           7. TRAZADO DE LÍNEA DE CONEXIÓN EN CANVAS
+           ========================================================================== */
+        function resizeCanvas() {
+            const rect = boardGrid.getBoundingClientRect();
+            const parentRect = pathCanvas.parentElement.getBoundingClientRect();
+            
+            pathCanvas.width = parentRect.width;
+            pathCanvas.height = parentRect.height;
+        }
+
+        function getCellCenterCoordinates(r, c) {
+            // Teniendo en cuenta el acolchado exterior r=0..gridRows+1, c=0..gridCols+1
+            const cellW = boardGrid.clientWidth / gridCols;
+            const cellH = boardGrid.clientHeight / gridRows;
+
+            const gridRect = boardGrid.getBoundingClientRect();
+            const containerRect = pathCanvas.parentElement.getBoundingClientRect();
+
+            const offsetX = gridRect.left - containerRect.left;
+            const offsetY = gridRect.top - containerRect.top;
+
+            // Ajustar coordenadas para las celdas virtuales del margen (0 o max)
+            let x, y;
+            if (c === 0) {
+                x = offsetX - cellW / 2;
+            } else if (c === gridCols + 1) {
+                x = offsetX + gridRect.width + cellW / 2;
+            } else {
+                x = offsetX + (c - 0.5) * cellW;
+            }
+
+            if (r === 0) {
+                y = offsetY - cellH / 2;
+            } else if (r === gridRows + 1) {
+                y = offsetY + gridRect.height + cellH / 2;
+            } else {
+                y = offsetY + (r - 0.5) * cellH;
+            }
+
+            return { x, y };
+        }
+
+        function drawConnectionPath(path) {
+            resizeCanvas();
+            ctx.clearRect(0, 0, pathCanvas.width, pathCanvas.height);
+
+            if (!path || path.length < 2) return;
+
+            const points = path.map(p => getCellCenterCoordinates(p.r, p.c));
+
+            ctx.save();
+            ctx.lineJoin = 'round';
+            ctx.lineCap = 'round';
+
+            // Capa Resplandor Dorado Exterior
+            ctx.beginPath();
+            ctx.moveTo(points[0].x, points[0].y);
+            for (let i = 1; i < points.length; i++) {
+                ctx.lineTo(points[i].x, points[i].y);
+            }
+            ctx.strokeStyle = '#fbbf24';
+            ctx.lineWidth = 8;
+            ctx.shadowColor = '#f59e0b';
+            ctx.shadowBlur = 18;
+            ctx.stroke();
+
+            // Capa Núcleo Blanco Brillante Interior
+            ctx.beginPath();
+            ctx.moveTo(points[0].x, points[0].y);
+            for (let i = 1; i < points.length; i++) {
+                ctx.lineTo(points[i].x, points[i].y);
+            }
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 3;
+            ctx.shadowBlur = 0;
+            ctx.stroke();
+
+            ctx.restore();
+        }
+
+        function clearCanvas() {
+            ctx.clearRect(0, 0, pathCanvas.width, pathCanvas.height);
+        }
+
+        /* ==========================================================================
+           8. UTILIDADES Y SISTEMA DE PISTAS Y MEZCLA
+           ========================================================================== */
+        function checkAvailableMovesOrShuffle(showNotification = true) {
+            const available = getAvailablePairs();
+            if (available.length === 0 && pairsRemaining > 0) {
+                if (showNotification) showToast("¡Sin movimientos posibles! Mezclando...");
+                setTimeout(() => {
+                    shuffleRemainingTiles();
+                }, 800);
+            }
+        }
+
+        function shuffleRemainingTiles() {
+            audio.playShuffle();
+            const remainingList = [];
+            for (let r = 1; r <= gridRows; r++) {
+                for (let c = 1; c <= gridCols; c++) {
+                    if (grid[r][c] !== null) {
+                        remainingList.push(grid[r][c]);
+                    }
+                }
+            }
+
+            let attempts = 0;
+            let validPairs = [];
+
+            // Mezclar hasta garantizar al menos 1 jugada posible
+            do {
+                shuffleArray(remainingList);
+                let idx = 0;
+                for (let r = 1; r <= gridRows; r++) {
+                    for (let c = 1; c <= gridCols; c++) {
+                        if (grid[r][c] !== null) {
+                            grid[r][c] = remainingList[idx++];
+                        }
+                    }
+                }
+                validPairs = getAvailablePairs();
+                attempts++;
+            } while (validPairs.length === 0 && attempts < 50);
+
+            selectedTile = null;
+            renderBoard();
+        }
+
+        function giveHint() {
+            if (hintsLeft <= 0 || isProcessingMatch) return;
+            const pairs = getAvailablePairs();
+            if (pairs.length > 0) {
+                hintsLeft--;
+                hintsUsedTotal++;
+                updateUIHeader();
+                
+                // Elegir una pareja al azar de las disponibles
+                const target = pairs[Math.floor(Math.random() * pairs.length)];
+                const el1 = getTileElement(target.t1.r, target.t1.c);
+                const el2 = getTileElement(target.t2.r, target.t2.c);
+
+                if (el1) el1.classList.add('hinted');
+                if (el2) el2.classList.add('hinted');
+
+                setTimeout(clearHints, 2500);
+            } else {
+                showToast("No hay movimientos disponibles. Mezclando...");
+                shuffleRemainingTiles();
+            }
+        }
+
+        function clearHints() {
+            document.querySelectorAll('.mahjong-tile.hinted').forEach(el => {
+                el.classList.remove('hinted');
+            });
+        }
+
+        function getTileElement(r, c) {
+            return document.querySelector(`.mahjong-tile[data-row="${r}"][data-col="${c}"]`);
+        }
+
+        function showToast(msg) {
+            toastMessage.textContent = msg;
+            toastMessage.classList.remove('hidden');
+            setTimeout(() => {
+                toastMessage.classList.add('hidden');
+            }, 2500);
+        }
+
+        /* ==========================================================================
+           9. UI, TEMPORIZADOR Y CONTROLADORES DE EVENTOS
+           ========================================================================== */
+        function startTimer() {
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                secondsElapsed++;
+                const mins = String(Math.floor(secondsElapsed / 60)).padStart(2, '0');
+                const secs = String(secondsElapsed % 60).padStart(2, '0');
+                timerDisplay.textContent = `${mins}:${secs}`;
+            }, 1000);
+        }
+
+        function updateUIHeader() {
+            scoreDisplay.textContent = score;
+            pairsDisplay.textContent = pairsRemaining;
+            hintCount.textContent = hintsLeft;
+            shuffleCount.textContent = shufflesLeft;
+
+            if (combo > 1) {
+                comboBadge.classList.remove('hidden');
+                comboBadge.classList.add('flex');
+                comboText.textContent = `COMBO x${combo}`;
+            } else {
+                comboBadge.classList.add('hidden');
+                comboBadge.classList.remove('flex');
+            }
+
+            // Actualizar estado visual de los botones de dificultad
+            document.querySelectorAll('.diff-btn').forEach(btn => {
+                if (btn.dataset.diff === currentDiff) {
+                    btn.className = 'diff-btn px-3 py-1 rounded-lg text-xs font-bold bg-amber-600 text-stone-950 shadow-md';
+                } else {
+                    btn.className = 'diff-btn px-3 py-1 rounded-lg text-xs font-semibold text-amber-300/70 hover:text-amber-100 hover:bg-stone-800/60';
+                }
+            });
+        }
+
+        function triggerVictory() {
+            clearInterval(timerInterval);
+            audio.playWin();
+
+            const mins = String(Math.floor(secondsElapsed / 60)).padStart(2, '0');
+            const secs = String(secondsElapsed % 60).padStart(2, '0');
+
+            document.getElementById('winTime').textContent = `${mins}:${secs}`;
+            document.getElementById('winScore').textContent = score;
+            document.getElementById('winCombo').textContent = `x${maxComboReached}`;
+            document.getElementById('winHints').textContent = hintsUsedTotal;
+
+            const winModal = document.getElementById('victoryModal');
+            winModal.classList.remove('opacity-0', 'pointer-events-none');
+            winModal.querySelector('div').classList.remove('scale-95');
+        }
+
+        /* Event Listeners de Botones de Interfaz */
+        document.getElementById('hintBtn').addEventListener('click', giveHint);
+
+        document.getElementById('shuffleBtn').addEventListener('click', () => {
+            if (shufflesLeft > 0 && !isProcessingMatch) {
+                shufflesLeft--;
+                updateUIHeader();
+                shuffleRemainingTiles();
+            }
+        });
+
+        document.getElementById('restartBtn').addEventListener('click', initGame);
+
+        document.querySelectorAll('.diff-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                currentDiff = e.target.dataset.diff;
+                initGame();
+            });
+        });
+
+        /* Control de Sonido */
+        const soundBtn = document.getElementById('soundBtn');
+        const soundIcon = document.getElementById('soundIcon');
+        soundBtn.addEventListener('click', () => {
+            audio.muted = !audio.muted;
+            if (audio.muted) {
+                soundIcon.className = 'fa-solid fa-volume-xmark text-red-400';
+            } else {
+                soundIcon.className = 'fa-solid fa-volume-high text-amber-300';
+                audio.playClick();
+            }
+        });
+
+        /* Modal Instrucciones */
+        const helpModal = document.getElementById('helpModal');
+        const openHelp = () => {
+            helpModal.classList.remove('opacity-0', 'pointer-events-none');
+            helpModal.querySelector('div').classList.remove('scale-95');
+        };
+        const closeHelp = () => {
+            helpModal.classList.add('opacity-0', 'pointer-events-none');
+            helpModal.querySelector('div').classList.add('scale-95');
+        };
+
+        document.getElementById('helpBtn').addEventListener('click', openHelp);
+        document.getElementById('closeHelpBtn').addEventListener('click', closeHelp);
+        document.getElementById('understoodHelpBtn').addEventListener('click', closeHelp);
+
+        /* Modal Victoria */
+        document.getElementById('playAgainBtn').addEventListener('click', () => {
+            const winModal = document.getElementById('victoryModal');
+            winModal.classList.add('opacity-0', 'pointer-events-none');
+            winModal.querySelector('div').classList.add('scale-95');
+            initGame();
+        });
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+        });
+
+        // Iniciar juego en carga completa de la página
+        window.onload = () => {
+            initGame();
+        };
+    </script>
+</body>
+</html>
