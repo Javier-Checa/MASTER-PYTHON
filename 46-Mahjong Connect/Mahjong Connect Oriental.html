@@ -869,7 +869,31 @@
             resizeCanvas();
             ctx.clearRect(0, 0, pathCanvas.width, pathCanvas.height);
 
+            if (!path || path.length < 2) return;
 
+            const points = path.map(p => getCellCenterCoordinates(p.r, p.c));
+
+            ctx.save();
+            ctx.lineJoin = 'round';
+            ctx.lineCap = 'round';
+
+            // Capa Resplandor Dorado Exterior
+            ctx.beginPath();
+            ctx.moveTo(points[0].x, points[0].y);
+            for (let i = 1; i < points.length; i++) {
+                ctx.lineTo(points[i].x, points[i].y);
+            }
+            ctx.strokeStyle = '#fbbf24';
+            ctx.lineWidth = 8;
+            ctx.shadowColor = '#f59e0b';
+            ctx.shadowBlur = 18;
+            ctx.stroke();
+
+            // Capa Núcleo Blanco Brillante Interior
+            ctx.beginPath();
+            ctx.moveTo(points[0].x, points[0].y);
+            for (let i = 1; i < points.length; i++) {
+                ctx.lineTo(points[i].x, points[i].y);
             }
             ctx.strokeStyle = '#ffffff';
             ctx.lineWidth = 3;
