@@ -481,7 +481,35 @@
         /* ==========================================================================
            3. ESTADO DEL JUEGO Y VARIABLES GLOBAL
            ========================================================================== */
+        let currentDiff = 'normal';
+        let gridRows = 8;
+        let gridCols = 10;
+        let grid = []; // Matriz con acolchado de ceros: (gridRows + 2) x (gridCols + 2)
+        let selectedTile = null; // { r, c }
+        let hintsLeft = 3;
+        let shufflesLeft = 2;
+        let score = 0;
+        let pairsRemaining = 0;
+        let timerInterval = null;
+        let secondsElapsed = 0;
+        let combo = 0;
+        let lastMatchTime = 0;
+        let hintsUsedTotal = 0;
+        let maxComboReached = 1;
+        let isProcessingMatch = false;
 
+        /* Referencias al DOM */
+        const boardGrid = document.getElementById('boardGrid');
+        const pathCanvas = document.getElementById('pathCanvas');
+        const ctx = pathCanvas.getContext('2d');
+        const timerDisplay = document.getElementById('timerDisplay');
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        const pairsDisplay = document.getElementById('pairsDisplay');
+        const comboBadge = document.getElementById('comboBadge');
+        const comboText = document.getElementById('comboText');
+        const hintCount = document.getElementById('hintCount');
+        const shuffleCount = document.getElementById('shuffleCount');
+        const toastMessage = document.getElementById('toastMessage');
 
         /* ==========================================================================
            4. INICIALIZACIÓN Y GESTIÓN DE TABLERO
