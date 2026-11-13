@@ -953,7 +953,28 @@
             renderBoard();
         }
 
+        function giveHint() {
+            if (hintsLeft <= 0 || isProcessingMatch) return;
+            const pairs = getAvailablePairs();
+            if (pairs.length > 0) {
+                hintsLeft--;
+                hintsUsedTotal++;
+                updateUIHeader();
+                
+                // Elegir una pareja al azar de las disponibles
+                const target = pairs[Math.floor(Math.random() * pairs.length)];
+                const el1 = getTileElement(target.t1.r, target.t1.c);
+                const el2 = getTileElement(target.t2.r, target.t2.c);
 
+                if (el1) el1.classList.add('hinted');
+                if (el2) el2.classList.add('hinted');
+
+                setTimeout(clearHints, 2500);
+            } else {
+                showToast("No hay movimientos disponibles. Mezclando...");
+                shuffleRemainingTiles();
+            }
+        }
 
         function clearHints() {
             document.querySelectorAll('.mahjong-tile.hinted').forEach(el => {
