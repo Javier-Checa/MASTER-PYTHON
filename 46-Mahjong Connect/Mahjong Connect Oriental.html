@@ -1050,7 +1050,15 @@
         }
 
         /* Event Listeners de Botones de Interfaz */
+        document.getElementById('hintBtn').addEventListener('click', giveHint);
 
+        document.getElementById('shuffleBtn').addEventListener('click', () => {
+            if (shufflesLeft > 0 && !isProcessingMatch) {
+                shufflesLeft--;
+                updateUIHeader();
+                shuffleRemainingTiles();
+            }
+        });
 
         document.getElementById('restartBtn').addEventListener('click', initGame);
 
