@@ -1093,17 +1093,6 @@
             helpModal.querySelector('div').classList.add('scale-95');
         };
 
-        document.getElementById('helpBtn').addEventListener('click', openHelp);
-        document.getElementById('closeHelpBtn').addEventListener('click', closeHelp);
-        document.getElementById('understoodHelpBtn').addEventListener('click', closeHelp);
-
-        /* Modal Victoria */
-        document.getElementById('playAgainBtn').addEventListener('click', () => {
-            const winModal = document.getElementById('victoryModal');
-            winModal.classList.add('opacity-0', 'pointer-events-none');
-            winModal.querySelector('div').classList.add('scale-95');
-            initGame();
-        });
 
         window.addEventListener('resize', () => {
             resizeCanvas();
