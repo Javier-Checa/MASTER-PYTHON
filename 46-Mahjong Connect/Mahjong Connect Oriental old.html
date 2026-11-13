@@ -997,6 +997,15 @@
         /* ==========================================================================
            9. UI, TEMPORIZADOR Y CONTROLADORES DE EVENTOS
            ========================================================================== */
+        function startTimer() {
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                secondsElapsed++;
+                const mins = String(Math.floor(secondsElapsed / 60)).padStart(2, '0');
+                const secs = String(secondsElapsed % 60).padStart(2, '0');
+                timerDisplay.textContent = `${mins}:${secs}`;
+            }, 1000);
+        }
 
         function updateUIHeader() {
             scoreDisplay.textContent = score;
