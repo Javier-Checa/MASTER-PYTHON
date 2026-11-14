@@ -198,7 +198,11 @@
     <nav class="max-w-6xl w-full mx-auto px-4 py-2 flex flex-wrap items-center justify-between gap-3 text-sm">
         
         <!-- Seleccionador de Dificultad -->
-
+        <div class="flex items-center gap-1 bg-stone-950/60 p-1 rounded-xl border border-amber-900/30">
+            <button data-diff="easy" class="diff-btn px-3 py-1 rounded-lg text-xs font-semibold transition-all">Fácil</button>
+            <button data-diff="normal" class="diff-btn px-3 py-1 rounded-lg text-xs font-semibold transition-all">Normal</button>
+            <button data-diff="hard" class="diff-btn px-3 py-1 rounded-lg text-xs font-semibold transition-all">Difícil</button>
+        </div>
 
         <!-- Indicador de Multiplicador Combo -->
         <div id="comboBadge" class="hidden items-center gap-1.5 px-3 py-1 rounded-full bg-gradient-to-r from-amber-600 to-red-600 text-white font-bold text-xs shadow-lg animate-bounce">
