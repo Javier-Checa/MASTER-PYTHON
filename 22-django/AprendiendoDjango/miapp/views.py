@@ -70,7 +70,7 @@ def hola_mundo(request):
 def pagina(request, redirigir=0):
     
     if redirigir == 1:
-        return redirect('/contacto/javier/checa')
+        return redirect('contacto', nombre="Javier", apellidos="Checa")
     
     return HttpResponse(layout+"""
         <h1>Página de mi sitio web</h1>
