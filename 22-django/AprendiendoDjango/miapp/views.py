@@ -47,7 +47,7 @@ def index(request):
             
     html += "</ul>"
         
-    return HttpResponse(layout + html)
+    return render(request, "index.html")
 
 def tictactoe(request):
     # Ruta absoluta de tu archivo HTML del juego
