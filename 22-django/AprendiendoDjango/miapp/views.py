@@ -70,8 +70,7 @@ def pagina(request, redirigir=0):
         return redirect('contacto', nombre="Javier", apellidos="Checa")
     
     return HttpResponse(layout+"""
-        <h1>Página de mi sitio web</h1>
-        <p>Creada por Javier Checa</p>
+
     """)
     
 def contacto(request, nombre="", apellidos=""):
