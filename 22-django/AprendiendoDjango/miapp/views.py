@@ -62,10 +62,7 @@ def tictactoe(request):
         return HttpResponse("<h1>Error: No se encontró el archivo del juego Tic Tac Toe en la ruta especificada.</h1>", status=404)
 
 def hola_mundo(request):
-    return HttpResponse(layout + """
-        <h1>¡Hola, Mundo, con Django!</h1>
-        <p>Este es mi primer proyecto con Django</p>
-        <p>Estamos en la ruta: <strong>/hola-mundo/</strong></p>""")
+    return render(request, "hola_mundo.html")
     
 def pagina(request, redirigir=0):
     
