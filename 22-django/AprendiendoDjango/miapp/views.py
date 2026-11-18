@@ -69,9 +69,7 @@ def pagina(request, redirigir=0):
     if redirigir == 1:
         return redirect('contacto', nombre="Javier", apellidos="Checa")
     
-    return HttpResponse(layout+"""
-
-    """)
+    return render(request, "pagina.html")
     
 def contacto(request, nombre="", apellidos=""):
     html = ""
