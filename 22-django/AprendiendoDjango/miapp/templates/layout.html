@@ -1,10 +1,50 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Sitio web con Django y Javier Checa</title>
-</head>
-<body>
+  
+  <head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}
+        <!--Título de cada página-->
+        {% endblock %}
+        | Javier Checa
+    </title>
+  </head>
 
-</body>
+  <body>
+    <h1>Sitio Web con Django | Javier Checa</h1>
+    <hr/>
+    <ul>
+      <li>
+        <a href="/inicio">Inicio</a>
+      </li>
+      <li>
+        <a href="/hola-mundo">Hola Mundo</a>
+      </li>
+      <li>
+        <a href="/tictactoe">Tic Tac Toe</a>
+      </li>
+      <li>
+        <a href="/pagina-pruebas">Página de pruebas</a>
+      </li>
+      <li>
+        <a href="/contacto">Contacto</a>
+      </li>
+    </ul>
+    <hr/>
+
+    <div id="content">
+        {% block content %}
+            <!--Código que viene de templates-->    
+        {% endblock %}
+    </div>
+
+    <footer>
+      <hr/>
+      <p>Master en Python  &copy; Javier Checa Web</p>
+      <p>Creado por Javier Checa</p>
+      <p> Año de creación: 2026</p>
+    </footer>
+
+
+  </body>
 </html>
