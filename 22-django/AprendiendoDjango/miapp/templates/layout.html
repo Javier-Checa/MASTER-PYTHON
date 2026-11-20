@@ -15,29 +15,42 @@
   </head>
 
   <body>
-    <h1>Sitio Web con Django | Javier Checa</h1>
-    <hr/>
-    <ul>
-      <li>
-        <a href="/inicio">Inicio</a>
-      </li>
-      <li>
-        <a href="/hola-mundo">Hola Mundo</a>
-      </li>
-      <li>
-        <a href="/tictactoe">Tic Tac Toe</a>
-      </li>
-      <li>
-        <a href="/pagina-pruebas">Página de pruebas</a>
-      </li>
-      <li>
-        <a href="/contacto">Contacto</a>
-      </li>
-    </ul>
-   
-    <hr/>
+
+    <!-- Cabecera de la página -->
+
+    <header>
+        <div id="logotipo">
+        <!-- Logo de la página -->
+        <img src="{% static 'images/logo.png' %}" alt="Logo de la página" />
+        <h1>Sitio web con Django</h1>
+
+      </div>
+      <hr/>
+    </header>
+
+    <nav>
+      <ul>
+        <li>
+          <a href="/inicio">Inicio</a>
+        </li>
+        <li>
+          <a href="/hola-mundo">Hola Mundo</a>
+        </li>
+        <li>
+          <a href="/tictactoe">Tic Tac Toe</a>
+        </li>
+        <li>
+          <a href="/pagina-pruebas">Página de pruebas</a>
+        </li>
+        <li>
+          <a href="/contacto">Contacto</a>
+        </li>
+      </ul>
+    </nav>
+
 
     <div id="content">
+      <h2 class="title">Título de prueba</h2>
         {% block content %}
             <!--Código que viene de templates-->  
             <strong>Contenido del bloque original!!!</strong>  
