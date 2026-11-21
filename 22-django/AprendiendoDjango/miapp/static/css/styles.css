@@ -7,3 +7,22 @@
     text-decoration: none;
 }
 
+body{
+    background-color: #f2f2f2;
+}
+
+/*Estilos del cabecera*/
+header{
+    width: 1212px;
+    height: 140px;
+    background-color: #23282B;
+    color: #fff;
+    margin: 0px auto;
+}
+
+#logotipo h1{
+    display: block;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    
+}
