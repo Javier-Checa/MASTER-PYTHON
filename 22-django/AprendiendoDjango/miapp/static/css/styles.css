@@ -39,7 +39,8 @@ header{
 #logotipo h1{
     display: block;
     float: left;
-    margin-top: 40px;
+    margin-top: 35px;
+    margin-left: 20px;
     letter-spacing: 2px;
     font-weight: lighter;
     color: #42a096;
