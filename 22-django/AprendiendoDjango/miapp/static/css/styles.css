@@ -21,6 +21,13 @@ header{
 }
 
 
+#logotipo{
+    width: 60%;
+    height: 140px;
+    margin: 0px auto;
+    padding: 0px;
+}
+
 #logotipo img{
     display: block;
     float: left;
@@ -31,8 +38,8 @@ header{
 
 #logotipo h1{
     display: block;
+    float: left;
     letter-spacing: 2px;
-    text-transform: uppercase;
-    font-weight: normal;
+    font-weight: lighter;
     color: #42a096;
 }
