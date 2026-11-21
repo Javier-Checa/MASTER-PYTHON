@@ -20,6 +20,15 @@ header{
     margin: 0px auto;
 }
 
+
+#logotipo img{
+    display: block;
+    float: left;
+    width: 60px; 
+    margin-top: 20px;
+}
+
+
 #logotipo h1{
     display: block;
     letter-spacing: 2px;
