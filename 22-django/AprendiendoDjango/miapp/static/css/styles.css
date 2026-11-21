@@ -25,7 +25,7 @@ header{
     width: 35%;
     height: 140px;
     margin: 0px auto;
-    padding: 0px;
+    padding-top: 10px;
 }
 
 #logotipo img{
