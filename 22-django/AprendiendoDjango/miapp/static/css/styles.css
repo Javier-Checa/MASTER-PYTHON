@@ -50,7 +50,17 @@ header{
 
 nav{
     width: 1250px;
+    height: 40px;
     background-color: #1B1E1F;
     border: 1px solid #333333;
-    
+}
+
+nav ul{
+    list-style: none;
+    text-decoration: none;
+}
+
+nav ul li{
+    line-height: 40px;
+    float: left;
 }
