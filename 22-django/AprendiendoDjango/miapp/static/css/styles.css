@@ -67,8 +67,9 @@ nav ul li{
 
 nav ul li a{
     display: block;
-    padding: 0px 20px;
-    color: #fff;
-    font-size: 14px;
-    text-transform: uppercase;
+    padding: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: #d1d4d6;
+    font-size: 16px;
 }
