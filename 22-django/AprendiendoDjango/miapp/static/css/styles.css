@@ -55,6 +55,7 @@ nav{
     background-color: #1B1E1F;
     border: 1px solid #333333;
     box-shadow: 0px 22px 22px #726a6a;
+
 }
 
 nav ul{
@@ -69,8 +70,8 @@ nav ul li{
 
 nav ul li a{
     display: block;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
     color: #c0cfd9;
-    font-size: 20px;
+    font-size: 16px;
 }
