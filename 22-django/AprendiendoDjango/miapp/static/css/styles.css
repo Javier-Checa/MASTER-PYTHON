@@ -51,8 +51,10 @@ header{
 nav{
     width: 1250px;
     height: 40px;
+    margin: 0px auto;
     background-color: #1B1E1F;
     border: 1px solid #333333;
+    box-shadow: 0px 22px 22px #726a6a;
 }
 
 nav ul{
@@ -67,9 +69,8 @@ nav ul li{
 
 nav ul li a{
     display: block;
-    padding: 10px;
     padding-left: 10px;
     padding-right: 10px;
-    color: #d1d4d6;
-    font-size: 16px;
+    color: #c0cfd9;
+    font-size: 20px;
 }
