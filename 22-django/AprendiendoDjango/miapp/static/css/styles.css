@@ -45,3 +45,12 @@ header{
     font-weight: lighter;
     color: #2ba977;
 }
+
+/*Estilos barra de navegacion*/
+
+nav{
+    width: 1250px;
+    background-color: #1B1E1F;
+    border: 1px solid #333333;
+    
+}
