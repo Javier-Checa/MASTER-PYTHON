@@ -95,4 +95,10 @@ nav ul li a:hover{
     float: left;
 }
 
+.esquina-derecha{
+    display: block;
+    border-right: 20px solid transparent;
+    border-top: 10px solid #2B2F30;
+    float: right;
+}
 
