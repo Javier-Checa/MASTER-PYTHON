@@ -104,6 +104,8 @@ nav ul li a:hover{
 
 .relleno-barra{
     display: block;
-    width: 100%;
+    width: 1210px;
+    height: 10px;
     background-color: #2B2F30;
+    float: left;
 }
