@@ -102,3 +102,8 @@ nav ul li a:hover{
     float: right;
 }
 
+.relleno-barra{
+    display: block;
+    width: 100%;
+    background-color: #2B2F30;
+}
