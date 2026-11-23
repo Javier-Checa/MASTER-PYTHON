@@ -55,7 +55,6 @@ nav{
     background-color: #1B1E1F;
     border: 1px solid #333333;
     box-shadow: 0px 22px 22px #726a6a;
-    margin-bottom: 145px;
 }
 
 nav ul{
@@ -86,6 +85,7 @@ nav ul li a:hover{
 .barra{
     width: 1250px;
     margin: 0px auto;
+    margin-bottom: 140px;
 }
 
 .esquina-izquierda{
@@ -94,3 +94,5 @@ nav ul li a:hover{
     border-top: 10px solid #2B2F30;
     float: left;
 }
+
+
