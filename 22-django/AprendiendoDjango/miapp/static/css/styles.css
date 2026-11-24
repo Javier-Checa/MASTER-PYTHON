@@ -109,3 +109,14 @@ nav ul li a:hover{
     background-color: #2B2F30;
     float: left;
 }
+
+
+/* Estilos para el contenido principal */
+
+#content{
+    width: 1212px;
+    margin: 0px auto;
+    background-color: #fff;
+    box-shadow: 0px 22px 22px #726a6a;
+    padding-bottom: 20px;
+}
