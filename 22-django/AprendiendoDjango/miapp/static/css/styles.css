@@ -85,7 +85,6 @@ nav ul li a:hover{
 .barra{
     width: 1250px;
     margin: 0px auto;
-    margin-bottom: 140px;
 }
 
 .esquina-izquierda{
@@ -115,7 +114,10 @@ nav ul li a:hover{
 
 #content{
     width: 1212px;
+    min-height: 930px;
     margin: 0px auto;
+    margin-bottom: 30px;
+    margin-top: 30px;
     background-color: #fff;
     box-shadow: 0px 22px 22px #726a6a;
     padding-bottom: 20px;
