@@ -125,8 +125,15 @@ nav ul li a:hover{
     min-height: 930px;
     background-color: #fff;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 10px;
     box-shadow: 0px 0px 8px #ccc;
     padding: 20px;
     margin: 0px auto;
+}
+
+.title{
+    font-size: 36px;
+    color: #444;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
 }
