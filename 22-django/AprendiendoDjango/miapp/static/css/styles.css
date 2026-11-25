@@ -139,3 +139,13 @@ nav ul li a:hover{
     margin-top: 5px;
 }
 
+footer{
+    width: 1250px;
+    background-color: #1B1E1F;
+    border: 1px solid #333333;
+    color: #fff;
+    margin: 0px auto;
+    text-align: center;
+    line-height: 40px;
+    padding-top: 10px;
+}
