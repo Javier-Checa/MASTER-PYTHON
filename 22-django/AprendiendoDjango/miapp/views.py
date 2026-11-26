@@ -48,6 +48,7 @@ def index(request):
     html += "</ul>"
         
     return render(request, "index.html", {
+        'title' : 'Inicio',
         'mi_variable' : 'Soy un dato que está en la vista'
     })
 
