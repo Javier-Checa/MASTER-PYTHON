@@ -48,7 +48,7 @@ def index(request):
     html += "</ul>"
         
     return render(request, "index.html", {
-        'title' : 'Inicio',
+        'title' : 'Página Landing',
         'mi_variable' : 'Soy un dato que está en la vista'
     })
 
