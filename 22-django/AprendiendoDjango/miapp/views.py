@@ -47,7 +47,9 @@ def index(request):
             
     html += "</ul>"
         
-    return render(request, "index.html")
+    return render(request, "index.html", {
+        'mi_variable' : 'Soy un dato que está en la vista'
+    })
 
 def tictactoe(request):
     # Ruta absoluta de tu archivo HTML del juego
