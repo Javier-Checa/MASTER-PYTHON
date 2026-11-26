@@ -52,7 +52,7 @@ def index(request):
     return render(request, "index.html", {
         'title' : 'Página Landing',
         'mi_variable' : 'Soy un dato que está en la vista',
-        'nombre' : nombre
+
     })
 
 def tictactoe(request):
