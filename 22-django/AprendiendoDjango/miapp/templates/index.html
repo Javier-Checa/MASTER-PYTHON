@@ -14,14 +14,10 @@
 
 <p>{{mi_variable}}</p>
 
-{% if nombre %}
-
+{% if nombre and nombre == "Javier Checa Martínez" %}
    <p>{{nombre}}</p>
-
 {% else %}
-
-   <strong>Nombre no disponible</strong>
-
+   <strong>Nombre no disponible o no coincide</strong>
 {% endif %}
 
 <p>Creado por {{nombre}}</p>
