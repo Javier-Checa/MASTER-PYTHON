@@ -20,10 +20,10 @@
    <strong>Nombre no disponible o no coincide</strong>
 {% endif %}
 
-<h3>Listado de algunos lenguajes de programación:</h3>
+<h2>Listado de algunos lenguajes de programación:</h2>
 <ul>
    {% for lenguaje in lenguajes %}
-      <li>{{lenguaje}}</li>
+      <li>{{lenguaje}} {{forloop.counter}}</li>
    {% empty %}
       <strong>NO HAY LENGUAJES QUE MOSTRAR</strong>
    {% endfor %}
