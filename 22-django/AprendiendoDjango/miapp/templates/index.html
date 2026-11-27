@@ -23,7 +23,7 @@
 <h2>Listado de algunos lenguajes de programación:</h2>
 <ul>
    {% for lenguaje in lenguajes %}
-      <li>{{lenguaje}} {{forloop.counter}}</li>
+      <li>{{forloop.counter}} {{lenguaje}} </li>
    {% empty %}
       <strong>NO HAY LENGUAJES QUE MOSTRAR</strong>
    {% endfor %}
