@@ -8,14 +8,15 @@
 }
 
 
-p, h2, h3, h4, h5, h6, ul, li{
+p, h2, h3, h4, h5, h6, ul{
     margin-top: 5px;
     margin-bottom: 5px;
 }
 
 
-ul, ol {
+ul, ol{
     margin-left: 20px;
+    margin-bottom: 10px;
 }
 
 
