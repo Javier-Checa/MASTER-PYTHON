@@ -8,13 +8,13 @@
 }
 
 
-p, h2, h3, h4, h5, h6, ul{
+.box p, .box h2, .box h3, .box h4, .box h5, .box h6, .box ul{
     margin-top: 5px;
     margin-bottom: 5px;
 }
 
 
-ul, ol{
+.box ul, .box ol{
     margin-left: 20px;
     margin-bottom: 10px;
 }
