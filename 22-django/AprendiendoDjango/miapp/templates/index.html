@@ -20,7 +20,11 @@
    <strong>Nombre no disponible o no coincide</strong>
 {% endif %}
 
-{{lenguajes}}
+<ul>
+   {% for lenguaje in lenguajes %}
+      <li>{{lenguaje}}</li>
+
+</ul>
 
 <p>Creado por {{nombre}}</p>
 <p> Año de creación: 2026</p>
