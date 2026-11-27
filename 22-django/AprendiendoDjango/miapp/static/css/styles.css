@@ -8,10 +8,16 @@
 }
 
 
-p{
+p, h2, h3, h4, h5, h6, ul, li{
     margin-top: 5px;
     margin-bottom: 5px;
 }
+
+
+ul, ol {
+    margin-left: 20px;
+}
+
 
 
 body{
