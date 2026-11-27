@@ -47,12 +47,14 @@ def index(request):
             
     html += "</ul>"
         
-    nombre = "Javier Checa Martínez"    
+    nombre = "Javier Checa Martínez"
+    lenguajes = ['Python', 'JavaScript', 'C#', 'Java', 'PHP']    
         
     return render(request, "index.html", {
         'title' : 'Página Landing',
         'mi_variable' : 'Soy un dato que está en la vista',
-        'nombre' : nombre
+        'nombre' : nombre,
+        'lenguajes' : lenguajes
     })
 
 def tictactoe(request):
