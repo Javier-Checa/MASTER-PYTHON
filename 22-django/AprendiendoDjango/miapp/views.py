@@ -48,7 +48,8 @@ def index(request):
     html += "</ul>"
         
     nombre = "Javier Checa Martínez"
-    lenguajes = ['Python', 'JavaScript', 'C#', 'Java', 'PHP']    
+    #lenguajes = ['Python', 'JavaScript', 'C#', 'Java', 'PHP']    
+    lenguajes = [] 
         
     return render(request, "index.html", {
         'title' : 'Página Landing',
